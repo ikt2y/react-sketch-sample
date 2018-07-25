@@ -91,6 +91,32 @@ var exports =
 /************************************************************************/
 /******/ ({
 
+/***/ "./node_modules/@skpm/timers/immediate.js":
+/*!************************************************!*\
+  !*** ./node_modules/@skpm/timers/immediate.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* globals coscript, sketch */
+var timeout = __webpack_require__(/*! ./timeout */ "./node_modules/@skpm/timers/timeout.js")
+
+function setImmediate(func, param1, param2, param3, param4, param5, param6, param7, param8, param9, param10) {
+  return timeout.setTimeout(func, 0, param1, param2, param3, param4, param5, param6, param7, param8, param9, param10)
+}
+
+function clearImmediate(id) {
+  return timeout.clearTimeout(id)
+}
+
+module.exports = {
+  setImmediate: setImmediate,
+  clearImmediate: clearImmediate
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/@skpm/timers/interval.js":
 /*!***********************************************!*\
   !*** ./node_modules/@skpm/timers/interval.js ***!
@@ -243,6 +269,3344 @@ module.exports = {
   clearTimeout: clearTimeout
 }
 
+
+/***/ }),
+
+/***/ "./node_modules/animated/lib/Animated.js":
+/*!***********************************************!*\
+  !*** ./node_modules/animated/lib/Animated.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+
+
+
+
+
+
+
+
+var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}var
+
+
+
+Animated=function(){function Animated(){_classCallCheck(this,Animated);}_createClass(Animated,[{key:'__attach',value:function __attach()
+{}},{key:'__detach',value:function __detach()
+{}},{key:'__getValue',value:function __getValue()
+{}},{key:'__getAnimatedValue',value:function __getAnimatedValue()
+{return this.__getValue();}},{key:'__addChild',value:function __addChild(
+child){}},{key:'__removeChild',value:function __removeChild(
+child){}},{key:'__getChildren',value:function __getChildren()
+{return[];}}]);return Animated;}();
+
+
+module.exports=Animated;
+
+/***/ }),
+
+/***/ "./node_modules/animated/lib/AnimatedAddition.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/animated/lib/AnimatedAddition.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+
+
+
+
+
+
+
+
+var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}
+
+var AnimatedWithChildren=__webpack_require__(/*! ./AnimatedWithChildren */ "./node_modules/animated/lib/AnimatedWithChildren.js");
+var Animated=__webpack_require__(/*! ./Animated */ "./node_modules/animated/lib/Animated.js");
+var AnimatedValue=__webpack_require__(/*! ./AnimatedValue */ "./node_modules/animated/lib/AnimatedValue.js");
+var Interpolation=__webpack_require__(/*! ./Interpolation */ "./node_modules/animated/lib/Interpolation.js");
+var AnimatedInterpolation=__webpack_require__(/*! ./AnimatedInterpolation */ "./node_modules/animated/lib/AnimatedInterpolation.js");var
+
+
+
+AnimatedAddition=function(_AnimatedWithChildren){_inherits(AnimatedAddition,_AnimatedWithChildren);
+
+
+
+
+
+
+function AnimatedAddition(a,b){_classCallCheck(this,AnimatedAddition);var _this=_possibleConstructorReturn(this,(AnimatedAddition.__proto__||Object.getPrototypeOf(AnimatedAddition)).call(this));
+
+_this._a=typeof a==='number'?new AnimatedValue(a):a;
+_this._b=typeof b==='number'?new AnimatedValue(b):b;
+_this._listeners={};return _this;
+}_createClass(AnimatedAddition,[{key:'__getValue',value:function __getValue()
+
+{
+return this._a.__getValue()+this._b.__getValue();
+}},{key:'addListener',value:function addListener(
+
+callback){var _this2=this;
+if(!this._aListener&&this._a.addListener){
+this._aListener=this._a.addListener(function(){
+for(var key in _this2._listeners){
+_this2._listeners[key]({value:_this2.__getValue()});
+}
+});
+}
+if(!this._bListener&&this._b.addListener){
+this._bListener=this._b.addListener(function(){
+for(var key in _this2._listeners){
+_this2._listeners[key]({value:_this2.__getValue()});
+}
+});
+}
+var id=guid();
+this._listeners[id]=callback;
+return id;
+}},{key:'removeListener',value:function removeListener(
+
+id){
+delete this._listeners[id];
+}},{key:'interpolate',value:function interpolate(
+
+config){
+return new AnimatedInterpolation(this,Interpolation.create(config));
+}},{key:'__attach',value:function __attach()
+
+{
+this._a.__addChild(this);
+this._b.__addChild(this);
+}},{key:'__detach',value:function __detach()
+
+{
+this._a.__removeChild(this);
+this._b.__removeChild(this);
+}}]);return AnimatedAddition;}(AnimatedWithChildren);
+
+
+module.exports=AnimatedAddition;
+
+/***/ }),
+
+/***/ "./node_modules/animated/lib/AnimatedInterpolation.js":
+/*!************************************************************!*\
+  !*** ./node_modules/animated/lib/AnimatedInterpolation.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+
+
+
+
+
+
+
+
+var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}
+
+var Animated=__webpack_require__(/*! ./Animated */ "./node_modules/animated/lib/Animated.js");
+var AnimatedWithChildren=__webpack_require__(/*! ./AnimatedWithChildren */ "./node_modules/animated/lib/AnimatedWithChildren.js");
+var invariant=__webpack_require__(/*! invariant */ "./node_modules/invariant/browser.js");
+var Interpolation=__webpack_require__(/*! ./Interpolation */ "./node_modules/animated/lib/Interpolation.js");
+var guid=__webpack_require__(/*! ./guid */ "./node_modules/animated/lib/guid.js");var
+
+
+
+AnimatedInterpolation=function(_AnimatedWithChildren){_inherits(AnimatedInterpolation,_AnimatedWithChildren);
+
+
+
+
+
+function AnimatedInterpolation(parent,interpolation){_classCallCheck(this,AnimatedInterpolation);var _this=_possibleConstructorReturn(this,(AnimatedInterpolation.__proto__||Object.getPrototypeOf(AnimatedInterpolation)).call(this));
+
+_this._parent=parent;
+_this._interpolation=interpolation;
+_this._listeners={};return _this;
+}_createClass(AnimatedInterpolation,[{key:'__getValue',value:function __getValue()
+
+{
+var parentValue=this._parent.__getValue();
+invariant(
+typeof parentValue==='number',
+'Cannot interpolate an input which is not a number.');
+
+return this._interpolation(parentValue);
+}},{key:'addListener',value:function addListener(
+
+callback){var _this2=this;
+if(!this._parentListener){
+this._parentListener=this._parent.addListener(function(){
+for(var key in _this2._listeners){
+_this2._listeners[key]({value:_this2.__getValue()});
+}
+});
+}
+var id=guid();
+this._listeners[id]=callback;
+return id;
+}},{key:'removeListener',value:function removeListener(
+
+id){
+delete this._listeners[id];
+}},{key:'interpolate',value:function interpolate(
+
+config){
+return new AnimatedInterpolation(this,Interpolation.create(config));
+}},{key:'__attach',value:function __attach()
+
+{
+this._parent.__addChild(this);
+}},{key:'__detach',value:function __detach()
+
+{
+this._parent.__removeChild(this);
+this._parentListener=this._parent.removeListener(this._parentListener);
+}}]);return AnimatedInterpolation;}(AnimatedWithChildren);
+
+
+module.exports=AnimatedInterpolation;
+
+/***/ }),
+
+/***/ "./node_modules/animated/lib/AnimatedModulo.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/animated/lib/AnimatedModulo.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+
+
+
+
+
+
+
+
+var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}
+
+var Animated=__webpack_require__(/*! ./Animated */ "./node_modules/animated/lib/Animated.js");
+var AnimatedWithChildren=__webpack_require__(/*! ./AnimatedWithChildren */ "./node_modules/animated/lib/AnimatedWithChildren.js");
+var AnimatedInterpolation=__webpack_require__(/*! ./AnimatedInterpolation */ "./node_modules/animated/lib/AnimatedInterpolation.js");
+var Interpolation=__webpack_require__(/*! ./Interpolation */ "./node_modules/animated/lib/Interpolation.js");var
+
+
+
+AnimatedModulo=function(_AnimatedWithChildren){_inherits(AnimatedModulo,_AnimatedWithChildren);
+
+
+
+
+
+function AnimatedModulo(a,modulus){_classCallCheck(this,AnimatedModulo);var _this=_possibleConstructorReturn(this,(AnimatedModulo.__proto__||Object.getPrototypeOf(AnimatedModulo)).call(this));
+
+_this._a=a;
+_this._modulus=modulus;
+_this._listeners={};return _this;
+}_createClass(AnimatedModulo,[{key:'__getValue',value:function __getValue()
+
+{
+return(this._a.__getValue()%this._modulus+this._modulus)%this._modulus;
+}},{key:'addListener',value:function addListener(
+
+callback){var _this2=this;
+if(!this._aListener){
+this._aListener=this._a.addListener(function(){
+for(var key in _this2._listeners){
+_this2._listeners[key]({value:_this2.__getValue()});
+}
+});
+}
+var id=guid();
+this._listeners[id]=callback;
+return id;
+}},{key:'removeListener',value:function removeListener(
+
+id){
+delete this._listeners[id];
+}},{key:'interpolate',value:function interpolate(
+
+config){
+return new AnimatedInterpolation(this,Interpolation.create(config));
+}},{key:'__attach',value:function __attach()
+
+{
+this._a.__addChild(this);
+}},{key:'__detach',value:function __detach()
+
+{
+this._a.__removeChild(this);
+}}]);return AnimatedModulo;}(AnimatedWithChildren);
+
+
+module.exports=AnimatedModulo;
+
+/***/ }),
+
+/***/ "./node_modules/animated/lib/AnimatedMultiplication.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/animated/lib/AnimatedMultiplication.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+
+
+
+
+
+
+
+
+var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}
+
+var AnimatedWithChildren=__webpack_require__(/*! ./AnimatedWithChildren */ "./node_modules/animated/lib/AnimatedWithChildren.js");
+var Animated=__webpack_require__(/*! ./Animated */ "./node_modules/animated/lib/Animated.js");
+var AnimatedValue=__webpack_require__(/*! ./AnimatedValue */ "./node_modules/animated/lib/AnimatedValue.js");
+var AnimatedInterpolation=__webpack_require__(/*! ./AnimatedInterpolation */ "./node_modules/animated/lib/AnimatedInterpolation.js");
+var Interpolation=__webpack_require__(/*! ./Interpolation */ "./node_modules/animated/lib/Interpolation.js");var
+
+
+
+AnimatedMultiplication=function(_AnimatedWithChildren){_inherits(AnimatedMultiplication,_AnimatedWithChildren);
+
+
+
+
+
+
+function AnimatedMultiplication(a,b){_classCallCheck(this,AnimatedMultiplication);var _this=_possibleConstructorReturn(this,(AnimatedMultiplication.__proto__||Object.getPrototypeOf(AnimatedMultiplication)).call(this));
+
+_this._a=typeof a==='number'?new AnimatedValue(a):a;
+_this._b=typeof b==='number'?new AnimatedValue(b):b;
+_this._listeners={};return _this;
+}_createClass(AnimatedMultiplication,[{key:'__getValue',value:function __getValue()
+
+{
+return this._a.__getValue()*this._b.__getValue();
+}},{key:'addListener',value:function addListener(
+
+callback){var _this2=this;
+if(!this._aListener&&this._a.addListener){
+this._aListener=this._a.addListener(function(){
+for(var key in _this2._listeners){
+_this2._listeners[key]({value:_this2.__getValue()});
+}
+});
+}
+if(!this._bListener&&this._b.addListener){
+this._bListener=this._b.addListener(function(){
+for(var key in _this2._listeners){
+_this2._listeners[key]({value:_this2.__getValue()});
+}
+});
+}
+var id=guid();
+this._listeners[id]=callback;
+return id;
+}},{key:'removeListener',value:function removeListener(
+
+id){
+delete this._listeners[id];
+}},{key:'interpolate',value:function interpolate(
+
+config){
+return new AnimatedInterpolation(this,Interpolation.create(config));
+}},{key:'__attach',value:function __attach()
+
+{
+this._a.__addChild(this);
+this._b.__addChild(this);
+}},{key:'__detach',value:function __detach()
+
+{
+this._a.__removeChild(this);
+this._b.__removeChild(this);
+}}]);return AnimatedMultiplication;}(AnimatedWithChildren);
+
+
+module.exports=AnimatedMultiplication;
+
+/***/ }),
+
+/***/ "./node_modules/animated/lib/AnimatedProps.js":
+/*!****************************************************!*\
+  !*** ./node_modules/animated/lib/AnimatedProps.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+
+
+
+
+
+
+
+
+var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}
+
+var Animated=__webpack_require__(/*! ./Animated */ "./node_modules/animated/lib/Animated.js");
+var AnimatedStyle=__webpack_require__(/*! ./AnimatedStyle */ "./node_modules/animated/lib/AnimatedStyle.js");var
+
+AnimatedProps=function(_Animated){_inherits(AnimatedProps,_Animated);
+
+
+
+function AnimatedProps(
+props,
+callback)
+{_classCallCheck(this,AnimatedProps);var _this=_possibleConstructorReturn(this,(AnimatedProps.__proto__||Object.getPrototypeOf(AnimatedProps)).call(this));
+
+if(props.style){
+props=_extends({},
+props,{
+style:new AnimatedStyle(props.style)});
+
+}
+_this._props=props;
+_this._callback=callback;
+_this.__attach();return _this;
+}_createClass(AnimatedProps,[{key:'__getValue',value:function __getValue()
+
+{
+var props={};
+for(var key in this._props){
+var value=this._props[key];
+if(value instanceof Animated){
+props[key]=value.__getValue();
+}else{
+props[key]=value;
+}
+}
+return props;
+}},{key:'__getAnimatedValue',value:function __getAnimatedValue()
+
+{
+var props={};
+for(var key in this._props){
+var value=this._props[key];
+if(value instanceof Animated){
+props[key]=value.__getAnimatedValue();
+}
+}
+return props;
+}},{key:'__attach',value:function __attach()
+
+{
+for(var key in this._props){
+var value=this._props[key];
+if(value instanceof Animated){
+value.__addChild(this);
+}
+}
+}},{key:'__detach',value:function __detach()
+
+{
+for(var key in this._props){
+var value=this._props[key];
+if(value instanceof Animated){
+value.__removeChild(this);
+}
+}
+}},{key:'update',value:function update()
+
+{
+this._callback();
+}}]);return AnimatedProps;}(Animated);
+
+
+module.exports=AnimatedProps;
+
+/***/ }),
+
+/***/ "./node_modules/animated/lib/AnimatedStyle.js":
+/*!****************************************************!*\
+  !*** ./node_modules/animated/lib/AnimatedStyle.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+
+
+
+
+
+
+
+
+var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}
+
+var Animated=__webpack_require__(/*! ./Animated */ "./node_modules/animated/lib/Animated.js");
+var AnimatedWithChildren=__webpack_require__(/*! ./AnimatedWithChildren */ "./node_modules/animated/lib/AnimatedWithChildren.js");
+var AnimatedTransform=__webpack_require__(/*! ./AnimatedTransform */ "./node_modules/animated/lib/AnimatedTransform.js");
+var FlattenStyle=__webpack_require__(/*! ./injectable/FlattenStyle */ "./node_modules/animated/lib/injectable/FlattenStyle.js");var
+
+AnimatedStyle=function(_AnimatedWithChildren){_inherits(AnimatedStyle,_AnimatedWithChildren);
+
+
+function AnimatedStyle(style){_classCallCheck(this,AnimatedStyle);var _this=_possibleConstructorReturn(this,(AnimatedStyle.__proto__||Object.getPrototypeOf(AnimatedStyle)).call(this));
+
+style=FlattenStyle.current(style)||{};
+if(style.transform&&!(style.transform instanceof Animated)){
+style=_extends({},
+style,{
+transform:new AnimatedTransform(style.transform)});
+
+}
+_this._style=style;return _this;
+}_createClass(AnimatedStyle,[{key:'__getValue',value:function __getValue()
+
+{
+var style={};
+for(var key in this._style){
+var value=this._style[key];
+if(value instanceof Animated){
+style[key]=value.__getValue();
+}else{
+style[key]=value;
+}
+}
+return style;
+}},{key:'__getAnimatedValue',value:function __getAnimatedValue()
+
+{
+var style={};
+for(var key in this._style){
+var value=this._style[key];
+if(value instanceof Animated){
+style[key]=value.__getAnimatedValue();
+}
+}
+return style;
+}},{key:'__attach',value:function __attach()
+
+{
+for(var key in this._style){
+var value=this._style[key];
+if(value instanceof Animated){
+value.__addChild(this);
+}
+}
+}},{key:'__detach',value:function __detach()
+
+{
+for(var key in this._style){
+var value=this._style[key];
+if(value instanceof Animated){
+value.__removeChild(this);
+}
+}
+}}]);return AnimatedStyle;}(AnimatedWithChildren);
+
+
+module.exports=AnimatedStyle;
+
+/***/ }),
+
+/***/ "./node_modules/animated/lib/AnimatedTemplate.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/animated/lib/AnimatedTemplate.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+
+
+
+
+
+
+
+
+var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}
+
+var Animated=__webpack_require__(/*! ./Animated */ "./node_modules/animated/lib/Animated.js");
+var AnimatedWithChildren=__webpack_require__(/*! ./AnimatedWithChildren */ "./node_modules/animated/lib/AnimatedWithChildren.js");var
+
+AnimatedTemplate=function(_AnimatedWithChildren){_inherits(AnimatedTemplate,_AnimatedWithChildren);
+
+
+
+function AnimatedTemplate(strings,values){_classCallCheck(this,AnimatedTemplate);var _this=_possibleConstructorReturn(this,(AnimatedTemplate.__proto__||Object.getPrototypeOf(AnimatedTemplate)).call(this));
+
+_this._strings=strings;
+_this._values=values;return _this;
+}_createClass(AnimatedTemplate,[{key:'__transformValue',value:function __transformValue(
+
+value){
+if(value instanceof Animated){
+return value.__getValue();
+}else{
+return value;
+}
+}},{key:'__getValue',value:function __getValue()
+
+{
+var value=this._strings[0];
+for(var i=0;i<this._values.length;++i){
+value+=this.__transformValue(this._values[i])+this._strings[1+i];
+}
+return value;
+}},{key:'__attach',value:function __attach()
+
+{
+for(var i=0;i<this._values.length;++i){
+if(this._values[i]instanceof Animated){
+this._values[i].__addChild(this);
+}
+}
+}},{key:'__detach',value:function __detach()
+
+{
+for(var i=0;i<this._values.length;++i){
+if(this._values[i]instanceof Animated){
+this._values[i].__removeChild(this);
+}
+}
+}}]);return AnimatedTemplate;}(AnimatedWithChildren);
+
+
+module.exports=AnimatedTemplate;
+
+/***/ }),
+
+/***/ "./node_modules/animated/lib/AnimatedTracking.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/animated/lib/AnimatedTracking.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+
+
+
+
+
+
+
+
+var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}
+
+var Animated=__webpack_require__(/*! ./Animated */ "./node_modules/animated/lib/Animated.js");
+var AnimatedValue=__webpack_require__(/*! ./AnimatedValue */ "./node_modules/animated/lib/AnimatedValue.js");var
+
+
+
+AnimatedTracking=function(_Animated){_inherits(AnimatedTracking,_Animated);
+
+
+
+
+
+
+function AnimatedTracking(
+value,
+parent,
+animationClass,
+animationConfig,
+callback)
+{_classCallCheck(this,AnimatedTracking);var _this=_possibleConstructorReturn(this,(AnimatedTracking.__proto__||Object.getPrototypeOf(AnimatedTracking)).call(this));
+
+_this._value=value;
+_this._parent=parent;
+_this._animationClass=animationClass;
+_this._animationConfig=animationConfig;
+_this._callback=callback;
+_this.__attach();return _this;
+}_createClass(AnimatedTracking,[{key:'__getValue',value:function __getValue()
+
+{
+return this._parent.__getValue();
+}},{key:'__attach',value:function __attach()
+
+{
+this._parent.__addChild(this);
+}},{key:'__detach',value:function __detach()
+
+{
+this._parent.__removeChild(this);
+}},{key:'update',value:function update()
+
+{
+this._value.animate(new this._animationClass(_extends({},
+this._animationConfig,{
+toValue:this._animationConfig.toValue.__getValue()})),
+this._callback);
+}}]);return AnimatedTracking;}(Animated);
+
+
+module.exports=AnimatedTracking;
+
+/***/ }),
+
+/***/ "./node_modules/animated/lib/AnimatedTransform.js":
+/*!********************************************************!*\
+  !*** ./node_modules/animated/lib/AnimatedTransform.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+
+
+
+
+
+
+
+
+var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}
+
+var Animated=__webpack_require__(/*! ./Animated */ "./node_modules/animated/lib/Animated.js");
+var AnimatedWithChildren=__webpack_require__(/*! ./AnimatedWithChildren */ "./node_modules/animated/lib/AnimatedWithChildren.js");var
+
+AnimatedTransform=function(_AnimatedWithChildren){_inherits(AnimatedTransform,_AnimatedWithChildren);
+
+
+function AnimatedTransform(transforms){_classCallCheck(this,AnimatedTransform);var _this=_possibleConstructorReturn(this,(AnimatedTransform.__proto__||Object.getPrototypeOf(AnimatedTransform)).call(this));
+
+_this._transforms=transforms;return _this;
+}_createClass(AnimatedTransform,[{key:'__getValue',value:function __getValue()
+
+{
+return this._transforms.map(function(transform){
+var result={};
+for(var key in transform){
+var value=transform[key];
+if(value instanceof Animated){
+result[key]=value.__getValue();
+}else{
+result[key]=value;
+}
+}
+return result;
+});
+}},{key:'__getAnimatedValue',value:function __getAnimatedValue()
+
+{
+return this._transforms.map(function(transform){
+var result={};
+for(var key in transform){
+var value=transform[key];
+if(value instanceof Animated){
+result[key]=value.__getAnimatedValue();
+}else{
+
+result[key]=value;
+}
+}
+return result;
+});
+}},{key:'__attach',value:function __attach()
+
+{var _this2=this;
+this._transforms.forEach(function(transform){
+for(var key in transform){
+var value=transform[key];
+if(value instanceof Animated){
+value.__addChild(_this2);
+}
+}
+});
+}},{key:'__detach',value:function __detach()
+
+{var _this3=this;
+this._transforms.forEach(function(transform){
+for(var key in transform){
+var value=transform[key];
+if(value instanceof Animated){
+value.__removeChild(_this3);
+}
+}
+});
+}}]);return AnimatedTransform;}(AnimatedWithChildren);
+
+
+module.exports=AnimatedTransform;
+
+/***/ }),
+
+/***/ "./node_modules/animated/lib/AnimatedValue.js":
+/*!****************************************************!*\
+  !*** ./node_modules/animated/lib/AnimatedValue.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(global) {
+
+
+
+
+
+
+
+
+
+var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}
+
+var AnimatedWithChildren=__webpack_require__(/*! ./AnimatedWithChildren */ "./node_modules/animated/lib/AnimatedWithChildren.js");
+var InteractionManager=__webpack_require__(/*! ./injectable/InteractionManager */ "./node_modules/animated/lib/injectable/InteractionManager.js");
+var AnimatedInterpolation=__webpack_require__(/*! ./AnimatedInterpolation */ "./node_modules/animated/lib/AnimatedInterpolation.js");
+var Interpolation=__webpack_require__(/*! ./Interpolation */ "./node_modules/animated/lib/Interpolation.js");
+var Animation=__webpack_require__(/*! ./Animation */ "./node_modules/animated/lib/Animation.js");
+var guid=__webpack_require__(/*! ./guid */ "./node_modules/animated/lib/guid.js");
+var Set=global.Set||__webpack_require__(/*! ./SetPolyfill */ "./node_modules/animated/lib/SetPolyfill.js");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function _flush(rootNode){
+var animatedStyles=new Set();
+function findAnimatedStyles(node){
+if(typeof node.update==='function'){
+animatedStyles.add(node);
+}else{
+node.__getChildren().forEach(findAnimatedStyles);
+}
+}
+findAnimatedStyles(rootNode);
+animatedStyles.forEach(function(animatedStyle){return animatedStyle.update();});
+}var
+
+
+
+
+
+
+
+AnimatedValue=function(_AnimatedWithChildren){_inherits(AnimatedValue,_AnimatedWithChildren);
+
+
+
+
+
+
+function AnimatedValue(value){_classCallCheck(this,AnimatedValue);var _this=_possibleConstructorReturn(this,(AnimatedValue.__proto__||Object.getPrototypeOf(AnimatedValue)).call(this));
+
+_this._value=value;
+_this._offset=0;
+_this._animation=null;
+_this._listeners={};return _this;
+}_createClass(AnimatedValue,[{key:'__detach',value:function __detach()
+
+{
+this.stopAnimation();
+}},{key:'__getValue',value:function __getValue()
+
+{
+return this._value+this._offset;
+}},{key:'setValue',value:function setValue(
+
+
+
+
+
+value){
+if(this._animation){
+this._animation.stop();
+this._animation=null;
+}
+this._updateValue(value);
+}},{key:'setOffset',value:function setOffset(
+
+
+
+
+
+
+offset){
+this._offset=offset;
+}},{key:'flattenOffset',value:function flattenOffset()
+
+
+
+
+
+{
+this._value+=this._offset;
+this._offset=0;
+}},{key:'addListener',value:function addListener(
+
+
+
+
+
+
+callback){
+var id=guid();
+this._listeners[id]=callback;
+return id;
+}},{key:'removeListener',value:function removeListener(
+
+id){
+delete this._listeners[id];
+}},{key:'removeAllListeners',value:function removeAllListeners()
+
+{
+this._listeners={};
+}},{key:'stopAnimation',value:function stopAnimation(
+
+
+
+
+
+
+callback){
+this.stopTracking();
+this._animation&&this._animation.stop();
+this._animation=null;
+callback&&callback(this.__getValue());
+}},{key:'interpolate',value:function interpolate(
+
+
+
+
+
+config){
+return new AnimatedInterpolation(this,Interpolation.create(config));
+}},{key:'animate',value:function animate(
+
+
+
+
+
+animation,callback){var _this2=this;
+var handle=null;
+if(animation.__isInteraction){
+handle=InteractionManager.current.createInteractionHandle();
+}
+var previousAnimation=this._animation;
+this._animation&&this._animation.stop();
+this._animation=animation;
+animation.start(
+this._value,
+function(value){
+_this2._updateValue(value);
+},
+function(result){
+_this2._animation=null;
+if(handle!==null){
+InteractionManager.current.clearInteractionHandle(handle);
+}
+callback&&callback(result);
+},
+previousAnimation);
+
+}},{key:'stopTracking',value:function stopTracking()
+
+
+
+
+{
+this._tracking&&this._tracking.__detach();
+this._tracking=null;
+}},{key:'track',value:function track(
+
+
+
+
+tracking){
+this.stopTracking();
+this._tracking=tracking;
+}},{key:'_updateValue',value:function _updateValue(
+
+value){
+this._value=value;
+_flush(this);
+for(var key in this._listeners){
+this._listeners[key]({value:this.__getValue()});
+}
+}}]);return AnimatedValue;}(AnimatedWithChildren);
+
+
+module.exports=AnimatedValue;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
+
+/***/ }),
+
+/***/ "./node_modules/animated/lib/AnimatedValueXY.js":
+/*!******************************************************!*\
+  !*** ./node_modules/animated/lib/AnimatedValueXY.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+
+
+
+
+
+
+
+
+var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}
+
+var Animated=__webpack_require__(/*! ./Animated */ "./node_modules/animated/lib/Animated.js");
+var AnimatedValue=__webpack_require__(/*! ./AnimatedValue */ "./node_modules/animated/lib/AnimatedValue.js");
+var AnimatedWithChildren=__webpack_require__(/*! ./AnimatedWithChildren */ "./node_modules/animated/lib/AnimatedWithChildren.js");
+var invariant=__webpack_require__(/*! invariant */ "./node_modules/invariant/browser.js");
+var guid=__webpack_require__(/*! ./guid */ "./node_modules/animated/lib/guid.js");var
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+AnimatedValueXY=function(_AnimatedWithChildren){_inherits(AnimatedValueXY,_AnimatedWithChildren);
+
+
+
+
+function AnimatedValueXY(valueIn){_classCallCheck(this,AnimatedValueXY);var _this=_possibleConstructorReturn(this,(AnimatedValueXY.__proto__||Object.getPrototypeOf(AnimatedValueXY)).call(this));
+
+var value=valueIn||{x:0,y:0};
+if(typeof value.x==='number'&&typeof value.y==='number'){
+_this.x=new AnimatedValue(value.x);
+_this.y=new AnimatedValue(value.y);
+}else{
+invariant(
+value.x instanceof AnimatedValue&&
+value.y instanceof AnimatedValue,
+'AnimatedValueXY must be initalized with an object of numbers or '+
+'AnimatedValues.');
+
+_this.x=value.x;
+_this.y=value.y;
+}
+_this._listeners={};return _this;
+}_createClass(AnimatedValueXY,[{key:'setValue',value:function setValue(
+
+value){
+this.x.setValue(value.x);
+this.y.setValue(value.y);
+}},{key:'setOffset',value:function setOffset(
+
+offset){
+this.x.setOffset(offset.x);
+this.y.setOffset(offset.y);
+}},{key:'flattenOffset',value:function flattenOffset()
+
+{
+this.x.flattenOffset();
+this.y.flattenOffset();
+}},{key:'__getValue',value:function __getValue()
+
+{
+return{
+x:this.x.__getValue(),
+y:this.y.__getValue()};
+
+}},{key:'stopAnimation',value:function stopAnimation(
+
+callback){
+this.x.stopAnimation();
+this.y.stopAnimation();
+callback&&callback(this.__getValue());
+}},{key:'addListener',value:function addListener(
+
+callback){var _this2=this;
+var id=guid();
+var jointCallback=function jointCallback(_ref){var number=_ref.value;
+callback(_this2.__getValue());
+};
+this._listeners[id]={
+x:this.x.addListener(jointCallback),
+y:this.y.addListener(jointCallback)};
+
+return id;
+}},{key:'removeListener',value:function removeListener(
+
+id){
+this.x.removeListener(this._listeners[id].x);
+this.y.removeListener(this._listeners[id].y);
+delete this._listeners[id];
+}},{key:'getLayout',value:function getLayout()
+
+
+
+
+
+
+
+
+{
+return{
+left:this.x,
+top:this.y};
+
+}},{key:'getTranslateTransform',value:function getTranslateTransform()
+
+
+
+
+
+
+
+
+
+
+{
+return[
+{translateX:this.x},
+{translateY:this.y}];
+
+}}]);return AnimatedValueXY;}(AnimatedWithChildren);
+
+
+module.exports=AnimatedValueXY;
+
+/***/ }),
+
+/***/ "./node_modules/animated/lib/AnimatedWithChildren.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/animated/lib/AnimatedWithChildren.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+
+
+
+
+
+
+
+
+var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}
+
+var Animated=__webpack_require__(/*! ./Animated */ "./node_modules/animated/lib/Animated.js");var
+
+AnimatedWithChildren=function(_Animated){_inherits(AnimatedWithChildren,_Animated);
+
+
+function AnimatedWithChildren(){_classCallCheck(this,AnimatedWithChildren);var _this=_possibleConstructorReturn(this,(AnimatedWithChildren.__proto__||Object.getPrototypeOf(AnimatedWithChildren)).call(this));
+
+_this._children=[];return _this;
+}_createClass(AnimatedWithChildren,[{key:'__addChild',value:function __addChild(
+
+child){
+if(this._children.length===0){
+this.__attach();
+}
+this._children.push(child);
+}},{key:'__removeChild',value:function __removeChild(
+
+child){
+var index=this._children.indexOf(child);
+if(index===-1){
+console.warn('Trying to remove a child that doesn\'t exist');
+return;
+}
+this._children.splice(index,1);
+if(this._children.length===0){
+this.__detach();
+}
+}},{key:'__getChildren',value:function __getChildren()
+
+{
+return this._children;
+}}]);return AnimatedWithChildren;}(Animated);
+
+
+module.exports=AnimatedWithChildren;
+
+/***/ }),
+
+/***/ "./node_modules/animated/lib/Animation.js":
+/*!************************************************!*\
+  !*** ./node_modules/animated/lib/Animation.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+
+
+
+
+
+
+
+
+var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}var
+
+
+
+
+
+
+
+
+
+
+Animation=function(){function Animation(){_classCallCheck(this,Animation);}_createClass(Animation,[{key:'start',value:function start(
+
+
+
+
+fromValue,
+onUpdate,
+onEnd,
+previousAnimation)
+{}},{key:'stop',value:function stop()
+{}},{key:'__debouncedOnEnd',value:function __debouncedOnEnd(
+
+result){
+var onEnd=this.__onEnd;
+this.__onEnd=null;
+onEnd&&onEnd(result);
+}}]);return Animation;}();
+
+
+module.exports=Animation;
+
+/***/ }),
+
+/***/ "./node_modules/animated/lib/DecayAnimation.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/animated/lib/DecayAnimation.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+
+
+
+
+
+
+
+
+var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}
+
+var Animation=__webpack_require__(/*! ./Animation */ "./node_modules/animated/lib/Animation.js");
+var RequestAnimationFrame=__webpack_require__(/*! ./injectable/RequestAnimationFrame */ "./node_modules/animated/lib/injectable/RequestAnimationFrame.js");
+var CancelAnimationFrame=__webpack_require__(/*! ./injectable/CancelAnimationFrame */ "./node_modules/animated/lib/injectable/CancelAnimationFrame.js");var
+
+
+
+
+
+
+
+
+DecayAnimation=function(_Animation){_inherits(DecayAnimation,_Animation);
+
+
+
+
+
+
+
+
+function DecayAnimation(
+config)
+{_classCallCheck(this,DecayAnimation);var _this=_possibleConstructorReturn(this,(DecayAnimation.__proto__||Object.getPrototypeOf(DecayAnimation)).call(this));
+
+_this._deceleration=config.deceleration!==undefined?config.deceleration:0.998;
+_this._velocity=config.velocity;
+_this.__isInteraction=config.isInteraction!==undefined?config.isInteraction:true;return _this;
+}_createClass(DecayAnimation,[{key:'start',value:function start(
+
+
+fromValue,
+onUpdate,
+onEnd)
+{
+this.__active=true;
+this._lastValue=fromValue;
+this._fromValue=fromValue;
+this._onUpdate=onUpdate;
+this.__onEnd=onEnd;
+this._startTime=Date.now();
+this._animationFrame=RequestAnimationFrame.current(this.onUpdate.bind(this));
+}},{key:'onUpdate',value:function onUpdate()
+
+{
+var now=Date.now();
+
+var value=this._fromValue+
+this._velocity/(1-this._deceleration)*(
+1-Math.exp(-(1-this._deceleration)*(now-this._startTime)));
+
+this._onUpdate(value);
+
+if(Math.abs(this._lastValue-value)<0.1){
+this.__debouncedOnEnd({finished:true});
+return;
+}
+
+this._lastValue=value;
+if(this.__active){
+this._animationFrame=RequestAnimationFrame.current(this.onUpdate.bind(this));
+}
+}},{key:'stop',value:function stop()
+
+{
+this.__active=false;
+CancelAnimationFrame.current(this._animationFrame);
+this.__debouncedOnEnd({finished:false});
+}}]);return DecayAnimation;}(Animation);
+
+
+module.exports=DecayAnimation;
+
+/***/ }),
+
+/***/ "./node_modules/animated/lib/Easing.js":
+/*!*********************************************!*\
+  !*** ./node_modules/animated/lib/Easing.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+
+
+
+
+
+
+
+
+var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}
+
+var _bezier=__webpack_require__(/*! ./bezier */ "./node_modules/animated/lib/bezier.js");var
+
+
+
+
+
+
+Easing=function(){function Easing(){_classCallCheck(this,Easing);}_createClass(Easing,null,[{key:'step0',value:function step0(
+n){
+return n>0?1:0;
+}},{key:'step1',value:function step1(
+
+n){
+return n>=1?1:0;
+}},{key:'linear',value:function linear(
+
+t){
+return t;
+}},{key:'ease',value:function ease(
+
+t){
+return _ease(t);
+}},{key:'quad',value:function quad(
+
+t){
+return t*t;
+}},{key:'cubic',value:function cubic(
+
+t){
+return t*t*t;
+}},{key:'poly',value:function poly(
+
+n){
+return function(t){return Math.pow(t,n);};
+}},{key:'sin',value:function sin(
+
+t){
+return 1-Math.cos(t*Math.PI/2);
+}},{key:'circle',value:function circle(
+
+t){
+return 1-Math.sqrt(1-t*t);
+}},{key:'exp',value:function exp(
+
+t){
+return Math.pow(2,10*(t-1));
+}},{key:'elastic',value:function elastic()
+
+
+
+
+
+
+
+
+
+
+
+{var bounciness=arguments.length>0&&arguments[0]!==undefined?arguments[0]:1;
+var p=bounciness*Math.PI;
+return function(t){return 1-Math.pow(Math.cos(t*Math.PI/2),3)*Math.cos(t*p);};
+}},{key:'back',value:function back(
+
+s){
+if(s===undefined){
+s=1.70158;
+}
+return function(t){return t*t*((s+1)*t-s);};
+}},{key:'bounce',value:function bounce(
+
+t){
+if(t<1/2.75){
+return 7.5625*t*t;
+}
+
+if(t<2/2.75){
+t-=1.5/2.75;
+return 7.5625*t*t+0.75;
+}
+
+if(t<2.5/2.75){
+t-=2.25/2.75;
+return 7.5625*t*t+0.9375;
+}
+
+t-=2.625/2.75;
+return 7.5625*t*t+0.984375;
+}},{key:'bezier',value:function bezier(
+
+
+x1,
+y1,
+x2,
+y2)
+{
+return _bezier(x1,y1,x2,y2);
+}},{key:'in',value:function _in(
+
+
+easing)
+{
+return easing;
+}},{key:'out',value:function out(
+
+
+
+
+
+easing)
+{
+return function(t){return 1-easing(1-t);};
+}},{key:'inOut',value:function inOut(
+
+
+
+
+
+easing)
+{
+return function(t){
+if(t<0.5){
+return easing(t*2)/2;
+}
+return 1-easing((1-t)*2)/2;
+};
+}}]);return Easing;}();
+
+
+var _ease=Easing.bezier(0.42,0,1,1);
+
+
+
+module.exports=Easing;
+
+/***/ }),
+
+/***/ "./node_modules/animated/lib/Interpolation.js":
+/*!****************************************************!*\
+  !*** ./node_modules/animated/lib/Interpolation.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+
+
+
+
+
+
+
+
+
+var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}
+
+var normalizeColor=__webpack_require__(/*! normalize-css-color */ "./node_modules/normalize-css-color/index.js");
+
+var invariant=__webpack_require__(/*! invariant */ "./node_modules/invariant/browser.js");
+
+
+
+
+
+
+
+
+
+
+
+
+var linear=function linear(t){return t;};var
+
+
+
+
+
+Interpolation=function(){function Interpolation(){_classCallCheck(this,Interpolation);}_createClass(Interpolation,null,[{key:'create',value:function create(
+config){
+
+if(config.outputRange&&typeof config.outputRange[0]==='string'){
+return createInterpolationFromStringOutputRange(config);
+}
+
+var outputRange=config.outputRange;
+checkInfiniteRange('outputRange',outputRange);
+
+var inputRange=config.inputRange;
+checkInfiniteRange('inputRange',inputRange);
+checkValidInputRange(inputRange);
+
+invariant(
+inputRange.length===outputRange.length,
+'inputRange ('+inputRange.length+') and outputRange ('+
+outputRange.length+') must have the same length');
+
+
+var easing=config.easing||linear;
+
+var extrapolateLeft='extend';
+if(config.extrapolateLeft!==undefined){
+extrapolateLeft=config.extrapolateLeft;
+}else if(config.extrapolate!==undefined){
+extrapolateLeft=config.extrapolate;
+}
+
+var extrapolateRight='extend';
+if(config.extrapolateRight!==undefined){
+extrapolateRight=config.extrapolateRight;
+}else if(config.extrapolate!==undefined){
+extrapolateRight=config.extrapolate;
+}
+
+return function(input){
+invariant(
+typeof input==='number',
+'Cannot interpolation an input which is not a number');
+
+
+var range=findRange(input,inputRange);
+return interpolate(
+input,
+inputRange[range],
+inputRange[range+1],
+outputRange[range],
+outputRange[range+1],
+easing,
+extrapolateLeft,
+extrapolateRight);
+
+};
+}}]);return Interpolation;}();
+
+
+function interpolate(
+input,
+inputMin,
+inputMax,
+outputMin,
+outputMax,
+easing,
+extrapolateLeft,
+extrapolateRight)
+{
+var result=input;
+
+
+if(result<inputMin){
+if(extrapolateLeft==='identity'){
+return result;
+}else if(extrapolateLeft==='clamp'){
+result=inputMin;
+}else if(extrapolateLeft==='extend'){
+
+}
+}
+
+if(result>inputMax){
+if(extrapolateRight==='identity'){
+return result;
+}else if(extrapolateRight==='clamp'){
+result=inputMax;
+}else if(extrapolateRight==='extend'){
+
+}
+}
+
+if(outputMin===outputMax){
+return outputMin;
+}
+
+if(inputMin===inputMax){
+if(input<=inputMin){
+return outputMin;
+}
+return outputMax;
+}
+
+
+if(inputMin===-Infinity){
+result=-result;
+}else if(inputMax===Infinity){
+result=result-inputMin;
+}else{
+result=(result-inputMin)/(inputMax-inputMin);
+}
+
+
+result=easing(result);
+
+
+if(outputMin===-Infinity){
+result=-result;
+}else if(outputMax===Infinity){
+result=result+outputMin;
+}else{
+result=result*(outputMax-outputMin)+outputMin;
+}
+
+return result;
+}
+
+function colorToRgba(input){
+var int32Color=normalizeColor(input);
+if(int32Color===null){
+return input;
+}
+
+int32Color=int32Color||0;
+
+var r=(int32Color&0xff000000)>>>24;
+var g=(int32Color&0x00ff0000)>>>16;
+var b=(int32Color&0x0000ff00)>>>8;
+var a=(int32Color&0x000000ff)/255;
+
+return'rgba('+r+', '+g+', '+b+', '+a+')';
+}
+
+var stringShapeRegex=/[0-9\.-]+/g;
+
+
+
+
+
+
+
+
+
+function createInterpolationFromStringOutputRange(
+config)
+{
+var outputRange=config.outputRange;
+invariant(outputRange.length>=2,'Bad output range');
+outputRange=outputRange.map(colorToRgba);
+checkPattern(outputRange);
+
+
+
+
+
+
+
+
+
+
+
+
+var outputRanges=outputRange[0].match(stringShapeRegex).map(function(){return[];});
+outputRange.forEach(function(value){
+
+
+
+value.match(stringShapeRegex).forEach(function(number,i){
+outputRanges[i].push(+number);
+});
+});
+
+
+
+
+var interpolations=outputRange[0].match(stringShapeRegex).map(function(value,i){
+return Interpolation.create(_extends({},
+config,{
+outputRange:outputRanges[i]}));
+
+});
+
+
+
+var shouldRound=/^rgb/.test(outputRange[0]);
+
+return function(input){
+var i=0;
+
+
+
+return outputRange[0].replace(stringShapeRegex,function(){
+var val=interpolations[i++](input);
+return String(shouldRound&&i<4?Math.round(val):val);
+});
+};
+}
+
+function checkPattern(arr){
+var pattern=arr[0].replace(stringShapeRegex,'');
+for(var i=1;i<arr.length;++i){
+invariant(
+pattern===arr[i].replace(stringShapeRegex,''),
+'invalid pattern '+arr[0]+' and '+arr[i]);
+
+}
+}
+
+function findRange(input,inputRange){
+for(var i=1;i<inputRange.length-1;++i){
+if(inputRange[i]>=input){
+break;
+}
+}
+return i-1;
+}
+
+function checkValidInputRange(arr){
+invariant(arr.length>=2,'inputRange must have at least 2 elements');
+for(var i=1;i<arr.length;++i){
+invariant(
+arr[i]>=arr[i-1],
+
+
+
+
+
+
+'inputRange must be monotonically increasing '+arr);
+
+}
+}
+
+function checkInfiniteRange(name,arr){
+invariant(arr.length>=2,name+' must have at least 2 elements');
+invariant(
+arr.length!==2||arr[0]!==-Infinity||arr[1]!==Infinity,
+
+
+
+
+
+
+name+'cannot be ]-infinity;+infinity[ '+arr);
+
+}
+
+module.exports=Interpolation;
+
+/***/ }),
+
+/***/ "./node_modules/animated/lib/SetPolyfill.js":
+/*!**************************************************!*\
+  !*** ./node_modules/animated/lib/SetPolyfill.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+
+
+
+
+
+
+
+
+
+function SetPolyfill(){
+this._cache=[];
+}
+
+SetPolyfill.prototype.add=function(e){
+if(this._cache.indexOf(e)===-1){
+this._cache.push(e);
+}
+};
+
+SetPolyfill.prototype.forEach=function(cb){
+this._cache.forEach(cb);
+};
+
+module.exports=SetPolyfill;
+
+/***/ }),
+
+/***/ "./node_modules/animated/lib/SpringAnimation.js":
+/*!******************************************************!*\
+  !*** ./node_modules/animated/lib/SpringAnimation.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+
+
+
+
+
+
+
+
+var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}
+
+var Animation=__webpack_require__(/*! ./Animation */ "./node_modules/animated/lib/Animation.js");
+var AnimatedValue=__webpack_require__(/*! ./AnimatedValue */ "./node_modules/animated/lib/AnimatedValue.js");
+var RequestAnimationFrame=__webpack_require__(/*! ./injectable/RequestAnimationFrame */ "./node_modules/animated/lib/injectable/RequestAnimationFrame.js");
+var CancelAnimationFrame=__webpack_require__(/*! ./injectable/CancelAnimationFrame */ "./node_modules/animated/lib/injectable/CancelAnimationFrame.js");
+var invariant=__webpack_require__(/*! invariant */ "./node_modules/invariant/browser.js");
+var SpringConfig=__webpack_require__(/*! ./SpringConfig */ "./node_modules/animated/lib/SpringConfig.js");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function withDefault(value,defaultValue){
+if(value===undefined||value===null){
+return defaultValue;
+}
+return value;
+}var
+
+SpringAnimation=function(_Animation){_inherits(SpringAnimation,_Animation);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function SpringAnimation(
+config)
+{_classCallCheck(this,SpringAnimation);var _this=_possibleConstructorReturn(this,(SpringAnimation.__proto__||Object.getPrototypeOf(SpringAnimation)).call(this));
+
+
+_this._overshootClamping=withDefault(config.overshootClamping,false);
+_this._restDisplacementThreshold=withDefault(config.restDisplacementThreshold,0.001);
+_this._restSpeedThreshold=withDefault(config.restSpeedThreshold,0.001);
+_this._initialVelocity=config.velocity;
+_this._lastVelocity=withDefault(config.velocity,0);
+_this._toValue=config.toValue;
+_this.__isInteraction=config.isInteraction!==undefined?config.isInteraction:true;
+
+var springConfig;
+if(config.bounciness!==undefined||config.speed!==undefined){
+invariant(
+config.tension===undefined&&config.friction===undefined,
+'You can only define bounciness/speed or tension/friction but not both');
+
+springConfig=SpringConfig.fromBouncinessAndSpeed(
+withDefault(config.bounciness,8),
+withDefault(config.speed,12));
+
+}else{
+springConfig=SpringConfig.fromOrigamiTensionAndFriction(
+withDefault(config.tension,40),
+withDefault(config.friction,7));
+
+}
+_this._tension=springConfig.tension;
+_this._friction=springConfig.friction;return _this;
+}_createClass(SpringAnimation,[{key:'start',value:function start(
+
+
+fromValue,
+onUpdate,
+onEnd,
+previousAnimation)
+{
+this.__active=true;
+this._startPosition=fromValue;
+this._lastPosition=this._startPosition;
+
+this._onUpdate=onUpdate;
+this.__onEnd=onEnd;
+this._lastTime=Date.now();
+
+if(previousAnimation instanceof SpringAnimation){
+var internalState=previousAnimation.getInternalState();
+this._lastPosition=internalState.lastPosition;
+this._lastVelocity=internalState.lastVelocity;
+this._lastTime=internalState.lastTime;
+}
+if(this._initialVelocity!==undefined&&
+this._initialVelocity!==null){
+this._lastVelocity=this._initialVelocity;
+}
+this.onUpdate();
+}},{key:'getInternalState',value:function getInternalState()
+
+{
+return{
+lastPosition:this._lastPosition,
+lastVelocity:this._lastVelocity,
+lastTime:this._lastTime};
+
+}},{key:'onUpdate',value:function onUpdate()
+
+{
+var position=this._lastPosition;
+var velocity=this._lastVelocity;
+
+var tempPosition=this._lastPosition;
+var tempVelocity=this._lastVelocity;
+
+
+
+
+
+var MAX_STEPS=64;
+var now=Date.now();
+if(now>this._lastTime+MAX_STEPS){
+now=this._lastTime+MAX_STEPS;
+}
+
+
+
+
+var TIMESTEP_MSEC=1;
+var numSteps=Math.floor((now-this._lastTime)/TIMESTEP_MSEC);
+
+for(var i=0;i<numSteps;++i){
+
+var step=TIMESTEP_MSEC/1000;
+
+
+
+var aVelocity=velocity;
+var aAcceleration=this._tension*(this._toValue-tempPosition)-this._friction*tempVelocity;
+var tempPosition=position+aVelocity*step/2;
+var tempVelocity=velocity+aAcceleration*step/2;
+
+var bVelocity=tempVelocity;
+var bAcceleration=this._tension*(this._toValue-tempPosition)-this._friction*tempVelocity;
+tempPosition=position+bVelocity*step/2;
+tempVelocity=velocity+bAcceleration*step/2;
+
+var cVelocity=tempVelocity;
+var cAcceleration=this._tension*(this._toValue-tempPosition)-this._friction*tempVelocity;
+tempPosition=position+cVelocity*step/2;
+tempVelocity=velocity+cAcceleration*step/2;
+
+var dVelocity=tempVelocity;
+var dAcceleration=this._tension*(this._toValue-tempPosition)-this._friction*tempVelocity;
+tempPosition=position+cVelocity*step/2;
+tempVelocity=velocity+cAcceleration*step/2;
+
+var dxdt=(aVelocity+2*(bVelocity+cVelocity)+dVelocity)/6;
+var dvdt=(aAcceleration+2*(bAcceleration+cAcceleration)+dAcceleration)/6;
+
+position+=dxdt*step;
+velocity+=dvdt*step;
+}
+
+this._lastTime=now;
+this._lastPosition=position;
+this._lastVelocity=velocity;
+
+this._onUpdate(position);
+if(!this.__active){
+return;
+}
+
+
+var isOvershooting=false;
+if(this._overshootClamping&&this._tension!==0){
+if(this._startPosition<this._toValue){
+isOvershooting=position>this._toValue;
+}else{
+isOvershooting=position<this._toValue;
+}
+}
+var isVelocity=Math.abs(velocity)<=this._restSpeedThreshold;
+var isDisplacement=true;
+if(this._tension!==0){
+isDisplacement=Math.abs(this._toValue-position)<=this._restDisplacementThreshold;
+}
+
+if(isOvershooting||isVelocity&&isDisplacement){
+if(this._tension!==0){
+
+this._onUpdate(this._toValue);
+}
+
+this.__debouncedOnEnd({finished:true});
+return;
+}
+this._animationFrame=RequestAnimationFrame.current(this.onUpdate.bind(this));
+}},{key:'stop',value:function stop()
+
+{
+this.__active=false;
+CancelAnimationFrame.current(this._animationFrame);
+this.__debouncedOnEnd({finished:false});
+}}]);return SpringAnimation;}(Animation);
+
+
+module.exports=SpringAnimation;
+
+/***/ }),
+
+/***/ "./node_modules/animated/lib/SpringConfig.js":
+/*!***************************************************!*\
+  !*** ./node_modules/animated/lib/SpringConfig.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function tensionFromOrigamiValue(oValue){
+return(oValue-30)*3.62+194;
+}
+
+function frictionFromOrigamiValue(oValue){
+return(oValue-8)*3+25;
+}
+
+function fromOrigamiTensionAndFriction(
+tension,
+friction)
+{
+return{
+tension:tensionFromOrigamiValue(tension),
+friction:frictionFromOrigamiValue(friction)};
+
+}
+
+function fromBouncinessAndSpeed(
+bounciness,
+speed)
+{
+function normalize(value,startValue,endValue){
+return(value-startValue)/(endValue-startValue);
+}
+
+function projectNormal(n,start,end){
+return start+n*(end-start);
+}
+
+function linearInterpolation(t,start,end){
+return t*end+(1-t)*start;
+}
+
+function quadraticOutInterpolation(t,start,end){
+return linearInterpolation(2*t-t*t,start,end);
+}
+
+function b3Friction1(x){
+return 0.0007*Math.pow(x,3)-
+0.031*Math.pow(x,2)+0.64*x+1.28;
+}
+
+function b3Friction2(x){
+return 0.000044*Math.pow(x,3)-
+0.006*Math.pow(x,2)+0.36*x+2;
+}
+
+function b3Friction3(x){
+return 0.00000045*Math.pow(x,3)-
+0.000332*Math.pow(x,2)+0.1078*x+5.84;
+}
+
+function b3Nobounce(tension){
+if(tension<=18){
+return b3Friction1(tension);
+}else if(tension>18&&tension<=44){
+return b3Friction2(tension);
+}else{
+return b3Friction3(tension);
+}
+}
+
+var b=normalize(bounciness/1.7,0,20);
+b=projectNormal(b,0,0.8);
+var s=normalize(speed/1.7,0,20);
+var bouncyTension=projectNormal(s,0.5,200);
+var bouncyFriction=quadraticOutInterpolation(
+b,
+b3Nobounce(bouncyTension),
+0.01);
+
+
+return{
+tension:tensionFromOrigamiValue(bouncyTension),
+friction:frictionFromOrigamiValue(bouncyFriction)};
+
+}
+
+module.exports={
+fromOrigamiTensionAndFriction:fromOrigamiTensionAndFriction,
+fromBouncinessAndSpeed:fromBouncinessAndSpeed};
+
+/***/ }),
+
+/***/ "./node_modules/animated/lib/TimingAnimation.js":
+/*!******************************************************!*\
+  !*** ./node_modules/animated/lib/TimingAnimation.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(setTimeout, clearTimeout) {
+
+
+
+
+
+
+
+
+
+var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}
+
+var Animation=__webpack_require__(/*! ./Animation */ "./node_modules/animated/lib/Animation.js");
+var AnimatedValue=__webpack_require__(/*! ./AnimatedValue */ "./node_modules/animated/lib/AnimatedValue.js");
+var Easing=__webpack_require__(/*! ./Easing */ "./node_modules/animated/lib/Easing.js");
+var RequestAnimationFrame=__webpack_require__(/*! ./injectable/RequestAnimationFrame */ "./node_modules/animated/lib/injectable/RequestAnimationFrame.js");
+var CancelAnimationFrame=__webpack_require__(/*! ./injectable/CancelAnimationFrame */ "./node_modules/animated/lib/injectable/CancelAnimationFrame.js");
+
+
+
+var easeInOut=Easing.inOut(Easing.ease);var
+
+
+
+
+
+
+
+
+TimingAnimation=function(_Animation){_inherits(TimingAnimation,_Animation);
+
+
+
+
+
+
+
+
+
+
+function TimingAnimation(
+config)
+{_classCallCheck(this,TimingAnimation);var _this=_possibleConstructorReturn(this,(TimingAnimation.__proto__||Object.getPrototypeOf(TimingAnimation)).call(this));
+
+_this._toValue=config.toValue;
+_this._easing=config.easing!==undefined?config.easing:easeInOut;
+_this._duration=config.duration!==undefined?config.duration:500;
+_this._delay=config.delay!==undefined?config.delay:0;
+_this.__isInteraction=config.isInteraction!==undefined?config.isInteraction:true;return _this;
+}_createClass(TimingAnimation,[{key:'start',value:function start(
+
+
+fromValue,
+onUpdate,
+onEnd)
+{var _this2=this;
+this.__active=true;
+this._fromValue=fromValue;
+this._onUpdate=onUpdate;
+this.__onEnd=onEnd;
+
+var start=function start(){
+if(_this2._duration===0){
+_this2._onUpdate(_this2._toValue);
+_this2.__debouncedOnEnd({finished:true});
+}else{
+_this2._startTime=Date.now();
+_this2._animationFrame=RequestAnimationFrame.current(_this2.onUpdate.bind(_this2));
+}
+};
+if(this._delay){
+this._timeout=setTimeout(start,this._delay);
+}else{
+start();
+}
+}},{key:'onUpdate',value:function onUpdate()
+
+{
+var now=Date.now();
+if(now>=this._startTime+this._duration){
+if(this._duration===0){
+this._onUpdate(this._toValue);
+}else{
+this._onUpdate(
+this._fromValue+this._easing(1)*(this._toValue-this._fromValue));
+
+}
+this.__debouncedOnEnd({finished:true});
+return;
+}
+
+this._onUpdate(
+this._fromValue+
+this._easing((now-this._startTime)/this._duration)*(
+this._toValue-this._fromValue));
+
+if(this.__active){
+this._animationFrame=RequestAnimationFrame.current(this.onUpdate.bind(this));
+}
+}},{key:'stop',value:function stop()
+
+{
+this.__active=false;
+clearTimeout(this._timeout);
+CancelAnimationFrame.current(this._animationFrame);
+this.__debouncedOnEnd({finished:false});
+}}]);return TimingAnimation;}(Animation);
+
+
+module.exports=TimingAnimation;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@skpm/timers/timeout.js */ "./node_modules/@skpm/timers/timeout.js")["setTimeout"], __webpack_require__(/*! ./node_modules/@skpm/timers/timeout.js */ "./node_modules/@skpm/timers/timeout.js")["clearTimeout"]))
+
+/***/ }),
+
+/***/ "./node_modules/animated/lib/bezier.js":
+/*!*********************************************!*\
+  !*** ./node_modules/animated/lib/bezier.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+
+
+
+
+
+
+
+
+var NEWTON_ITERATIONS=4;
+var NEWTON_MIN_SLOPE=0.001;
+var SUBDIVISION_PRECISION=0.0000001;
+var SUBDIVISION_MAX_ITERATIONS=10;
+
+var kSplineTableSize=11;
+var kSampleStepSize=1.0/(kSplineTableSize-1.0);
+
+var float32ArraySupported=typeof Float32Array==='function';
+
+function A(aA1,aA2){return 1.0-3.0*aA2+3.0*aA1;}
+function B(aA1,aA2){return 3.0*aA2-6.0*aA1;}
+function C(aA1){return 3.0*aA1;}
+
+
+function calcBezier(aT,aA1,aA2){return((A(aA1,aA2)*aT+B(aA1,aA2))*aT+C(aA1))*aT;}
+
+
+function getSlope(aT,aA1,aA2){return 3.0*A(aA1,aA2)*aT*aT+2.0*B(aA1,aA2)*aT+C(aA1);}
+
+function binarySubdivide(aX,aA,aB,mX1,mX2){
+var currentX,currentT,i=0;
+do{
+currentT=aA+(aB-aA)/2.0;
+currentX=calcBezier(currentT,mX1,mX2)-aX;
+if(currentX>0.0){
+aB=currentT;
+}else{
+aA=currentT;
+}
+}while(Math.abs(currentX)>SUBDIVISION_PRECISION&&++i<SUBDIVISION_MAX_ITERATIONS);
+return currentT;
+}
+
+function newtonRaphsonIterate(aX,aGuessT,mX1,mX2){
+for(var i=0;i<NEWTON_ITERATIONS;++i){
+var currentSlope=getSlope(aGuessT,mX1,mX2);
+if(currentSlope===0.0){
+return aGuessT;
+}
+var currentX=calcBezier(aGuessT,mX1,mX2)-aX;
+aGuessT-=currentX/currentSlope;
+}
+return aGuessT;
+}
+
+module.exports=function bezier(mX1,mY1,mX2,mY2){
+if(!(0<=mX1&&mX1<=1&&0<=mX2&&mX2<=1)){
+throw new Error('bezier x values must be in [0, 1] range');
+}
+
+
+var sampleValues=float32ArraySupported?new Float32Array(kSplineTableSize):new Array(kSplineTableSize);
+if(mX1!==mY1||mX2!==mY2){
+for(var i=0;i<kSplineTableSize;++i){
+sampleValues[i]=calcBezier(i*kSampleStepSize,mX1,mX2);
+}
+}
+
+function getTForX(aX){
+var intervalStart=0.0;
+var currentSample=1;
+var lastSample=kSplineTableSize-1;
+
+for(;currentSample!==lastSample&&sampleValues[currentSample]<=aX;++currentSample){
+intervalStart+=kSampleStepSize;
+}
+--currentSample;
+
+
+var dist=(aX-sampleValues[currentSample])/(sampleValues[currentSample+1]-sampleValues[currentSample]);
+var guessForT=intervalStart+dist*kSampleStepSize;
+
+var initialSlope=getSlope(guessForT,mX1,mX2);
+if(initialSlope>=NEWTON_MIN_SLOPE){
+return newtonRaphsonIterate(aX,guessForT,mX1,mX2);
+}else if(initialSlope===0.0){
+return guessForT;
+}else{
+return binarySubdivide(aX,intervalStart,intervalStart+kSampleStepSize,mX1,mX2);
+}
+}
+
+return function BezierEasing(x){
+if(mX1===mY1&&mX2===mY2){
+return x;
+}
+
+if(x===0){
+return 0;
+}
+if(x===1){
+return 1;
+}
+return calcBezier(getTForX(x),mY1,mY2);
+};
+};
+
+/***/ }),
+
+/***/ "./node_modules/animated/lib/createAnimatedComponent.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/animated/lib/createAnimatedComponent.js ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+
+
+
+
+
+
+
+
+var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _jsxFileName='src/createAnimatedComponent.js';var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();function _objectWithoutProperties(obj,keys){var target={};for(var i in obj){if(keys.indexOf(i)>=0)continue;if(!Object.prototype.hasOwnProperty.call(obj,i))continue;target[i]=obj[i];}return target;}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}
+
+var React=__webpack_require__(/*! react */ "./node_modules/react/index.js");
+var AnimatedProps=__webpack_require__(/*! ./AnimatedProps */ "./node_modules/animated/lib/AnimatedProps.js");
+var ApplyAnimatedValues=__webpack_require__(/*! ./injectable/ApplyAnimatedValues */ "./node_modules/animated/lib/injectable/ApplyAnimatedValues.js");
+
+function createAnimatedComponent(Component){
+var refName='node';var
+
+AnimatedComponent=function(_React$Component){_inherits(AnimatedComponent,_React$Component);function AnimatedComponent(){_classCallCheck(this,AnimatedComponent);return _possibleConstructorReturn(this,(AnimatedComponent.__proto__||Object.getPrototypeOf(AnimatedComponent)).apply(this,arguments));}_createClass(AnimatedComponent,[{key:'componentWillUnmount',value:function componentWillUnmount()
+
+
+{
+this._propsAnimated&&this._propsAnimated.__detach();
+}},{key:'setNativeProps',value:function setNativeProps(
+
+props){
+var didUpdate=ApplyAnimatedValues.current(this.refs[refName],props,this);
+if(didUpdate===false){
+this.forceUpdate();
+}
+}},{key:'componentWillMount',value:function componentWillMount()
+
+{
+this.attachProps(this.props);
+}},{key:'attachProps',value:function attachProps(
+
+nextProps){var _this2=this;
+var oldPropsAnimated=this._propsAnimated;
+
+
+
+
+
+
+
+var callback=function callback(){
+var didUpdate=ApplyAnimatedValues.current(_this2.refs[refName],_this2._propsAnimated.__getAnimatedValue(),_this2);
+if(didUpdate===false){
+_this2.forceUpdate();
+}
+};
+
+this._propsAnimated=new AnimatedProps(
+nextProps,
+callback);
+
+
+
+
+
+
+
+
+
+
+oldPropsAnimated&&oldPropsAnimated.__detach();
+}},{key:'componentWillReceiveProps',value:function componentWillReceiveProps(
+
+nextProps){
+this.attachProps(nextProps);
+}},{key:'render',value:function render()
+
+{var _propsAnimated$__getV=
+this._propsAnimated.__getValue(),style=_propsAnimated$__getV.style,other=_objectWithoutProperties(_propsAnimated$__getV,['style']);
+
+return(
+React.createElement(Component,_extends({},
+other,{
+style:ApplyAnimatedValues.transformStyles(style),
+ref:refName,__source:{fileName:_jsxFileName,lineNumber:78}})));
+
+
+}}]);return AnimatedComponent;}(React.Component);
+
+AnimatedComponent.propTypes={
+style:function style(props,propName,componentName){
+if(!Component.propTypes){
+return;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}};
+
+
+return AnimatedComponent;
+}
+
+module.exports=createAnimatedComponent;
+
+/***/ }),
+
+/***/ "./node_modules/animated/lib/guid.js":
+/*!*******************************************!*\
+  !*** ./node_modules/animated/lib/guid.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+
+
+
+
+
+
+
+
+
+
+var _uniqueId=0;
+
+module.exports=function uniqueId(){
+return String(_uniqueId++);
+};
+
+/***/ }),
+
+/***/ "./node_modules/animated/lib/index.js":
+/*!********************************************!*\
+  !*** ./node_modules/animated/lib/index.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+
+
+
+
+
+
+
+
+var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};
+
+var invariant=__webpack_require__(/*! invariant */ "./node_modules/invariant/browser.js");
+
+var Animated=__webpack_require__(/*! ./Animated */ "./node_modules/animated/lib/Animated.js");
+var AnimatedValue=__webpack_require__(/*! ./AnimatedValue */ "./node_modules/animated/lib/AnimatedValue.js");
+var AnimatedValueXY=__webpack_require__(/*! ./AnimatedValueXY */ "./node_modules/animated/lib/AnimatedValueXY.js");
+var AnimatedAddition=__webpack_require__(/*! ./AnimatedAddition */ "./node_modules/animated/lib/AnimatedAddition.js");
+var AnimatedMultiplication=__webpack_require__(/*! ./AnimatedMultiplication */ "./node_modules/animated/lib/AnimatedMultiplication.js");
+var AnimatedModulo=__webpack_require__(/*! ./AnimatedModulo */ "./node_modules/animated/lib/AnimatedModulo.js");
+var AnimatedTemplate=__webpack_require__(/*! ./AnimatedTemplate */ "./node_modules/animated/lib/AnimatedTemplate.js");
+var AnimatedTracking=__webpack_require__(/*! ./AnimatedTracking */ "./node_modules/animated/lib/AnimatedTracking.js");
+var isAnimated=__webpack_require__(/*! ./isAnimated */ "./node_modules/animated/lib/isAnimated.js");
+
+var Animation=__webpack_require__(/*! ./Animation */ "./node_modules/animated/lib/Animation.js");
+var TimingAnimation=__webpack_require__(/*! ./TimingAnimation */ "./node_modules/animated/lib/TimingAnimation.js");
+var DecayAnimation=__webpack_require__(/*! ./DecayAnimation */ "./node_modules/animated/lib/DecayAnimation.js");
+var SpringAnimation=__webpack_require__(/*! ./SpringAnimation */ "./node_modules/animated/lib/SpringAnimation.js");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var maybeVectorAnim=function maybeVectorAnim(
+value,
+config,
+anim)
+{
+if(value instanceof AnimatedValueXY){
+var configX=_extends({},config);
+var configY=_extends({},config);
+for(var key in config){var _config$key=
+config[key],x=_config$key.x,y=_config$key.y;
+if(x!==undefined&&y!==undefined){
+configX[key]=x;
+configY[key]=y;
+}
+}
+var aX=anim(value.x,configX);
+var aY=anim(value.y,configY);
+
+
+return parallel([aX,aY],{stopTogether:false});
+}
+return null;
+};
+
+var spring=function spring(
+value,
+config)
+{
+return maybeVectorAnim(value,config,spring)||{
+start:function start(callback){
+var singleValue=value;
+var singleConfig=config;
+singleValue.stopTracking();
+if(config.toValue instanceof Animated){
+singleValue.track(new AnimatedTracking(
+singleValue,
+config.toValue,
+SpringAnimation,
+singleConfig,
+callback));
+
+}else{
+singleValue.animate(new SpringAnimation(singleConfig),callback);
+}
+},
+
+stop:function stop(){
+value.stopAnimation();
+}};
+
+};
+
+var timing=function timing(
+value,
+config)
+{
+return maybeVectorAnim(value,config,timing)||{
+start:function start(callback){
+var singleValue=value;
+var singleConfig=config;
+singleValue.stopTracking();
+if(config.toValue instanceof Animated){
+singleValue.track(new AnimatedTracking(
+singleValue,
+config.toValue,
+TimingAnimation,
+singleConfig,
+callback));
+
+}else{
+singleValue.animate(new TimingAnimation(singleConfig),callback);
+}
+},
+
+stop:function stop(){
+value.stopAnimation();
+}};
+
+};
+
+var decay=function decay(
+value,
+config)
+{
+return maybeVectorAnim(value,config,decay)||{
+start:function start(callback){
+var singleValue=value;
+var singleConfig=config;
+singleValue.stopTracking();
+singleValue.animate(new DecayAnimation(singleConfig),callback);
+},
+
+stop:function stop(){
+value.stopAnimation();
+}};
+
+};
+
+var sequence=function sequence(
+animations)
+{
+var current=0;
+return{
+start:function start(callback){
+var onComplete=function onComplete(result){
+if(!result.finished){
+callback&&callback(result);
+return;
+}
+
+current++;
+
+if(current===animations.length){
+callback&&callback(result);
+return;
+}
+
+animations[current].start(onComplete);
+};
+
+if(animations.length===0){
+callback&&callback({finished:true});
+}else{
+animations[current].start(onComplete);
+}
+},
+
+stop:function stop(){
+if(current<animations.length){
+animations[current].stop();
+}
+}};
+
+};
+
+
+
+
+var parallel=function parallel(
+animations,
+config)
+{
+var doneCount=0;
+
+var hasEnded={};
+var stopTogether=!(config&&config.stopTogether===false);
+
+var result={
+start:function start(callback){
+if(doneCount===animations.length){
+callback&&callback({finished:true});
+return;
+}
+
+animations.forEach(function(animation,idx){
+var cb=function cb(endResult){
+hasEnded[idx]=true;
+doneCount++;
+if(doneCount===animations.length){
+doneCount=0;
+callback&&callback(endResult);
+return;
+}
+
+if(!endResult.finished&&stopTogether){
+result.stop();
+}
+};
+
+if(!animation){
+cb({finished:true});
+}else{
+animation.start(cb);
+}
+});
+},
+
+stop:function stop(){
+animations.forEach(function(animation,idx){
+!hasEnded[idx]&&animation.stop();
+hasEnded[idx]=true;
+});
+}};
+
+
+return result;
+};
+
+var delay=function delay(time){
+
+return timing(new AnimatedValue(0),{toValue:0,delay:time,duration:0});
+};
+
+var stagger=function stagger(
+time,
+animations)
+{
+return parallel(animations.map(function(animation,i){
+return sequence([
+delay(time*i),
+animation]);
+
+}));
+};
+
+
+
+
+var event=function event(
+argMapping,
+config)
+{
+return function(){for(var _len=arguments.length,args=Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}
+var traverse=function traverse(recMapping,recEvt,key){
+if(typeof recEvt==='number'){
+invariant(
+recMapping instanceof AnimatedValue,
+'Bad mapping of type '+typeof recMapping+' for key '+key+
+', event value must map to AnimatedValue');
+
+recMapping.setValue(recEvt);
+return;
+}
+invariant(
+typeof recMapping==='object',
+'Bad mapping of type '+typeof recMapping+' for key '+key);
+
+invariant(
+typeof recEvt==='object',
+'Bad event of type '+typeof recEvt+' for key '+key);
+
+for(var key in recMapping){
+traverse(recMapping[key],recEvt[key],key);
+}
+};
+argMapping.forEach(function(mapping,idx){
+traverse(mapping,args[idx],'arg'+idx);
+});
+if(config&&config.listener){
+config.listener.apply(null,args);
+}
+};
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+module.exports={
+
+
+
+
+Value:AnimatedValue,
+
+
+
+ValueXY:AnimatedValueXY,
+
+
+
+
+
+decay:decay,
+
+
+
+
+timing:timing,
+
+
+
+
+spring:spring,
+
+
+
+
+
+add:function add(a,b){
+return new AnimatedAddition(a,b);
+},
+
+
+
+
+multiply:function multiply(a,b){
+return new AnimatedMultiplication(a,b);
+},
+
+
+
+
+
+modulo:function modulo(a,modulus){
+return new AnimatedModulo(a,modulus);
+},
+
+
+
+
+
+template:function template(strings){for(var _len2=arguments.length,values=Array(_len2>1?_len2-1:0),_key2=1;_key2<_len2;_key2++){values[_key2-1]=arguments[_key2];}
+return new AnimatedTemplate(strings,values);
+},
+
+
+
+
+delay:delay,
+
+
+
+
+
+sequence:sequence,
+
+
+
+
+
+parallel:parallel,
+
+
+
+
+stagger:stagger,
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+event:event,
+
+
+
+
+
+isAnimated:isAnimated,
+
+
+
+
+createAnimatedComponent:__webpack_require__(/*! ./createAnimatedComponent */ "./node_modules/animated/lib/createAnimatedComponent.js"),
+
+inject:{
+ApplyAnimatedValues:__webpack_require__(/*! ./injectable/ApplyAnimatedValues */ "./node_modules/animated/lib/injectable/ApplyAnimatedValues.js").inject,
+InteractionManager:__webpack_require__(/*! ./injectable/InteractionManager */ "./node_modules/animated/lib/injectable/InteractionManager.js").inject,
+FlattenStyle:__webpack_require__(/*! ./injectable/FlattenStyle */ "./node_modules/animated/lib/injectable/FlattenStyle.js").inject,
+RequestAnimationFrame:__webpack_require__(/*! ./injectable/RequestAnimationFrame */ "./node_modules/animated/lib/injectable/RequestAnimationFrame.js").inject,
+CancelAnimationFrame:__webpack_require__(/*! ./injectable/CancelAnimationFrame */ "./node_modules/animated/lib/injectable/CancelAnimationFrame.js").inject},
+
+
+__PropsOnlyForTests:__webpack_require__(/*! ./AnimatedProps */ "./node_modules/animated/lib/AnimatedProps.js")};
+
+/***/ }),
+
+/***/ "./node_modules/animated/lib/injectable/ApplyAnimatedValues.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/animated/lib/injectable/ApplyAnimatedValues.js ***!
+  \*********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+
+
+
+
+
+
+
+
+
+
+var ApplyAnimatedValues={
+current:function ApplyAnimatedValues(instance,props){
+if(instance.setNativeProps){
+instance.setNativeProps(props);
+}else{
+return false;
+}
+},
+transformStyles:function transformStyles(style){
+return style;
+},
+inject:function inject(apply,transform){
+ApplyAnimatedValues.current=apply;
+ApplyAnimatedValues.transformStyles=transform;
+}};
+
+
+module.exports=ApplyAnimatedValues;
+
+/***/ }),
+
+/***/ "./node_modules/animated/lib/injectable/CancelAnimationFrame.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/animated/lib/injectable/CancelAnimationFrame.js ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(global) {
+
+
+
+
+
+
+
+
+
+
+
+var CancelAnimationFrame={
+current:function current(id){return global.cancelAnimationFrame(id);},
+inject:function inject(injected){
+CancelAnimationFrame.current=injected;
+}};
+
+
+module.exports=CancelAnimationFrame;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
+
+/***/ }),
+
+/***/ "./node_modules/animated/lib/injectable/FlattenStyle.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/animated/lib/injectable/FlattenStyle.js ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+
+
+
+
+
+
+
+
+
+
+var FlattenStyle={
+current:function current(style){return style;},
+inject:function inject(flatten){
+FlattenStyle.current=flatten;
+}};
+
+
+module.exports=FlattenStyle;
+
+/***/ }),
+
+/***/ "./node_modules/animated/lib/injectable/InteractionManager.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/animated/lib/injectable/InteractionManager.js ***!
+  \********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+
+
+
+
+
+
+
+
+
+
+var InteractionManager={
+current:{
+createInteractionHandle:function createInteractionHandle(){},
+clearInteractionHandle:function clearInteractionHandle(){}},
+
+inject:function inject(manager){
+InteractionManager.current=manager;
+}};
+
+
+module.exports=InteractionManager;
+
+/***/ }),
+
+/***/ "./node_modules/animated/lib/injectable/RequestAnimationFrame.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/animated/lib/injectable/RequestAnimationFrame.js ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(global) {
+
+
+
+
+
+
+
+
+
+
+
+var RequestAnimationFrame={
+current:function current(cb){return global.requestAnimationFrame(cb);},
+inject:function inject(injected){
+RequestAnimationFrame.current=injected;
+}};
+
+
+module.exports=RequestAnimationFrame;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
+
+/***/ }),
+
+/***/ "./node_modules/animated/lib/isAnimated.js":
+/*!*************************************************!*\
+  !*** ./node_modules/animated/lib/isAnimated.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+
+
+
+
+
+
+
+
+
+
+var Animated=__webpack_require__(/*! ./Animated */ "./node_modules/animated/lib/Animated.js");
+
+function isAnimated(obj){
+return obj instanceof Animated;
+}
+
+module.exports=isAnimated;
 
 /***/ }),
 
@@ -409,729 +3773,10 @@ function fromByteArray (uint8) {
 
 /***/ }),
 
-/***/ "./node_modules/error-stack-parser/error-stack-parser.js":
-/*!***************************************************************!*\
-  !*** ./node_modules/error-stack-parser/error-stack-parser.js ***!
-  \***************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function(root, factory) {
-    'use strict';
-    // Universal Module Definition (UMD) to support AMD, CommonJS/Node.js, Rhino, and browsers.
-
-    /* istanbul ignore next */
-    if (true) {
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! stackframe */ "./node_modules/stackframe/stackframe.js")], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
-				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
-				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-    } else {}
-}(this, function ErrorStackParser(StackFrame) {
-    'use strict';
-
-    var FIREFOX_SAFARI_STACK_REGEXP = /(^|@)\S+\:\d+/;
-    var CHROME_IE_STACK_REGEXP = /^\s*at .*(\S+\:\d+|\(native\))/m;
-    var SAFARI_NATIVE_CODE_REGEXP = /^(eval@)?(\[native code\])?$/;
-
-    return {
-        /**
-         * Given an Error object, extract the most information from it.
-         *
-         * @param {Error} error object
-         * @return {Array} of StackFrames
-         */
-        parse: function ErrorStackParser$$parse(error) {
-            if (typeof error.stacktrace !== 'undefined' || typeof error['opera#sourceloc'] !== 'undefined') {
-                return this.parseOpera(error);
-            } else if (error.stack && error.stack.match(CHROME_IE_STACK_REGEXP)) {
-                return this.parseV8OrIE(error);
-            } else if (error.stack) {
-                return this.parseFFOrSafari(error);
-            } else {
-                throw new Error('Cannot parse given Error object');
-            }
-        },
-
-        // Separate line and column numbers from a string of the form: (URI:Line:Column)
-        extractLocation: function ErrorStackParser$$extractLocation(urlLike) {
-            // Fail-fast but return locations like "(native)"
-            if (urlLike.indexOf(':') === -1) {
-                return [urlLike];
-            }
-
-            var regExp = /(.+?)(?:\:(\d+))?(?:\:(\d+))?$/;
-            var parts = regExp.exec(urlLike.replace(/[\(\)]/g, ''));
-            return [parts[1], parts[2] || undefined, parts[3] || undefined];
-        },
-
-        parseV8OrIE: function ErrorStackParser$$parseV8OrIE(error) {
-            var filtered = error.stack.split('\n').filter(function(line) {
-                return !!line.match(CHROME_IE_STACK_REGEXP);
-            }, this);
-
-            return filtered.map(function(line) {
-                if (line.indexOf('(eval ') > -1) {
-                    // Throw away eval information until we implement stacktrace.js/stackframe#8
-                    line = line.replace(/eval code/g, 'eval').replace(/(\(eval at [^\()]*)|(\)\,.*$)/g, '');
-                }
-                var tokens = line.replace(/^\s+/, '').replace(/\(eval code/g, '(').split(/\s+/).slice(1);
-                var locationParts = this.extractLocation(tokens.pop());
-                var functionName = tokens.join(' ') || undefined;
-                var fileName = ['eval', '<anonymous>'].indexOf(locationParts[0]) > -1 ? undefined : locationParts[0];
-
-                return new StackFrame({
-                    functionName: functionName,
-                    fileName: fileName,
-                    lineNumber: locationParts[1],
-                    columnNumber: locationParts[2],
-                    source: line
-                });
-            }, this);
-        },
-
-        parseFFOrSafari: function ErrorStackParser$$parseFFOrSafari(error) {
-            var filtered = error.stack.split('\n').filter(function(line) {
-                return !line.match(SAFARI_NATIVE_CODE_REGEXP);
-            }, this);
-
-            return filtered.map(function(line) {
-                // Throw away eval information until we implement stacktrace.js/stackframe#8
-                if (line.indexOf(' > eval') > -1) {
-                    line = line.replace(/ line (\d+)(?: > eval line \d+)* > eval\:\d+\:\d+/g, ':$1');
-                }
-
-                if (line.indexOf('@') === -1 && line.indexOf(':') === -1) {
-                    // Safari eval frames only have function names and nothing else
-                    return new StackFrame({
-                        functionName: line
-                    });
-                } else {
-                    var functionNameRegex = /((.*".+"[^@]*)?[^@]*)(?:@)/;
-                    var matches = line.match(functionNameRegex);
-                    var functionName = matches && matches[1] ? matches[1] : undefined;
-                    var locationParts = this.extractLocation(line.replace(functionNameRegex, ''));
-
-                    return new StackFrame({
-                        functionName: functionName,
-                        fileName: locationParts[0],
-                        lineNumber: locationParts[1],
-                        columnNumber: locationParts[2],
-                        source: line
-                    });
-                }
-            }, this);
-        },
-
-        parseOpera: function ErrorStackParser$$parseOpera(e) {
-            if (!e.stacktrace || (e.message.indexOf('\n') > -1 &&
-                e.message.split('\n').length > e.stacktrace.split('\n').length)) {
-                return this.parseOpera9(e);
-            } else if (!e.stack) {
-                return this.parseOpera10(e);
-            } else {
-                return this.parseOpera11(e);
-            }
-        },
-
-        parseOpera9: function ErrorStackParser$$parseOpera9(e) {
-            var lineRE = /Line (\d+).*script (?:in )?(\S+)/i;
-            var lines = e.message.split('\n');
-            var result = [];
-
-            for (var i = 2, len = lines.length; i < len; i += 2) {
-                var match = lineRE.exec(lines[i]);
-                if (match) {
-                    result.push(new StackFrame({
-                        fileName: match[2],
-                        lineNumber: match[1],
-                        source: lines[i]
-                    }));
-                }
-            }
-
-            return result;
-        },
-
-        parseOpera10: function ErrorStackParser$$parseOpera10(e) {
-            var lineRE = /Line (\d+).*script (?:in )?(\S+)(?:: In function (\S+))?$/i;
-            var lines = e.stacktrace.split('\n');
-            var result = [];
-
-            for (var i = 0, len = lines.length; i < len; i += 2) {
-                var match = lineRE.exec(lines[i]);
-                if (match) {
-                    result.push(
-                        new StackFrame({
-                            functionName: match[3] || undefined,
-                            fileName: match[2],
-                            lineNumber: match[1],
-                            source: lines[i]
-                        })
-                    );
-                }
-            }
-
-            return result;
-        },
-
-        // Opera 10.65+ Error.stack very similar to FF/Safari
-        parseOpera11: function ErrorStackParser$$parseOpera11(error) {
-            var filtered = error.stack.split('\n').filter(function(line) {
-                return !!line.match(FIREFOX_SAFARI_STACK_REGEXP) && !line.match(/^Error created at/);
-            }, this);
-
-            return filtered.map(function(line) {
-                var tokens = line.split('@');
-                var locationParts = this.extractLocation(tokens.pop());
-                var functionCall = (tokens.shift() || '');
-                var functionName = functionCall
-                        .replace(/<anonymous function(: (\w+))?>/, '$2')
-                        .replace(/\([^\)]*\)/g, '') || undefined;
-                var argsRaw;
-                if (functionCall.match(/\(([^\)]*)\)/)) {
-                    argsRaw = functionCall.replace(/^[^\(]+\(([^\)]*)\)$/, '$1');
-                }
-                var args = (argsRaw === undefined || argsRaw === '[arguments not available]') ?
-                    undefined : argsRaw.split(',');
-
-                return new StackFrame({
-                    functionName: functionName,
-                    args: args,
-                    fileName: locationParts[0],
-                    lineNumber: locationParts[1],
-                    columnNumber: locationParts[2],
-                    source: line
-                });
-            }, this);
-        }
-    };
-}));
-
-
-/***/ }),
-
-/***/ "./node_modules/fbjs/lib/emptyFunction.js":
-/*!************************************************!*\
-  !*** ./node_modules/fbjs/lib/emptyFunction.js ***!
-  \************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- * 
- */
-
-function makeEmptyFunction(arg) {
-  return function () {
-    return arg;
-  };
-}
-
-/**
- * This function accepts and discards inputs; it has no side effects. This is
- * primarily useful idiomatically for overridable function endpoints which
- * always need to be callable, since JS lacks a null-call idiom ala Cocoa.
- */
-var emptyFunction = function emptyFunction() {};
-
-emptyFunction.thatReturns = makeEmptyFunction;
-emptyFunction.thatReturnsFalse = makeEmptyFunction(false);
-emptyFunction.thatReturnsTrue = makeEmptyFunction(true);
-emptyFunction.thatReturnsNull = makeEmptyFunction(null);
-emptyFunction.thatReturnsThis = function () {
-  return this;
-};
-emptyFunction.thatReturnsArgument = function (arg) {
-  return arg;
-};
-
-module.exports = emptyFunction;
-
-/***/ }),
-
-/***/ "./node_modules/fbjs/lib/emptyObject.js":
-/*!**********************************************!*\
-  !*** ./node_modules/fbjs/lib/emptyObject.js ***!
-  \**********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- */
-
-
-
-var emptyObject = {};
-
-if (true) {
-  Object.freeze(emptyObject);
-}
-
-module.exports = emptyObject;
-
-/***/ }),
-
-/***/ "./node_modules/fbjs/lib/invariant.js":
-/*!********************************************!*\
-  !*** ./node_modules/fbjs/lib/invariant.js ***!
-  \********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- */
-
-
-
-/**
- * Use invariant() to assert state which your program assumes to be true.
- *
- * Provide sprintf-style format (only %s is supported) and arguments
- * to provide information about what broke and what you were
- * expecting.
- *
- * The invariant message will be stripped in production, but the invariant
- * will remain to ensure logic does not differ in production.
- */
-
-var validateFormat = function validateFormat(format) {};
-
-if (true) {
-  validateFormat = function validateFormat(format) {
-    if (format === undefined) {
-      throw new Error('invariant requires an error message argument');
-    }
-  };
-}
-
-function invariant(condition, format, a, b, c, d, e, f) {
-  validateFormat(format);
-
-  if (!condition) {
-    var error;
-    if (format === undefined) {
-      error = new Error('Minified exception occurred; use the non-minified dev environment ' + 'for the full error message and additional helpful warnings.');
-    } else {
-      var args = [a, b, c, d, e, f];
-      var argIndex = 0;
-      error = new Error(format.replace(/%s/g, function () {
-        return args[argIndex++];
-      }));
-      error.name = 'Invariant Violation';
-    }
-
-    error.framesToPop = 1; // we don't care about invariant's own frame
-    throw error;
-  }
-}
-
-module.exports = invariant;
-
-/***/ }),
-
-/***/ "./node_modules/fbjs/lib/shallowEqual.js":
-/*!***********************************************!*\
-  !*** ./node_modules/fbjs/lib/shallowEqual.js ***!
-  \***********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- * @typechecks
- * 
- */
-
-/*eslint-disable no-self-compare */
-
-
-
-var hasOwnProperty = Object.prototype.hasOwnProperty;
-
-/**
- * inlined Object.is polyfill to avoid requiring consumers ship their own
- * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
- */
-function is(x, y) {
-  // SameValue algorithm
-  if (x === y) {
-    // Steps 1-5, 7-10
-    // Steps 6.b-6.e: +0 != -0
-    // Added the nonzero y check to make Flow happy, but it is redundant
-    return x !== 0 || y !== 0 || 1 / x === 1 / y;
-  } else {
-    // Step 6.a: NaN == NaN
-    return x !== x && y !== y;
-  }
-}
-
-/**
- * Performs equality by iterating through keys on an object and returning false
- * when any key has values which are not strictly equal between the arguments.
- * Returns true when the values of all keys are strictly equal.
- */
-function shallowEqual(objA, objB) {
-  if (is(objA, objB)) {
-    return true;
-  }
-
-  if (typeof objA !== 'object' || objA === null || typeof objB !== 'object' || objB === null) {
-    return false;
-  }
-
-  var keysA = Object.keys(objA);
-  var keysB = Object.keys(objB);
-
-  if (keysA.length !== keysB.length) {
-    return false;
-  }
-
-  // Test for A's keys different from B.
-  for (var i = 0; i < keysA.length; i++) {
-    if (!hasOwnProperty.call(objB, keysA[i]) || !is(objA[keysA[i]], objB[keysA[i]])) {
-      return false;
-    }
-  }
-
-  return true;
-}
-
-module.exports = shallowEqual;
-
-/***/ }),
-
-/***/ "./node_modules/fbjs/lib/warning.js":
-/*!******************************************!*\
-  !*** ./node_modules/fbjs/lib/warning.js ***!
-  \******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright (c) 2014-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- */
-
-
-
-var emptyFunction = __webpack_require__(/*! ./emptyFunction */ "./node_modules/fbjs/lib/emptyFunction.js");
-
-/**
- * Similar to invariant but only logs a warning if the condition is not met.
- * This can be used to log issues in development environments in critical
- * paths. Removing the logging code for production environments will keep the
- * same logic and follow the same code paths.
- */
-
-var warning = emptyFunction;
-
-if (true) {
-  var printWarning = function printWarning(format) {
-    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      args[_key - 1] = arguments[_key];
-    }
-
-    var argIndex = 0;
-    var message = 'Warning: ' + format.replace(/%s/g, function () {
-      return args[argIndex++];
-    });
-    if (typeof console !== 'undefined') {
-      console.error(message);
-    }
-    try {
-      // --- Welcome to debugging React ---
-      // This error was thrown as a convenience so that you can use this stack
-      // to find the callsite that caused this warning to fire.
-      throw new Error(message);
-    } catch (x) {}
-  };
-
-  warning = function warning(condition, format) {
-    if (format === undefined) {
-      throw new Error('`warning(condition, format, ...args)` requires a warning ' + 'message argument');
-    }
-
-    if (format.indexOf('Failed Composite propType: ') === 0) {
-      return; // Ignore CompositeComponent proptype check.
-    }
-
-    if (!condition) {
-      for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
-        args[_key2 - 2] = arguments[_key2];
-      }
-
-      printWarning.apply(undefined, [format].concat(args));
-    }
-  };
-}
-
-module.exports = warning;
-
-/***/ }),
-
-/***/ "./node_modules/ieee754/index.js":
-/*!***************************************!*\
-  !*** ./node_modules/ieee754/index.js ***!
-  \***************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-exports.read = function (buffer, offset, isLE, mLen, nBytes) {
-  var e, m
-  var eLen = (nBytes * 8) - mLen - 1
-  var eMax = (1 << eLen) - 1
-  var eBias = eMax >> 1
-  var nBits = -7
-  var i = isLE ? (nBytes - 1) : 0
-  var d = isLE ? -1 : 1
-  var s = buffer[offset + i]
-
-  i += d
-
-  e = s & ((1 << (-nBits)) - 1)
-  s >>= (-nBits)
-  nBits += eLen
-  for (; nBits > 0; e = (e * 256) + buffer[offset + i], i += d, nBits -= 8) {}
-
-  m = e & ((1 << (-nBits)) - 1)
-  e >>= (-nBits)
-  nBits += mLen
-  for (; nBits > 0; m = (m * 256) + buffer[offset + i], i += d, nBits -= 8) {}
-
-  if (e === 0) {
-    e = 1 - eBias
-  } else if (e === eMax) {
-    return m ? NaN : ((s ? -1 : 1) * Infinity)
-  } else {
-    m = m + Math.pow(2, mLen)
-    e = e - eBias
-  }
-  return (s ? -1 : 1) * m * Math.pow(2, e - mLen)
-}
-
-exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
-  var e, m, c
-  var eLen = (nBytes * 8) - mLen - 1
-  var eMax = (1 << eLen) - 1
-  var eBias = eMax >> 1
-  var rt = (mLen === 23 ? Math.pow(2, -24) - Math.pow(2, -77) : 0)
-  var i = isLE ? 0 : (nBytes - 1)
-  var d = isLE ? 1 : -1
-  var s = value < 0 || (value === 0 && 1 / value < 0) ? 1 : 0
-
-  value = Math.abs(value)
-
-  if (isNaN(value) || value === Infinity) {
-    m = isNaN(value) ? 1 : 0
-    e = eMax
-  } else {
-    e = Math.floor(Math.log(value) / Math.LN2)
-    if (value * (c = Math.pow(2, -e)) < 1) {
-      e--
-      c *= 2
-    }
-    if (e + eBias >= 1) {
-      value += rt / c
-    } else {
-      value += rt * Math.pow(2, 1 - eBias)
-    }
-    if (value * c >= 2) {
-      e++
-      c /= 2
-    }
-
-    if (e + eBias >= eMax) {
-      m = 0
-      e = eMax
-    } else if (e + eBias >= 1) {
-      m = ((value * c) - 1) * Math.pow(2, mLen)
-      e = e + eBias
-    } else {
-      m = value * Math.pow(2, eBias - 1) * Math.pow(2, mLen)
-      e = 0
-    }
-  }
-
-  for (; mLen >= 8; buffer[offset + i] = m & 0xff, i += d, m /= 256, mLen -= 8) {}
-
-  e = (e << mLen) | m
-  eLen += mLen
-  for (; eLen > 0; buffer[offset + i] = e & 0xff, i += d, e /= 256, eLen -= 8) {}
-
-  buffer[offset + i - d] |= s * 128
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/invariant/browser.js":
-/*!*******************************************!*\
-  !*** ./node_modules/invariant/browser.js ***!
-  \*******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-
-
-/**
- * Use invariant() to assert state which your program assumes to be true.
- *
- * Provide sprintf-style format (only %s is supported) and arguments
- * to provide information about what broke and what you were
- * expecting.
- *
- * The invariant message will be stripped in production, but the invariant
- * will remain to ensure logic does not differ in production.
- */
-
-var invariant = function(condition, format, a, b, c, d, e, f) {
-  if (true) {
-    if (format === undefined) {
-      throw new Error('invariant requires an error message argument');
-    }
-  }
-
-  if (!condition) {
-    var error;
-    if (format === undefined) {
-      error = new Error(
-        'Minified exception occurred; use the non-minified dev environment ' +
-        'for the full error message and additional helpful warnings.'
-      );
-    } else {
-      var args = [a, b, c, d, e, f];
-      var argIndex = 0;
-      error = new Error(
-        format.replace(/%s/g, function() { return args[argIndex++]; })
-      );
-      error.name = 'Invariant Violation';
-    }
-
-    error.framesToPop = 1; // we don't care about invariant's own frame
-    throw error;
-  }
-};
-
-module.exports = invariant;
-
-
-/***/ }),
-
-/***/ "./node_modules/isarray/index.js":
-/*!***************************************!*\
-  !*** ./node_modules/isarray/index.js ***!
-  \***************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-var toString = {}.toString;
-
-module.exports = Array.isArray || function (arr) {
-  return toString.call(arr) == '[object Array]';
-};
-
-
-/***/ }),
-
-/***/ "./node_modules/murmur2js/index.js":
-/*!*****************************************!*\
-  !*** ./node_modules/murmur2js/index.js ***!
-  \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/**
- * JS Implementation of MurmurHash2
- *
- * @author <a href="mailto:gary.court@gmail.com">Gary Court</a>
- * @see http://github.com/garycourt/murmurhash-js
- * @author <a href="mailto:aappleby@gmail.com">Austin Appleby</a>
- * @see http://sites.google.com/site/murmurhash/
- *
- * @param {string} str ASCII only
- * @return {int} hash result
- */
-module.exports = function murmur2js(str) {
-  var l = str.length;
-  var h = l;
-  var i = 0;
-  var k;
-
-  while (l >= 4) {
-    k = ((str.charCodeAt(i) & 0xff)) |
-      ((str.charCodeAt(++i) & 0xff) << 8) |
-      ((str.charCodeAt(++i) & 0xff) << 16) |
-      ((str.charCodeAt(++i) & 0xff) << 24);
-
-    k = (((k & 0xffff) * 0x5bd1e995) + ((((k >>> 16) * 0x5bd1e995) & 0xffff) << 16));
-    k ^= k >>> 24;
-    k = (((k & 0xffff) * 0x5bd1e995) + ((((k >>> 16) * 0x5bd1e995) & 0xffff) << 16));
-
-    h = (((h & 0xffff) * 0x5bd1e995) + ((((h >>> 16) * 0x5bd1e995) & 0xffff) << 16)) ^ k;
-
-    l -= 4;
-    ++i;
-  }
-
-  switch (l) {
-    case 3: h ^= (str.charCodeAt(i + 2) & 0xff) << 16;
-    case 2: h ^= (str.charCodeAt(i + 1) & 0xff) << 8;
-    case 1: h ^= (str.charCodeAt(i) & 0xff);
-      h = (((h & 0xffff) * 0x5bd1e995) + ((((h >>> 16) * 0x5bd1e995) & 0xffff) << 16));
-  }
-
-  h ^= h >>> 13;
-  h = (((h & 0xffff) * 0x5bd1e995) + ((((h >>> 16) * 0x5bd1e995) & 0xffff) << 16));
-  h ^= h >>> 15;
-
-  return h >>> 0;
-};
-
-
-/***/ }),
-
-/***/ "./node_modules/node-libs-browser/node_modules/buffer/index.js":
-/*!*********************************************************************!*\
-  !*** ./node_modules/node-libs-browser/node_modules/buffer/index.js ***!
-  \*********************************************************************/
+/***/ "./node_modules/buffer/index.js":
+/*!**************************************!*\
+  !*** ./node_modules/buffer/index.js ***!
+  \**************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2926,7 +5571,2817 @@ function isnan (val) {
   return val !== val // eslint-disable-line no-self-compare
 }
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
+
+/***/ }),
+
+/***/ "./node_modules/create-react-class/factory.js":
+/*!****************************************************!*\
+  !*** ./node_modules/create-react-class/factory.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
+
+
+
+var _assign = __webpack_require__(/*! object-assign */ "./node_modules/object-assign/index.js");
+
+var emptyObject = __webpack_require__(/*! fbjs/lib/emptyObject */ "./node_modules/fbjs/lib/emptyObject.js");
+var _invariant = __webpack_require__(/*! fbjs/lib/invariant */ "./node_modules/fbjs/lib/invariant.js");
+
+if (true) {
+  var warning = __webpack_require__(/*! fbjs/lib/warning */ "./node_modules/fbjs/lib/warning.js");
+}
+
+var MIXINS_KEY = 'mixins';
+
+// Helper function to allow the creation of anonymous functions which do not
+// have .name set to the name of the variable being assigned to.
+function identity(fn) {
+  return fn;
+}
+
+var ReactPropTypeLocationNames;
+if (true) {
+  ReactPropTypeLocationNames = {
+    prop: 'prop',
+    context: 'context',
+    childContext: 'child context'
+  };
+} else {}
+
+function factory(ReactComponent, isValidElement, ReactNoopUpdateQueue) {
+  /**
+   * Policies that describe methods in `ReactClassInterface`.
+   */
+
+  var injectedMixins = [];
+
+  /**
+   * Composite components are higher-level components that compose other composite
+   * or host components.
+   *
+   * To create a new type of `ReactClass`, pass a specification of
+   * your new class to `React.createClass`. The only requirement of your class
+   * specification is that you implement a `render` method.
+   *
+   *   var MyComponent = React.createClass({
+   *     render: function() {
+   *       return <div>Hello World</div>;
+   *     }
+   *   });
+   *
+   * The class specification supports a specific protocol of methods that have
+   * special meaning (e.g. `render`). See `ReactClassInterface` for
+   * more the comprehensive protocol. Any other properties and methods in the
+   * class specification will be available on the prototype.
+   *
+   * @interface ReactClassInterface
+   * @internal
+   */
+  var ReactClassInterface = {
+    /**
+     * An array of Mixin objects to include when defining your component.
+     *
+     * @type {array}
+     * @optional
+     */
+    mixins: 'DEFINE_MANY',
+
+    /**
+     * An object containing properties and methods that should be defined on
+     * the component's constructor instead of its prototype (static methods).
+     *
+     * @type {object}
+     * @optional
+     */
+    statics: 'DEFINE_MANY',
+
+    /**
+     * Definition of prop types for this component.
+     *
+     * @type {object}
+     * @optional
+     */
+    propTypes: 'DEFINE_MANY',
+
+    /**
+     * Definition of context types for this component.
+     *
+     * @type {object}
+     * @optional
+     */
+    contextTypes: 'DEFINE_MANY',
+
+    /**
+     * Definition of context types this component sets for its children.
+     *
+     * @type {object}
+     * @optional
+     */
+    childContextTypes: 'DEFINE_MANY',
+
+    // ==== Definition methods ====
+
+    /**
+     * Invoked when the component is mounted. Values in the mapping will be set on
+     * `this.props` if that prop is not specified (i.e. using an `in` check).
+     *
+     * This method is invoked before `getInitialState` and therefore cannot rely
+     * on `this.state` or use `this.setState`.
+     *
+     * @return {object}
+     * @optional
+     */
+    getDefaultProps: 'DEFINE_MANY_MERGED',
+
+    /**
+     * Invoked once before the component is mounted. The return value will be used
+     * as the initial value of `this.state`.
+     *
+     *   getInitialState: function() {
+     *     return {
+     *       isOn: false,
+     *       fooBaz: new BazFoo()
+     *     }
+     *   }
+     *
+     * @return {object}
+     * @optional
+     */
+    getInitialState: 'DEFINE_MANY_MERGED',
+
+    /**
+     * @return {object}
+     * @optional
+     */
+    getChildContext: 'DEFINE_MANY_MERGED',
+
+    /**
+     * Uses props from `this.props` and state from `this.state` to render the
+     * structure of the component.
+     *
+     * No guarantees are made about when or how often this method is invoked, so
+     * it must not have side effects.
+     *
+     *   render: function() {
+     *     var name = this.props.name;
+     *     return <div>Hello, {name}!</div>;
+     *   }
+     *
+     * @return {ReactComponent}
+     * @required
+     */
+    render: 'DEFINE_ONCE',
+
+    // ==== Delegate methods ====
+
+    /**
+     * Invoked when the component is initially created and about to be mounted.
+     * This may have side effects, but any external subscriptions or data created
+     * by this method must be cleaned up in `componentWillUnmount`.
+     *
+     * @optional
+     */
+    componentWillMount: 'DEFINE_MANY',
+
+    /**
+     * Invoked when the component has been mounted and has a DOM representation.
+     * However, there is no guarantee that the DOM node is in the document.
+     *
+     * Use this as an opportunity to operate on the DOM when the component has
+     * been mounted (initialized and rendered) for the first time.
+     *
+     * @param {DOMElement} rootNode DOM element representing the component.
+     * @optional
+     */
+    componentDidMount: 'DEFINE_MANY',
+
+    /**
+     * Invoked before the component receives new props.
+     *
+     * Use this as an opportunity to react to a prop transition by updating the
+     * state using `this.setState`. Current props are accessed via `this.props`.
+     *
+     *   componentWillReceiveProps: function(nextProps, nextContext) {
+     *     this.setState({
+     *       likesIncreasing: nextProps.likeCount > this.props.likeCount
+     *     });
+     *   }
+     *
+     * NOTE: There is no equivalent `componentWillReceiveState`. An incoming prop
+     * transition may cause a state change, but the opposite is not true. If you
+     * need it, you are probably looking for `componentWillUpdate`.
+     *
+     * @param {object} nextProps
+     * @optional
+     */
+    componentWillReceiveProps: 'DEFINE_MANY',
+
+    /**
+     * Invoked while deciding if the component should be updated as a result of
+     * receiving new props, state and/or context.
+     *
+     * Use this as an opportunity to `return false` when you're certain that the
+     * transition to the new props/state/context will not require a component
+     * update.
+     *
+     *   shouldComponentUpdate: function(nextProps, nextState, nextContext) {
+     *     return !equal(nextProps, this.props) ||
+     *       !equal(nextState, this.state) ||
+     *       !equal(nextContext, this.context);
+     *   }
+     *
+     * @param {object} nextProps
+     * @param {?object} nextState
+     * @param {?object} nextContext
+     * @return {boolean} True if the component should update.
+     * @optional
+     */
+    shouldComponentUpdate: 'DEFINE_ONCE',
+
+    /**
+     * Invoked when the component is about to update due to a transition from
+     * `this.props`, `this.state` and `this.context` to `nextProps`, `nextState`
+     * and `nextContext`.
+     *
+     * Use this as an opportunity to perform preparation before an update occurs.
+     *
+     * NOTE: You **cannot** use `this.setState()` in this method.
+     *
+     * @param {object} nextProps
+     * @param {?object} nextState
+     * @param {?object} nextContext
+     * @param {ReactReconcileTransaction} transaction
+     * @optional
+     */
+    componentWillUpdate: 'DEFINE_MANY',
+
+    /**
+     * Invoked when the component's DOM representation has been updated.
+     *
+     * Use this as an opportunity to operate on the DOM when the component has
+     * been updated.
+     *
+     * @param {object} prevProps
+     * @param {?object} prevState
+     * @param {?object} prevContext
+     * @param {DOMElement} rootNode DOM element representing the component.
+     * @optional
+     */
+    componentDidUpdate: 'DEFINE_MANY',
+
+    /**
+     * Invoked when the component is about to be removed from its parent and have
+     * its DOM representation destroyed.
+     *
+     * Use this as an opportunity to deallocate any external resources.
+     *
+     * NOTE: There is no `componentDidUnmount` since your component will have been
+     * destroyed by that point.
+     *
+     * @optional
+     */
+    componentWillUnmount: 'DEFINE_MANY',
+
+    /**
+     * Replacement for (deprecated) `componentWillMount`.
+     *
+     * @optional
+     */
+    UNSAFE_componentWillMount: 'DEFINE_MANY',
+
+    /**
+     * Replacement for (deprecated) `componentWillReceiveProps`.
+     *
+     * @optional
+     */
+    UNSAFE_componentWillReceiveProps: 'DEFINE_MANY',
+
+    /**
+     * Replacement for (deprecated) `componentWillUpdate`.
+     *
+     * @optional
+     */
+    UNSAFE_componentWillUpdate: 'DEFINE_MANY',
+
+    // ==== Advanced methods ====
+
+    /**
+     * Updates the component's currently mounted DOM representation.
+     *
+     * By default, this implements React's rendering and reconciliation algorithm.
+     * Sophisticated clients may wish to override this.
+     *
+     * @param {ReactReconcileTransaction} transaction
+     * @internal
+     * @overridable
+     */
+    updateComponent: 'OVERRIDE_BASE'
+  };
+
+  /**
+   * Similar to ReactClassInterface but for static methods.
+   */
+  var ReactClassStaticInterface = {
+    /**
+     * This method is invoked after a component is instantiated and when it
+     * receives new props. Return an object to update state in response to
+     * prop changes. Return null to indicate no change to state.
+     *
+     * If an object is returned, its keys will be merged into the existing state.
+     *
+     * @return {object || null}
+     * @optional
+     */
+    getDerivedStateFromProps: 'DEFINE_MANY_MERGED'
+  };
+
+  /**
+   * Mapping from class specification keys to special processing functions.
+   *
+   * Although these are declared like instance properties in the specification
+   * when defining classes using `React.createClass`, they are actually static
+   * and are accessible on the constructor instead of the prototype. Despite
+   * being static, they must be defined outside of the "statics" key under
+   * which all other static methods are defined.
+   */
+  var RESERVED_SPEC_KEYS = {
+    displayName: function(Constructor, displayName) {
+      Constructor.displayName = displayName;
+    },
+    mixins: function(Constructor, mixins) {
+      if (mixins) {
+        for (var i = 0; i < mixins.length; i++) {
+          mixSpecIntoComponent(Constructor, mixins[i]);
+        }
+      }
+    },
+    childContextTypes: function(Constructor, childContextTypes) {
+      if (true) {
+        validateTypeDef(Constructor, childContextTypes, 'childContext');
+      }
+      Constructor.childContextTypes = _assign(
+        {},
+        Constructor.childContextTypes,
+        childContextTypes
+      );
+    },
+    contextTypes: function(Constructor, contextTypes) {
+      if (true) {
+        validateTypeDef(Constructor, contextTypes, 'context');
+      }
+      Constructor.contextTypes = _assign(
+        {},
+        Constructor.contextTypes,
+        contextTypes
+      );
+    },
+    /**
+     * Special case getDefaultProps which should move into statics but requires
+     * automatic merging.
+     */
+    getDefaultProps: function(Constructor, getDefaultProps) {
+      if (Constructor.getDefaultProps) {
+        Constructor.getDefaultProps = createMergedResultFunction(
+          Constructor.getDefaultProps,
+          getDefaultProps
+        );
+      } else {
+        Constructor.getDefaultProps = getDefaultProps;
+      }
+    },
+    propTypes: function(Constructor, propTypes) {
+      if (true) {
+        validateTypeDef(Constructor, propTypes, 'prop');
+      }
+      Constructor.propTypes = _assign({}, Constructor.propTypes, propTypes);
+    },
+    statics: function(Constructor, statics) {
+      mixStaticSpecIntoComponent(Constructor, statics);
+    },
+    autobind: function() {}
+  };
+
+  function validateTypeDef(Constructor, typeDef, location) {
+    for (var propName in typeDef) {
+      if (typeDef.hasOwnProperty(propName)) {
+        // use a warning instead of an _invariant so components
+        // don't show up in prod but only in __DEV__
+        if (true) {
+          warning(
+            typeof typeDef[propName] === 'function',
+            '%s: %s type `%s` is invalid; it must be a function, usually from ' +
+              'React.PropTypes.',
+            Constructor.displayName || 'ReactClass',
+            ReactPropTypeLocationNames[location],
+            propName
+          );
+        }
+      }
+    }
+  }
+
+  function validateMethodOverride(isAlreadyDefined, name) {
+    var specPolicy = ReactClassInterface.hasOwnProperty(name)
+      ? ReactClassInterface[name]
+      : null;
+
+    // Disallow overriding of base class methods unless explicitly allowed.
+    if (ReactClassMixin.hasOwnProperty(name)) {
+      _invariant(
+        specPolicy === 'OVERRIDE_BASE',
+        'ReactClassInterface: You are attempting to override ' +
+          '`%s` from your class specification. Ensure that your method names ' +
+          'do not overlap with React methods.',
+        name
+      );
+    }
+
+    // Disallow defining methods more than once unless explicitly allowed.
+    if (isAlreadyDefined) {
+      _invariant(
+        specPolicy === 'DEFINE_MANY' || specPolicy === 'DEFINE_MANY_MERGED',
+        'ReactClassInterface: You are attempting to define ' +
+          '`%s` on your component more than once. This conflict may be due ' +
+          'to a mixin.',
+        name
+      );
+    }
+  }
+
+  /**
+   * Mixin helper which handles policy validation and reserved
+   * specification keys when building React classes.
+   */
+  function mixSpecIntoComponent(Constructor, spec) {
+    if (!spec) {
+      if (true) {
+        var typeofSpec = typeof spec;
+        var isMixinValid = typeofSpec === 'object' && spec !== null;
+
+        if (true) {
+          warning(
+            isMixinValid,
+            "%s: You're attempting to include a mixin that is either null " +
+              'or not an object. Check the mixins included by the component, ' +
+              'as well as any mixins they include themselves. ' +
+              'Expected object but got %s.',
+            Constructor.displayName || 'ReactClass',
+            spec === null ? null : typeofSpec
+          );
+        }
+      }
+
+      return;
+    }
+
+    _invariant(
+      typeof spec !== 'function',
+      "ReactClass: You're attempting to " +
+        'use a component class or function as a mixin. Instead, just use a ' +
+        'regular object.'
+    );
+    _invariant(
+      !isValidElement(spec),
+      "ReactClass: You're attempting to " +
+        'use a component as a mixin. Instead, just use a regular object.'
+    );
+
+    var proto = Constructor.prototype;
+    var autoBindPairs = proto.__reactAutoBindPairs;
+
+    // By handling mixins before any other properties, we ensure the same
+    // chaining order is applied to methods with DEFINE_MANY policy, whether
+    // mixins are listed before or after these methods in the spec.
+    if (spec.hasOwnProperty(MIXINS_KEY)) {
+      RESERVED_SPEC_KEYS.mixins(Constructor, spec.mixins);
+    }
+
+    for (var name in spec) {
+      if (!spec.hasOwnProperty(name)) {
+        continue;
+      }
+
+      if (name === MIXINS_KEY) {
+        // We have already handled mixins in a special case above.
+        continue;
+      }
+
+      var property = spec[name];
+      var isAlreadyDefined = proto.hasOwnProperty(name);
+      validateMethodOverride(isAlreadyDefined, name);
+
+      if (RESERVED_SPEC_KEYS.hasOwnProperty(name)) {
+        RESERVED_SPEC_KEYS[name](Constructor, property);
+      } else {
+        // Setup methods on prototype:
+        // The following member methods should not be automatically bound:
+        // 1. Expected ReactClass methods (in the "interface").
+        // 2. Overridden methods (that were mixed in).
+        var isReactClassMethod = ReactClassInterface.hasOwnProperty(name);
+        var isFunction = typeof property === 'function';
+        var shouldAutoBind =
+          isFunction &&
+          !isReactClassMethod &&
+          !isAlreadyDefined &&
+          spec.autobind !== false;
+
+        if (shouldAutoBind) {
+          autoBindPairs.push(name, property);
+          proto[name] = property;
+        } else {
+          if (isAlreadyDefined) {
+            var specPolicy = ReactClassInterface[name];
+
+            // These cases should already be caught by validateMethodOverride.
+            _invariant(
+              isReactClassMethod &&
+                (specPolicy === 'DEFINE_MANY_MERGED' ||
+                  specPolicy === 'DEFINE_MANY'),
+              'ReactClass: Unexpected spec policy %s for key %s ' +
+                'when mixing in component specs.',
+              specPolicy,
+              name
+            );
+
+            // For methods which are defined more than once, call the existing
+            // methods before calling the new property, merging if appropriate.
+            if (specPolicy === 'DEFINE_MANY_MERGED') {
+              proto[name] = createMergedResultFunction(proto[name], property);
+            } else if (specPolicy === 'DEFINE_MANY') {
+              proto[name] = createChainedFunction(proto[name], property);
+            }
+          } else {
+            proto[name] = property;
+            if (true) {
+              // Add verbose displayName to the function, which helps when looking
+              // at profiling tools.
+              if (typeof property === 'function' && spec.displayName) {
+                proto[name].displayName = spec.displayName + '_' + name;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  function mixStaticSpecIntoComponent(Constructor, statics) {
+    if (!statics) {
+      return;
+    }
+
+    for (var name in statics) {
+      var property = statics[name];
+      if (!statics.hasOwnProperty(name)) {
+        continue;
+      }
+
+      var isReserved = name in RESERVED_SPEC_KEYS;
+      _invariant(
+        !isReserved,
+        'ReactClass: You are attempting to define a reserved ' +
+          'property, `%s`, that shouldn\'t be on the "statics" key. Define it ' +
+          'as an instance property instead; it will still be accessible on the ' +
+          'constructor.',
+        name
+      );
+
+      var isAlreadyDefined = name in Constructor;
+      if (isAlreadyDefined) {
+        var specPolicy = ReactClassStaticInterface.hasOwnProperty(name)
+          ? ReactClassStaticInterface[name]
+          : null;
+
+        _invariant(
+          specPolicy === 'DEFINE_MANY_MERGED',
+          'ReactClass: You are attempting to define ' +
+            '`%s` on your component more than once. This conflict may be ' +
+            'due to a mixin.',
+          name
+        );
+
+        Constructor[name] = createMergedResultFunction(Constructor[name], property);
+
+        return;
+      }
+
+      Constructor[name] = property;
+    }
+  }
+
+  /**
+   * Merge two objects, but throw if both contain the same key.
+   *
+   * @param {object} one The first object, which is mutated.
+   * @param {object} two The second object
+   * @return {object} one after it has been mutated to contain everything in two.
+   */
+  function mergeIntoWithNoDuplicateKeys(one, two) {
+    _invariant(
+      one && two && typeof one === 'object' && typeof two === 'object',
+      'mergeIntoWithNoDuplicateKeys(): Cannot merge non-objects.'
+    );
+
+    for (var key in two) {
+      if (two.hasOwnProperty(key)) {
+        _invariant(
+          one[key] === undefined,
+          'mergeIntoWithNoDuplicateKeys(): ' +
+            'Tried to merge two objects with the same key: `%s`. This conflict ' +
+            'may be due to a mixin; in particular, this may be caused by two ' +
+            'getInitialState() or getDefaultProps() methods returning objects ' +
+            'with clashing keys.',
+          key
+        );
+        one[key] = two[key];
+      }
+    }
+    return one;
+  }
+
+  /**
+   * Creates a function that invokes two functions and merges their return values.
+   *
+   * @param {function} one Function to invoke first.
+   * @param {function} two Function to invoke second.
+   * @return {function} Function that invokes the two argument functions.
+   * @private
+   */
+  function createMergedResultFunction(one, two) {
+    return function mergedResult() {
+      var a = one.apply(this, arguments);
+      var b = two.apply(this, arguments);
+      if (a == null) {
+        return b;
+      } else if (b == null) {
+        return a;
+      }
+      var c = {};
+      mergeIntoWithNoDuplicateKeys(c, a);
+      mergeIntoWithNoDuplicateKeys(c, b);
+      return c;
+    };
+  }
+
+  /**
+   * Creates a function that invokes two functions and ignores their return vales.
+   *
+   * @param {function} one Function to invoke first.
+   * @param {function} two Function to invoke second.
+   * @return {function} Function that invokes the two argument functions.
+   * @private
+   */
+  function createChainedFunction(one, two) {
+    return function chainedFunction() {
+      one.apply(this, arguments);
+      two.apply(this, arguments);
+    };
+  }
+
+  /**
+   * Binds a method to the component.
+   *
+   * @param {object} component Component whose method is going to be bound.
+   * @param {function} method Method to be bound.
+   * @return {function} The bound method.
+   */
+  function bindAutoBindMethod(component, method) {
+    var boundMethod = method.bind(component);
+    if (true) {
+      boundMethod.__reactBoundContext = component;
+      boundMethod.__reactBoundMethod = method;
+      boundMethod.__reactBoundArguments = null;
+      var componentName = component.constructor.displayName;
+      var _bind = boundMethod.bind;
+      boundMethod.bind = function(newThis) {
+        for (
+          var _len = arguments.length,
+            args = Array(_len > 1 ? _len - 1 : 0),
+            _key = 1;
+          _key < _len;
+          _key++
+        ) {
+          args[_key - 1] = arguments[_key];
+        }
+
+        // User is trying to bind() an autobound method; we effectively will
+        // ignore the value of "this" that the user is trying to use, so
+        // let's warn.
+        if (newThis !== component && newThis !== null) {
+          if (true) {
+            warning(
+              false,
+              'bind(): React component methods may only be bound to the ' +
+                'component instance. See %s',
+              componentName
+            );
+          }
+        } else if (!args.length) {
+          if (true) {
+            warning(
+              false,
+              'bind(): You are binding a component method to the component. ' +
+                'React does this for you automatically in a high-performance ' +
+                'way, so you can safely remove this call. See %s',
+              componentName
+            );
+          }
+          return boundMethod;
+        }
+        var reboundMethod = _bind.apply(boundMethod, arguments);
+        reboundMethod.__reactBoundContext = component;
+        reboundMethod.__reactBoundMethod = method;
+        reboundMethod.__reactBoundArguments = args;
+        return reboundMethod;
+      };
+    }
+    return boundMethod;
+  }
+
+  /**
+   * Binds all auto-bound methods in a component.
+   *
+   * @param {object} component Component whose method is going to be bound.
+   */
+  function bindAutoBindMethods(component) {
+    var pairs = component.__reactAutoBindPairs;
+    for (var i = 0; i < pairs.length; i += 2) {
+      var autoBindKey = pairs[i];
+      var method = pairs[i + 1];
+      component[autoBindKey] = bindAutoBindMethod(component, method);
+    }
+  }
+
+  var IsMountedPreMixin = {
+    componentDidMount: function() {
+      this.__isMounted = true;
+    }
+  };
+
+  var IsMountedPostMixin = {
+    componentWillUnmount: function() {
+      this.__isMounted = false;
+    }
+  };
+
+  /**
+   * Add more to the ReactClass base class. These are all legacy features and
+   * therefore not already part of the modern ReactComponent.
+   */
+  var ReactClassMixin = {
+    /**
+     * TODO: This will be deprecated because state should always keep a consistent
+     * type signature and the only use case for this, is to avoid that.
+     */
+    replaceState: function(newState, callback) {
+      this.updater.enqueueReplaceState(this, newState, callback);
+    },
+
+    /**
+     * Checks whether or not this composite component is mounted.
+     * @return {boolean} True if mounted, false otherwise.
+     * @protected
+     * @final
+     */
+    isMounted: function() {
+      if (true) {
+        warning(
+          this.__didWarnIsMounted,
+          '%s: isMounted is deprecated. Instead, make sure to clean up ' +
+            'subscriptions and pending requests in componentWillUnmount to ' +
+            'prevent memory leaks.',
+          (this.constructor && this.constructor.displayName) ||
+            this.name ||
+            'Component'
+        );
+        this.__didWarnIsMounted = true;
+      }
+      return !!this.__isMounted;
+    }
+  };
+
+  var ReactClassComponent = function() {};
+  _assign(
+    ReactClassComponent.prototype,
+    ReactComponent.prototype,
+    ReactClassMixin
+  );
+
+  /**
+   * Creates a composite component class given a class specification.
+   * See https://facebook.github.io/react/docs/top-level-api.html#react.createclass
+   *
+   * @param {object} spec Class specification (which must define `render`).
+   * @return {function} Component constructor function.
+   * @public
+   */
+  function createClass(spec) {
+    // To keep our warnings more understandable, we'll use a little hack here to
+    // ensure that Constructor.name !== 'Constructor'. This makes sure we don't
+    // unnecessarily identify a class without displayName as 'Constructor'.
+    var Constructor = identity(function(props, context, updater) {
+      // This constructor gets overridden by mocks. The argument is used
+      // by mocks to assert on what gets mounted.
+
+      if (true) {
+        warning(
+          this instanceof Constructor,
+          'Something is calling a React component directly. Use a factory or ' +
+            'JSX instead. See: https://fb.me/react-legacyfactory'
+        );
+      }
+
+      // Wire up auto-binding
+      if (this.__reactAutoBindPairs.length) {
+        bindAutoBindMethods(this);
+      }
+
+      this.props = props;
+      this.context = context;
+      this.refs = emptyObject;
+      this.updater = updater || ReactNoopUpdateQueue;
+
+      this.state = null;
+
+      // ReactClasses doesn't have constructors. Instead, they use the
+      // getInitialState and componentWillMount methods for initialization.
+
+      var initialState = this.getInitialState ? this.getInitialState() : null;
+      if (true) {
+        // We allow auto-mocks to proceed as if they're returning null.
+        if (
+          initialState === undefined &&
+          this.getInitialState._isMockFunction
+        ) {
+          // This is probably bad practice. Consider warning here and
+          // deprecating this convenience.
+          initialState = null;
+        }
+      }
+      _invariant(
+        typeof initialState === 'object' && !Array.isArray(initialState),
+        '%s.getInitialState(): must return an object or null',
+        Constructor.displayName || 'ReactCompositeComponent'
+      );
+
+      this.state = initialState;
+    });
+    Constructor.prototype = new ReactClassComponent();
+    Constructor.prototype.constructor = Constructor;
+    Constructor.prototype.__reactAutoBindPairs = [];
+
+    injectedMixins.forEach(mixSpecIntoComponent.bind(null, Constructor));
+
+    mixSpecIntoComponent(Constructor, IsMountedPreMixin);
+    mixSpecIntoComponent(Constructor, spec);
+    mixSpecIntoComponent(Constructor, IsMountedPostMixin);
+
+    // Initialize the defaultProps property after all mixins have been merged.
+    if (Constructor.getDefaultProps) {
+      Constructor.defaultProps = Constructor.getDefaultProps();
+    }
+
+    if (true) {
+      // This is a tag to indicate that the use of these method names is ok,
+      // since it's used with createClass. If it's not, then it's likely a
+      // mistake so we'll warn you to use the static property, property
+      // initializer or constructor respectively.
+      if (Constructor.getDefaultProps) {
+        Constructor.getDefaultProps.isReactClassApproved = {};
+      }
+      if (Constructor.prototype.getInitialState) {
+        Constructor.prototype.getInitialState.isReactClassApproved = {};
+      }
+    }
+
+    _invariant(
+      Constructor.prototype.render,
+      'createClass(...): Class specification must implement a `render` method.'
+    );
+
+    if (true) {
+      warning(
+        !Constructor.prototype.componentShouldUpdate,
+        '%s has a method called ' +
+          'componentShouldUpdate(). Did you mean shouldComponentUpdate()? ' +
+          'The name is phrased as a question because the function is ' +
+          'expected to return a value.',
+        spec.displayName || 'A component'
+      );
+      warning(
+        !Constructor.prototype.componentWillRecieveProps,
+        '%s has a method called ' +
+          'componentWillRecieveProps(). Did you mean componentWillReceiveProps()?',
+        spec.displayName || 'A component'
+      );
+      warning(
+        !Constructor.prototype.UNSAFE_componentWillRecieveProps,
+        '%s has a method called UNSAFE_componentWillRecieveProps(). ' +
+          'Did you mean UNSAFE_componentWillReceiveProps()?',
+        spec.displayName || 'A component'
+      );
+    }
+
+    // Reduce time spent doing lookups by setting these on the prototype.
+    for (var methodName in ReactClassInterface) {
+      if (!Constructor.prototype[methodName]) {
+        Constructor.prototype[methodName] = null;
+      }
+    }
+
+    return Constructor;
+  }
+
+  return createClass;
+}
+
+module.exports = factory;
+
+
+/***/ }),
+
+/***/ "./node_modules/create-react-class/index.js":
+/*!**************************************************!*\
+  !*** ./node_modules/create-react-class/index.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
+
+
+
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var factory = __webpack_require__(/*! ./factory */ "./node_modules/create-react-class/factory.js");
+
+if (typeof React === 'undefined') {
+  throw Error(
+    'create-react-class could not find the React object. If you are using script tags, ' +
+      'make sure that React is being loaded before create-react-class.'
+  );
+}
+
+// Hack to grab NoopUpdateQueue from isomorphic React
+var ReactNoopUpdateQueue = new React.Component().updater;
+
+module.exports = factory(
+  React.Component,
+  React.isValidElement,
+  ReactNoopUpdateQueue
+);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-color-keywords/colors.json":
+/*!*****************************************************!*\
+  !*** ./node_modules/css-color-keywords/colors.json ***!
+  \*****************************************************/
+/*! exports provided: black, silver, gray, white, maroon, red, purple, fuchsia, green, lime, olive, yellow, navy, blue, teal, aqua, orange, aliceblue, antiquewhite, aquamarine, azure, beige, bisque, blanchedalmond, blueviolet, brown, burlywood, cadetblue, chartreuse, chocolate, coral, cornflowerblue, cornsilk, crimson, darkblue, darkcyan, darkgoldenrod, darkgray, darkgreen, darkgrey, darkkhaki, darkmagenta, darkolivegreen, darkorange, darkorchid, darkred, darksalmon, darkseagreen, darkslateblue, darkslategray, darkslategrey, darkturquoise, darkviolet, deeppink, deepskyblue, dimgray, dimgrey, dodgerblue, firebrick, floralwhite, forestgreen, gainsboro, ghostwhite, gold, goldenrod, greenyellow, grey, honeydew, hotpink, indianred, indigo, ivory, khaki, lavender, lavenderblush, lawngreen, lemonchiffon, lightblue, lightcoral, lightcyan, lightgoldenrodyellow, lightgray, lightgreen, lightgrey, lightpink, lightsalmon, lightseagreen, lightskyblue, lightslategray, lightslategrey, lightsteelblue, lightyellow, limegreen, linen, mediumaquamarine, mediumblue, mediumorchid, mediumpurple, mediumseagreen, mediumslateblue, mediumspringgreen, mediumturquoise, mediumvioletred, midnightblue, mintcream, mistyrose, moccasin, navajowhite, oldlace, olivedrab, orangered, orchid, palegoldenrod, palegreen, paleturquoise, palevioletred, papayawhip, peachpuff, peru, pink, plum, powderblue, rosybrown, royalblue, saddlebrown, salmon, sandybrown, seagreen, seashell, sienna, skyblue, slateblue, slategray, slategrey, snow, springgreen, steelblue, tan, thistle, tomato, turquoise, violet, wheat, whitesmoke, yellowgreen, rebeccapurple, default */
+/***/ (function(module) {
+
+module.exports = {"black":"#000000","silver":"#c0c0c0","gray":"#808080","white":"#ffffff","maroon":"#800000","red":"#ff0000","purple":"#800080","fuchsia":"#ff00ff","green":"#008000","lime":"#00ff00","olive":"#808000","yellow":"#ffff00","navy":"#000080","blue":"#0000ff","teal":"#008080","aqua":"#00ffff","orange":"#ffa500","aliceblue":"#f0f8ff","antiquewhite":"#faebd7","aquamarine":"#7fffd4","azure":"#f0ffff","beige":"#f5f5dc","bisque":"#ffe4c4","blanchedalmond":"#ffebcd","blueviolet":"#8a2be2","brown":"#a52a2a","burlywood":"#deb887","cadetblue":"#5f9ea0","chartreuse":"#7fff00","chocolate":"#d2691e","coral":"#ff7f50","cornflowerblue":"#6495ed","cornsilk":"#fff8dc","crimson":"#dc143c","darkblue":"#00008b","darkcyan":"#008b8b","darkgoldenrod":"#b8860b","darkgray":"#a9a9a9","darkgreen":"#006400","darkgrey":"#a9a9a9","darkkhaki":"#bdb76b","darkmagenta":"#8b008b","darkolivegreen":"#556b2f","darkorange":"#ff8c00","darkorchid":"#9932cc","darkred":"#8b0000","darksalmon":"#e9967a","darkseagreen":"#8fbc8f","darkslateblue":"#483d8b","darkslategray":"#2f4f4f","darkslategrey":"#2f4f4f","darkturquoise":"#00ced1","darkviolet":"#9400d3","deeppink":"#ff1493","deepskyblue":"#00bfff","dimgray":"#696969","dimgrey":"#696969","dodgerblue":"#1e90ff","firebrick":"#b22222","floralwhite":"#fffaf0","forestgreen":"#228b22","gainsboro":"#dcdcdc","ghostwhite":"#f8f8ff","gold":"#ffd700","goldenrod":"#daa520","greenyellow":"#adff2f","grey":"#808080","honeydew":"#f0fff0","hotpink":"#ff69b4","indianred":"#cd5c5c","indigo":"#4b0082","ivory":"#fffff0","khaki":"#f0e68c","lavender":"#e6e6fa","lavenderblush":"#fff0f5","lawngreen":"#7cfc00","lemonchiffon":"#fffacd","lightblue":"#add8e6","lightcoral":"#f08080","lightcyan":"#e0ffff","lightgoldenrodyellow":"#fafad2","lightgray":"#d3d3d3","lightgreen":"#90ee90","lightgrey":"#d3d3d3","lightpink":"#ffb6c1","lightsalmon":"#ffa07a","lightseagreen":"#20b2aa","lightskyblue":"#87cefa","lightslategray":"#778899","lightslategrey":"#778899","lightsteelblue":"#b0c4de","lightyellow":"#ffffe0","limegreen":"#32cd32","linen":"#faf0e6","mediumaquamarine":"#66cdaa","mediumblue":"#0000cd","mediumorchid":"#ba55d3","mediumpurple":"#9370db","mediumseagreen":"#3cb371","mediumslateblue":"#7b68ee","mediumspringgreen":"#00fa9a","mediumturquoise":"#48d1cc","mediumvioletred":"#c71585","midnightblue":"#191970","mintcream":"#f5fffa","mistyrose":"#ffe4e1","moccasin":"#ffe4b5","navajowhite":"#ffdead","oldlace":"#fdf5e6","olivedrab":"#6b8e23","orangered":"#ff4500","orchid":"#da70d6","palegoldenrod":"#eee8aa","palegreen":"#98fb98","paleturquoise":"#afeeee","palevioletred":"#db7093","papayawhip":"#ffefd5","peachpuff":"#ffdab9","peru":"#cd853f","pink":"#ffc0cb","plum":"#dda0dd","powderblue":"#b0e0e6","rosybrown":"#bc8f8f","royalblue":"#4169e1","saddlebrown":"#8b4513","salmon":"#fa8072","sandybrown":"#f4a460","seagreen":"#2e8b57","seashell":"#fff5ee","sienna":"#a0522d","skyblue":"#87ceeb","slateblue":"#6a5acd","slategray":"#708090","slategrey":"#708090","snow":"#fffafa","springgreen":"#00ff7f","steelblue":"#4682b4","tan":"#d2b48c","thistle":"#d8bfd8","tomato":"#ff6347","turquoise":"#40e0d0","violet":"#ee82ee","wheat":"#f5deb3","whitesmoke":"#f5f5f5","yellowgreen":"#9acd32","rebeccapurple":"#663399"};
+
+/***/ }),
+
+/***/ "./node_modules/css-color-keywords/index.js":
+/*!**************************************************!*\
+  !*** ./node_modules/css-color-keywords/index.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = __webpack_require__(/*! ./colors.json */ "./node_modules/css-color-keywords/colors.json")
+
+
+/***/ }),
+
+/***/ "./node_modules/css-to-react-native/index.js":
+/*!***************************************************!*\
+  !*** ./node_modules/css-to-react-native/index.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+function _interopDefault(ex) {
+  return ex && (typeof ex === 'undefined' ? 'undefined' : _typeof(ex)) === 'object' && 'default' in ex ? ex['default'] : ex;
+}
+
+var parse = __webpack_require__(/*! postcss-value-parser */ "./node_modules/postcss-value-parser/lib/index.js");
+var parse__default = _interopDefault(parse);
+var cssColorKeywords = _interopDefault(__webpack_require__(/*! css-color-keywords */ "./node_modules/css-color-keywords/index.js"));
+var camelizeStyleName = _interopDefault(__webpack_require__(/*! fbjs/lib/camelizeStyleName */ "./node_modules/fbjs/lib/camelizeStyleName.js"));
+
+var matchString = function matchString(node) {
+  if (node.type !== 'string') return null;
+  return node.value.replace(/\\([0-9a-f]{1,6})(?:\s|$)/gi, function (match, charCode) {
+    return String.fromCharCode(parseInt(charCode, 16));
+  }).replace(/\\/g, '');
+};
+
+var hexColorRe = /^(#(?:[0-9a-f]{3,4}){1,2})$/i;
+var cssFunctionNameRe = /^(rgba?|hsla?|hwb|lab|lch|gray|color)$/;
+
+var matchColor = function matchColor(node) {
+  if (node.type === 'word' && (hexColorRe.test(node.value) || node.value in cssColorKeywords)) {
+    return node.value;
+  } else if (node.type === 'function' && cssFunctionNameRe.test(node.value)) {
+    return parse.stringify(node);
+  }
+  return null;
+};
+
+var noneRe = /^(none)$/i;
+var autoRe = /^(auto)$/i;
+var identRe = /(^-?[_a-z][_a-z0-9-]*$)/i;
+// Note if these are wrong, you'll need to change index.js too
+var numberRe = /^([+-]?(?:\d*\.)?\d+(?:[Ee][+-]?\d+)?)$/;
+// Note lengthRe is sneaky: you can omit units for 0
+var lengthRe = /^(0$|(?:[+-]?(?:\d*\.)?\d+(?:[Ee][+-]?\d+)?)(?=px$))/;
+var unsupportedUnitRe = /^([+-]?(?:\d*\.)?\d+(?:[Ee][+-]?\d+)?(ch|em|ex|rem|vh|vw|vmin|vmax|cm|mm|in|pc|pt))$/;
+var angleRe = /^([+-]?(?:\d*\.)?\d+(?:[Ee][+-]?\d+)?(?:deg|rad))$/;
+var percentRe = /^([+-]?(?:\d*\.)?\d+(?:[Ee][+-]?\d+)?%)$/;
+
+var noopToken = function noopToken(predicate) {
+  return function (node) {
+    return predicate(node) ? '<token>' : null;
+  };
+};
+
+var valueForTypeToken = function valueForTypeToken(type) {
+  return function (node) {
+    return node.type === type ? node.value : null;
+  };
+};
+
+var regExpToken = function regExpToken(regExp) {
+  var transform = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : String;
+  return function (node) {
+    if (node.type !== 'word') return null;
+
+    var match = node.value.match(regExp);
+    if (match === null) return null;
+
+    var value = transform(match[1]);
+
+    return value;
+  };
+};
+
+var tokens = {
+  SPACE: noopToken(function (node) {
+    return node.type === 'space';
+  }),
+  SLASH: noopToken(function (node) {
+    return node.type === 'div' && node.value === '/';
+  }),
+  COMMA: noopToken(function (node) {
+    return node.type === 'div' && node.value === ',';
+  }),
+  WORD: valueForTypeToken('word'),
+  NONE: regExpToken(noneRe),
+  AUTO: regExpToken(autoRe),
+  NUMBER: regExpToken(numberRe, Number),
+  LENGTH: regExpToken(lengthRe, Number),
+  UNSUPPORTED_LENGTH_UNIT: regExpToken(unsupportedUnitRe),
+  ANGLE: regExpToken(angleRe),
+  PERCENT: regExpToken(percentRe),
+  IDENT: regExpToken(identRe),
+  STRING: matchString,
+  COLOR: matchColor,
+  LINE: regExpToken(/^(none|underline|line-through)$/i)
+};
+
+var LENGTH = tokens.LENGTH,
+    UNSUPPORTED_LENGTH_UNIT = tokens.UNSUPPORTED_LENGTH_UNIT,
+    PERCENT = tokens.PERCENT,
+    COLOR = tokens.COLOR,
+    SPACE = tokens.SPACE,
+    NONE = tokens.NONE;
+
+
+var directionFactory = function directionFactory(_ref) {
+  var _ref$types = _ref.types,
+      types = _ref$types === undefined ? [LENGTH, UNSUPPORTED_LENGTH_UNIT, PERCENT] : _ref$types,
+      _ref$directions = _ref.directions,
+      directions = _ref$directions === undefined ? ['Top', 'Right', 'Bottom', 'Left'] : _ref$directions,
+      _ref$prefix = _ref.prefix,
+      prefix = _ref$prefix === undefined ? '' : _ref$prefix,
+      _ref$suffix = _ref.suffix,
+      suffix = _ref$suffix === undefined ? '' : _ref$suffix;
+  return function (tokenStream) {
+    var _output;
+
+    var values = [];
+
+    // borderWidth doesn't currently allow a percent value, but may do in the future
+    values.push(tokenStream.expect.apply(tokenStream, _toConsumableArray(types)));
+
+    while (values.length < 4 && tokenStream.hasTokens()) {
+      tokenStream.expect(SPACE);
+      values.push(tokenStream.expect.apply(tokenStream, _toConsumableArray(types)));
+    }
+
+    tokenStream.expectEmpty();
+
+    var top = values[0],
+        _values$ = values[1],
+        right = _values$ === undefined ? top : _values$,
+        _values$2 = values[2],
+        bottom = _values$2 === undefined ? top : _values$2,
+        _values$3 = values[3],
+        left = _values$3 === undefined ? right : _values$3;
+
+
+    var keyFor = function keyFor(n) {
+      return '' + prefix + directions[n] + suffix;
+    };
+
+    var output = (_output = {}, _defineProperty(_output, keyFor(0), top), _defineProperty(_output, keyFor(1), right), _defineProperty(_output, keyFor(2), bottom), _defineProperty(_output, keyFor(3), left), _output);
+
+    return { $merge: output };
+  };
+};
+
+var anyOrderFactory = function anyOrderFactory(properties) {
+  var delim = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : SPACE;
+  return function (tokenStream) {
+    var propertyNames = Object.keys(properties);
+    var values = propertyNames.reduce(function (accum, propertyName) {
+      accum[propertyName] === undefined; // eslint-disable-line
+      return accum;
+    }, {});
+
+    var numParsed = 0;
+    while (numParsed < propertyNames.length && tokenStream.hasTokens()) {
+      if (numParsed) tokenStream.expect(delim);
+
+      var matchedPropertyName = propertyNames.find(function (propertyName) {
+        return values[propertyName] === undefined && properties[propertyName].tokens.some(function (token) {
+          return tokenStream.matches(token);
+        });
+      });
+
+      if (!matchedPropertyName) {
+        tokenStream.throw();
+      } else {
+        values[matchedPropertyName] = tokenStream.lastValue;
+      }
+
+      numParsed += 1;
+    }
+
+    tokenStream.expectEmpty();
+
+    propertyNames.forEach(function (propertyName) {
+      if (values[propertyName] === undefined) values[propertyName] = properties[propertyName].default;
+    });
+
+    return { $merge: values };
+  };
+};
+
+var shadowOffsetFactory = function shadowOffsetFactory() {
+  return function (tokenStream) {
+    var width = tokenStream.expect(LENGTH);
+    var height = tokenStream.matches(SPACE) ? tokenStream.expect(LENGTH) : width;
+    tokenStream.expectEmpty();
+    return { width: width, height: height };
+  };
+};
+
+var parseShadow = function parseShadow(tokenStream) {
+  var offsetX = void 0;
+  var offsetY = void 0;
+  var radius = void 0;
+  var color = void 0;
+
+  if (tokenStream.matches(NONE)) {
+    tokenStream.expectEmpty();
+    return {
+      offset: { width: 0, height: 0 },
+      radius: 0,
+      color: 'black'
+    };
+  }
+
+  var didParseFirst = false;
+  while (tokenStream.hasTokens()) {
+    if (didParseFirst) tokenStream.expect(SPACE);
+
+    if (offsetX === undefined && tokenStream.matches(LENGTH, UNSUPPORTED_LENGTH_UNIT)) {
+      offsetX = tokenStream.lastValue;
+      tokenStream.expect(SPACE);
+      offsetY = tokenStream.expect(LENGTH, UNSUPPORTED_LENGTH_UNIT);
+
+      tokenStream.saveRewindPoint();
+      if (tokenStream.matches(SPACE) && tokenStream.matches(LENGTH, UNSUPPORTED_LENGTH_UNIT)) {
+        radius = tokenStream.lastValue;
+      } else {
+        tokenStream.rewind();
+      }
+    } else if (color === undefined && tokenStream.matches(COLOR)) {
+      color = tokenStream.lastValue;
+    } else {
+      tokenStream.throw();
+    }
+
+    didParseFirst = true;
+  }
+
+  if (offsetX === undefined) tokenStream.throw();
+
+  return {
+    offset: { width: offsetX, height: offsetY },
+    radius: radius !== undefined ? radius : 0,
+    color: color !== undefined ? color : 'black'
+  };
+};
+
+var boxShadow = function boxShadow(tokenStream) {
+  var _parseShadow = parseShadow(tokenStream),
+      offset = _parseShadow.offset,
+      radius = _parseShadow.radius,
+      color = _parseShadow.color;
+
+  return {
+    $merge: {
+      shadowOffset: offset,
+      shadowRadius: radius,
+      shadowColor: color,
+      shadowOpacity: 1
+    }
+  };
+};
+
+var NONE$1 = tokens.NONE,
+    AUTO = tokens.AUTO,
+    NUMBER = tokens.NUMBER,
+    LENGTH$1 = tokens.LENGTH,
+    SPACE$1 = tokens.SPACE;
+
+
+var defaultFlexGrow = 1;
+var defaultFlexShrink = 1;
+var defaultFlexBasis = 0;
+
+var FLEX_BASIS_AUTO = {}; // Used for reference equality
+
+var flex = function flex(tokenStream) {
+  var flexGrow = void 0;
+  var flexShrink = void 0;
+  var flexBasis = void 0;
+
+  if (tokenStream.matches(NONE$1)) {
+    tokenStream.expectEmpty();
+    return { $merge: { flexGrow: 0, flexShrink: 0 } };
+  }
+
+  tokenStream.saveRewindPoint();
+  if (tokenStream.matches(AUTO) && !tokenStream.hasTokens()) {
+    return { $merge: { flexGrow: 1, flexShrink: 1 } };
+  }
+  tokenStream.rewind();
+
+  var partsParsed = 0;
+  while (partsParsed < 2 && tokenStream.hasTokens()) {
+    if (partsParsed !== 0) tokenStream.expect(SPACE$1);
+
+    if (flexGrow === undefined && tokenStream.matches(NUMBER)) {
+      flexGrow = tokenStream.lastValue;
+
+      tokenStream.saveRewindPoint();
+      if (tokenStream.matches(SPACE$1) && tokenStream.matches(NUMBER)) {
+        flexShrink = tokenStream.lastValue;
+      } else {
+        tokenStream.rewind();
+      }
+    } else if (flexBasis === undefined && tokenStream.matches(LENGTH$1)) {
+      flexBasis = tokenStream.lastValue;
+    } else if (flexBasis === undefined && tokenStream.matches(AUTO)) {
+      flexBasis = FLEX_BASIS_AUTO;
+    } else {
+      tokenStream.throw();
+    }
+
+    partsParsed += 1;
+  }
+
+  tokenStream.expectEmpty();
+
+  if (flexGrow === undefined) flexGrow = defaultFlexGrow;
+  if (flexShrink === undefined) flexShrink = defaultFlexShrink;
+  if (flexBasis === undefined) flexBasis = defaultFlexBasis;
+
+  return flexBasis !== FLEX_BASIS_AUTO ? { $merge: { flexGrow: flexGrow, flexShrink: flexShrink, flexBasis: flexBasis } } : { $merge: { flexGrow: flexGrow, flexShrink: flexShrink } };
+};
+
+var SPACE$2 = tokens.SPACE,
+    IDENT = tokens.IDENT,
+    STRING = tokens.STRING;
+
+
+var parseFontFamily = function parseFontFamily(tokenStream) {
+  var fontFamily = void 0;
+
+  if (tokenStream.matches(STRING)) {
+    fontFamily = tokenStream.lastValue;
+  } else {
+    fontFamily = tokenStream.expect(IDENT);
+    while (tokenStream.hasTokens()) {
+      tokenStream.expect(SPACE$2);
+      var nextIdent = tokenStream.expect(IDENT);
+      fontFamily += ' ' + nextIdent;
+    }
+  }
+
+  tokenStream.expectEmpty();
+
+  return fontFamily;
+};
+
+var SPACE$3 = tokens.SPACE,
+    LENGTH$2 = tokens.LENGTH,
+    UNSUPPORTED_LENGTH_UNIT$1 = tokens.UNSUPPORTED_LENGTH_UNIT,
+    NUMBER$1 = tokens.NUMBER,
+    SLASH = tokens.SLASH;
+
+var NORMAL = regExpToken(/^(normal)$/);
+var STYLE = regExpToken(/^(italic)$/);
+var WEIGHT = regExpToken(/^([1-9]00|bold)$/);
+var VARIANT = regExpToken(/^(small-caps)$/);
+
+var defaultFontStyle = 'normal';
+var defaultFontWeight = 'normal';
+var defaultFontVariant = [];
+
+var font = function font(tokenStream) {
+  var fontStyle = void 0;
+  var fontWeight = void 0;
+  var fontVariant = void 0;
+  // let fontSize;
+  var lineHeight = void 0;
+  // let fontFamily;
+
+  var numStyleWeightVariantMatched = 0;
+  while (numStyleWeightVariantMatched < 3 && tokenStream.hasTokens()) {
+    if (tokenStream.matches(NORMAL)) {
+      /* pass */
+    } else if (fontStyle === undefined && tokenStream.matches(STYLE)) {
+      fontStyle = tokenStream.lastValue;
+    } else if (fontWeight === undefined && tokenStream.matches(WEIGHT)) {
+      fontWeight = tokenStream.lastValue;
+    } else if (fontVariant === undefined && tokenStream.matches(VARIANT)) {
+      fontVariant = [tokenStream.lastValue];
+    } else {
+      break;
+    }
+
+    tokenStream.expect(SPACE$3);
+    numStyleWeightVariantMatched += 1;
+  }
+
+  var fontSize = tokenStream.expect(LENGTH$2, UNSUPPORTED_LENGTH_UNIT$1);
+
+  if (tokenStream.matches(SLASH)) {
+    if (tokenStream.matches(NUMBER$1)) {
+      lineHeight = fontSize * tokenStream.lastValue;
+    } else {
+      lineHeight = tokenStream.expect(LENGTH$2, UNSUPPORTED_LENGTH_UNIT$1);
+    }
+  }
+
+  tokenStream.expect(SPACE$3);
+
+  var fontFamily = parseFontFamily(tokenStream);
+
+  if (fontStyle === undefined) fontStyle = defaultFontStyle;
+  if (fontWeight === undefined) fontWeight = defaultFontWeight;
+  if (fontVariant === undefined) fontVariant = defaultFontVariant;
+
+  var out = { fontStyle: fontStyle, fontWeight: fontWeight, fontVariant: fontVariant, fontSize: fontSize, fontFamily: fontFamily };
+  if (lineHeight !== undefined) out.lineHeight = lineHeight;
+
+  return { $merge: out };
+};
+
+var textShadow = function textShadow(tokenStream) {
+  var _parseShadow2 = parseShadow(tokenStream),
+      offset = _parseShadow2.offset,
+      radius = _parseShadow2.radius,
+      color = _parseShadow2.color;
+
+  return {
+    $merge: {
+      textShadowOffset: offset,
+      textShadowRadius: radius,
+      textShadowColor: color
+    }
+  };
+};
+
+var SPACE$4 = tokens.SPACE,
+    LINE = tokens.LINE,
+    COLOR$1 = tokens.COLOR;
+
+
+var STYLE$1 = regExpToken(/^(solid|double|dotted|dashed)$/);
+
+var defaultTextDecorationLine = 'none';
+var defaultTextDecorationStyle = 'solid';
+var defaultTextDecorationColor = 'black';
+
+var textDecoration = function textDecoration(tokenStream) {
+  var line = void 0;
+  var style = void 0;
+  var color = void 0;
+
+  var didParseFirst = false;
+  while (tokenStream.hasTokens()) {
+    if (didParseFirst) tokenStream.expect(SPACE$4);
+
+    if (line === undefined && tokenStream.matches(LINE)) {
+      var lines = [tokenStream.lastValue.toLowerCase()];
+
+      tokenStream.saveRewindPoint();
+      if (lines[0] !== 'none' && tokenStream.matches(SPACE$4) && tokenStream.matches(LINE)) {
+        lines.push(tokenStream.lastValue.toLowerCase());
+        // Underline comes before line-through
+        lines.sort().reverse();
+      } else {
+        tokenStream.rewind();
+      }
+
+      line = lines.join(' ');
+    } else if (style === undefined && tokenStream.matches(STYLE$1)) {
+      style = tokenStream.lastValue;
+    } else if (color === undefined && tokenStream.matches(COLOR$1)) {
+      color = tokenStream.lastValue;
+    } else {
+      tokenStream.throw();
+    }
+
+    didParseFirst = true;
+  }
+
+  var $merge = {
+    textDecorationLine: line !== undefined ? line : defaultTextDecorationLine,
+    textDecorationColor: color !== undefined ? color : defaultTextDecorationColor,
+    textDecorationStyle: style !== undefined ? style : defaultTextDecorationStyle
+  };
+  return { $merge: $merge };
+};
+
+var SPACE$5 = tokens.SPACE,
+    LINE$1 = tokens.LINE;
+
+
+var textDecorationLine = function textDecorationLine(tokenStream) {
+  var lines = [];
+
+  var didParseFirst = false;
+  while (tokenStream.hasTokens()) {
+    if (didParseFirst) tokenStream.expect(SPACE$5);
+
+    lines.push(tokenStream.expect(LINE$1).toLowerCase());
+
+    didParseFirst = true;
+  }
+
+  lines.sort().reverse();
+
+  return lines.join(' ');
+};
+
+var SPACE$6 = tokens.SPACE,
+    COMMA = tokens.COMMA,
+    LENGTH$3 = tokens.LENGTH,
+    NUMBER$2 = tokens.NUMBER,
+    ANGLE = tokens.ANGLE;
+
+
+var oneOfType = function oneOfType(tokenType) {
+  return function (functionStream) {
+    var value = functionStream.expect(tokenType);
+    functionStream.expectEmpty();
+    return value;
+  };
+};
+
+var singleNumber = oneOfType(NUMBER$2);
+var singleLength = oneOfType(LENGTH$3);
+var singleAngle = oneOfType(ANGLE);
+var xyTransformFactory = function xyTransformFactory(tokenType) {
+  return function (key, valueIfOmitted) {
+    return function (functionStream) {
+      var x = functionStream.expect(tokenType);
+
+      var y = void 0;
+      if (functionStream.hasTokens()) {
+        functionStream.expect(COMMA);
+        y = functionStream.expect(tokenType);
+      } else if (valueIfOmitted !== undefined) {
+        y = valueIfOmitted;
+      } else {
+        // Assumption, if x === y, then we can omit XY
+        // I.e. scale(5) => [{ scale: 5 }] rather than [{ scaleX: 5 }, { scaleY: 5 }]
+        return x;
+      }
+
+      functionStream.expectEmpty();
+
+      return [_defineProperty({}, key + 'Y', y), _defineProperty({}, key + 'X', x)];
+    };
+  };
+};
+var xyNumber = xyTransformFactory(NUMBER$2);
+var xyLength = xyTransformFactory(LENGTH$3);
+var xyAngle = xyTransformFactory(ANGLE);
+
+var partTransforms = {
+  perspective: singleNumber,
+  scale: xyNumber('scale'),
+  scaleX: singleNumber,
+  scaleY: singleNumber,
+  translate: xyLength('translate', 0),
+  translateX: singleLength,
+  translateY: singleLength,
+  rotate: singleAngle,
+  rotateX: singleAngle,
+  rotateY: singleAngle,
+  rotateZ: singleAngle,
+  skewX: singleAngle,
+  skewY: singleAngle,
+  skew: xyAngle('skew', '0deg')
+};
+
+var transform = function transform(tokenStream) {
+  var transforms = [];
+
+  var didParseFirst = false;
+  while (tokenStream.hasTokens()) {
+    if (didParseFirst) tokenStream.expect(SPACE$6);
+
+    var functionStream = tokenStream.expectFunction();
+    var functionName = functionStream.functionName;
+
+    var transformedValues = partTransforms[functionName](functionStream);
+    if (!Array.isArray(transformedValues)) {
+      transformedValues = [_defineProperty({}, functionName, transformedValues)];
+    }
+    transforms = transformedValues.concat(transforms);
+
+    didParseFirst = true;
+  }
+
+  return transforms;
+};
+
+var IDENT$1 = tokens.IDENT,
+    WORD = tokens.WORD,
+    COLOR$2 = tokens.COLOR,
+    LENGTH$4 = tokens.LENGTH,
+    UNSUPPORTED_LENGTH_UNIT$2 = tokens.UNSUPPORTED_LENGTH_UNIT,
+    PERCENT$1 = tokens.PERCENT,
+    AUTO$1 = tokens.AUTO;
+
+
+var background = function background(tokenStream) {
+  return {
+    $merge: { backgroundColor: tokenStream.expect(COLOR$2) }
+  };
+};
+var border = anyOrderFactory({
+  borderWidth: {
+    tokens: [LENGTH$4, UNSUPPORTED_LENGTH_UNIT$2],
+    default: 1
+  },
+  borderColor: {
+    tokens: [COLOR$2],
+    default: 'black'
+  },
+  borderStyle: {
+    tokens: [regExpToken(/^(solid|dashed|dotted)$/)],
+    default: 'solid'
+  }
+});
+var borderColor = directionFactory({
+  types: [WORD],
+  prefix: 'border',
+  suffix: 'Color'
+});
+var borderRadius = directionFactory({
+  directions: ['TopLeft', 'TopRight', 'BottomRight', 'BottomLeft'],
+  prefix: 'border',
+  suffix: 'Radius'
+});
+var borderWidth = directionFactory({ prefix: 'border', suffix: 'Width' });
+var margin = directionFactory({
+  types: [LENGTH$4, UNSUPPORTED_LENGTH_UNIT$2, PERCENT$1, AUTO$1],
+  prefix: 'margin'
+});
+var padding = directionFactory({ prefix: 'padding' });
+var flexFlow = anyOrderFactory({
+  flexWrap: {
+    tokens: [regExpToken(/(nowrap|wrap|wrap-reverse)/)],
+    default: 'nowrap'
+  },
+  flexDirection: {
+    tokens: [regExpToken(/(row|row-reverse|column|column-reverse)/)],
+    default: 'row'
+  }
+});
+var fontVariant = function fontVariant(tokenStream) {
+  return [tokenStream.expect(IDENT$1)];
+};
+var fontWeight = function fontWeight(tokenStream) {
+  return tokenStream.expect(WORD);
+}; // Also match numbers as strings
+var shadowOffset = shadowOffsetFactory();
+var textShadowOffset = shadowOffsetFactory();
+
+var transforms = {
+  background: background,
+  border: border,
+  borderColor: borderColor,
+  borderRadius: borderRadius,
+  borderWidth: borderWidth,
+  boxShadow: boxShadow,
+  flex: flex,
+  flexFlow: flexFlow,
+  font: font,
+  fontFamily: parseFontFamily,
+  fontVariant: fontVariant,
+  fontWeight: fontWeight,
+  margin: margin,
+  padding: padding,
+  shadowOffset: shadowOffset,
+  textShadow: textShadow,
+  textShadowOffset: textShadowOffset,
+  textDecoration: textDecoration,
+  textDecorationLine: textDecorationLine,
+  transform: transform
+};
+
+var SYMBOL_MATCH = 'SYMBOL_MATCH';
+
+var TokenStream = function () {
+  function TokenStream(nodes, parent) {
+    _classCallCheck(this, TokenStream);
+
+    this.index = 0;
+    this.nodes = nodes;
+    this.functionName = parent != null ? parent.value : null;
+    this.lastValue = null;
+    this.rewindIndex = -1;
+  }
+
+  _createClass(TokenStream, [{
+    key: 'hasTokens',
+    value: function hasTokens() {
+      return this.index <= this.nodes.length - 1;
+    }
+  }, {
+    key: SYMBOL_MATCH,
+    value: function value() {
+      if (!this.hasTokens()) return null;
+
+      var node = this.nodes[this.index];
+
+      for (var i = 0; i < arguments.length; i += 1) {
+        var tokenDescriptor = arguments.length <= i ? undefined : arguments[i];
+        var value = tokenDescriptor(node);
+        if (value !== null) {
+          this.index += 1;
+          this.lastValue = value;
+          return value;
+        }
+      }
+
+      return null;
+    }
+  }, {
+    key: 'matches',
+    value: function matches() {
+      return this[SYMBOL_MATCH].apply(this, arguments) !== null;
+    }
+  }, {
+    key: 'expect',
+    value: function expect() {
+      var value = this[SYMBOL_MATCH].apply(this, arguments);
+      return value !== null ? value : this.throw();
+    }
+  }, {
+    key: 'matchesFunction',
+    value: function matchesFunction() {
+      var node = this.nodes[this.index];
+      if (node.type !== 'function') return null;
+      var value = new TokenStream(node.nodes, node);
+      this.index += 1;
+      this.lastValue = null;
+      return value;
+    }
+  }, {
+    key: 'expectFunction',
+    value: function expectFunction() {
+      var value = this.matchesFunction();
+      return value !== null ? value : this.throw();
+    }
+  }, {
+    key: 'expectEmpty',
+    value: function expectEmpty() {
+      if (this.hasTokens()) this.throw();
+    }
+  }, {
+    key: 'throw',
+    value: function _throw() {
+      throw new Error('Unexpected token type: ' + this.nodes[this.index].type);
+    }
+  }, {
+    key: 'saveRewindPoint',
+    value: function saveRewindPoint() {
+      this.rewindIndex = this.index;
+    }
+  }, {
+    key: 'rewind',
+    value: function rewind() {
+      if (this.rewindIndex === -1) throw new Error('Internal error');
+      this.index = this.rewindIndex;
+      this.lastValue = null;
+    }
+  }]);
+
+  return TokenStream;
+}();
+
+/* eslint-disable no-param-reassign */
+// Note if this is wrong, you'll need to change tokenTypes.js too
+
+
+var numberOrLengthRe = /^([+-]?(?:\d*\.)?\d+(?:[Ee][+-]?\d+)?)(?:px)?$/i;
+var boolRe = /^true|false$/i;
+var nullRe = /^null$/i;
+var undefinedRe = /^undefined$/i;
+
+// Undocumented export
+var transformRawValue = function transformRawValue(input) {
+  var value = input.trim();
+
+  var numberMatch = value.match(numberOrLengthRe);
+  if (numberMatch !== null) return Number(numberMatch[1]);
+
+  var boolMatch = input.match(boolRe);
+  if (boolMatch !== null) return boolMatch[0].toLowerCase() === 'true';
+
+  var nullMatch = input.match(nullRe);
+  if (nullMatch !== null) return null;
+
+  var undefinedMatch = input.match(undefinedRe);
+  if (undefinedMatch !== null) return undefined;
+
+  return value;
+};
+
+var baseTransformShorthandValue = function baseTransformShorthandValue(propName, inputValue) {
+  var ast = parse__default(inputValue.trim());
+  var tokenStream = new TokenStream(ast.nodes);
+  return transforms[propName](tokenStream);
+};
+
+var transformShorthandValue =  false ? undefined : function (propName, inputValue) {
+  try {
+    return baseTransformShorthandValue(propName, inputValue);
+  } catch (e) {
+    throw new Error('Failed to parse declaration "' + propName + ': ' + inputValue + '"');
+  }
+};
+
+var getStylesForProperty = function getStylesForProperty(propName, inputValue, allowShorthand) {
+  var isRawValue = allowShorthand === false || !(propName in transforms);
+  var propValue = isRawValue ? transformRawValue(inputValue) : transformShorthandValue(propName, inputValue.trim());
+
+  return propValue && propValue.$merge ? propValue.$merge : _defineProperty({}, propName, propValue);
+};
+
+var getPropertyName = function getPropertyName(propName) {
+  var isCustomProp = /^--\w+/.test(propName);
+  if (isCustomProp) {
+    return propName;
+  }
+  return camelizeStyleName(propName);
+};
+
+var index = function index(rules) {
+  var shorthandBlacklist = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+  return rules.reduce(function (accum, rule) {
+    var propertyName = getPropertyName(rule[0]);
+    var value = rule[1];
+    var allowShorthand = shorthandBlacklist.indexOf(propertyName) === -1;
+    return Object.assign(accum, getStylesForProperty(propertyName, value, allowShorthand));
+  }, {});
+};
+
+exports.transformRawValue = transformRawValue;
+exports.getStylesForProperty = getStylesForProperty;
+exports.getPropertyName = getPropertyName;
+exports.default = index;
+
+
+/***/ }),
+
+/***/ "./node_modules/error-stack-parser/error-stack-parser.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/error-stack-parser/error-stack-parser.js ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function(root, factory) {
+    'use strict';
+    // Universal Module Definition (UMD) to support AMD, CommonJS/Node.js, Rhino, and browsers.
+
+    /* istanbul ignore next */
+    if (true) {
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! stackframe */ "./node_modules/stackframe/stackframe.js")], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+    } else {}
+}(this, function ErrorStackParser(StackFrame) {
+    'use strict';
+
+    var FIREFOX_SAFARI_STACK_REGEXP = /(^|@)\S+\:\d+/;
+    var CHROME_IE_STACK_REGEXP = /^\s*at .*(\S+\:\d+|\(native\))/m;
+    var SAFARI_NATIVE_CODE_REGEXP = /^(eval@)?(\[native code\])?$/;
+
+    return {
+        /**
+         * Given an Error object, extract the most information from it.
+         *
+         * @param {Error} error object
+         * @return {Array} of StackFrames
+         */
+        parse: function ErrorStackParser$$parse(error) {
+            if (typeof error.stacktrace !== 'undefined' || typeof error['opera#sourceloc'] !== 'undefined') {
+                return this.parseOpera(error);
+            } else if (error.stack && error.stack.match(CHROME_IE_STACK_REGEXP)) {
+                return this.parseV8OrIE(error);
+            } else if (error.stack) {
+                return this.parseFFOrSafari(error);
+            } else {
+                throw new Error('Cannot parse given Error object');
+            }
+        },
+
+        // Separate line and column numbers from a string of the form: (URI:Line:Column)
+        extractLocation: function ErrorStackParser$$extractLocation(urlLike) {
+            // Fail-fast but return locations like "(native)"
+            if (urlLike.indexOf(':') === -1) {
+                return [urlLike];
+            }
+
+            var regExp = /(.+?)(?:\:(\d+))?(?:\:(\d+))?$/;
+            var parts = regExp.exec(urlLike.replace(/[\(\)]/g, ''));
+            return [parts[1], parts[2] || undefined, parts[3] || undefined];
+        },
+
+        parseV8OrIE: function ErrorStackParser$$parseV8OrIE(error) {
+            var filtered = error.stack.split('\n').filter(function(line) {
+                return !!line.match(CHROME_IE_STACK_REGEXP);
+            }, this);
+
+            return filtered.map(function(line) {
+                if (line.indexOf('(eval ') > -1) {
+                    // Throw away eval information until we implement stacktrace.js/stackframe#8
+                    line = line.replace(/eval code/g, 'eval').replace(/(\(eval at [^\()]*)|(\)\,.*$)/g, '');
+                }
+                var tokens = line.replace(/^\s+/, '').replace(/\(eval code/g, '(').split(/\s+/).slice(1);
+                var locationParts = this.extractLocation(tokens.pop());
+                var functionName = tokens.join(' ') || undefined;
+                var fileName = ['eval', '<anonymous>'].indexOf(locationParts[0]) > -1 ? undefined : locationParts[0];
+
+                return new StackFrame({
+                    functionName: functionName,
+                    fileName: fileName,
+                    lineNumber: locationParts[1],
+                    columnNumber: locationParts[2],
+                    source: line
+                });
+            }, this);
+        },
+
+        parseFFOrSafari: function ErrorStackParser$$parseFFOrSafari(error) {
+            var filtered = error.stack.split('\n').filter(function(line) {
+                return !line.match(SAFARI_NATIVE_CODE_REGEXP);
+            }, this);
+
+            return filtered.map(function(line) {
+                // Throw away eval information until we implement stacktrace.js/stackframe#8
+                if (line.indexOf(' > eval') > -1) {
+                    line = line.replace(/ line (\d+)(?: > eval line \d+)* > eval\:\d+\:\d+/g, ':$1');
+                }
+
+                if (line.indexOf('@') === -1 && line.indexOf(':') === -1) {
+                    // Safari eval frames only have function names and nothing else
+                    return new StackFrame({
+                        functionName: line
+                    });
+                } else {
+                    var functionNameRegex = /((.*".+"[^@]*)?[^@]*)(?:@)/;
+                    var matches = line.match(functionNameRegex);
+                    var functionName = matches && matches[1] ? matches[1] : undefined;
+                    var locationParts = this.extractLocation(line.replace(functionNameRegex, ''));
+
+                    return new StackFrame({
+                        functionName: functionName,
+                        fileName: locationParts[0],
+                        lineNumber: locationParts[1],
+                        columnNumber: locationParts[2],
+                        source: line
+                    });
+                }
+            }, this);
+        },
+
+        parseOpera: function ErrorStackParser$$parseOpera(e) {
+            if (!e.stacktrace || (e.message.indexOf('\n') > -1 &&
+                e.message.split('\n').length > e.stacktrace.split('\n').length)) {
+                return this.parseOpera9(e);
+            } else if (!e.stack) {
+                return this.parseOpera10(e);
+            } else {
+                return this.parseOpera11(e);
+            }
+        },
+
+        parseOpera9: function ErrorStackParser$$parseOpera9(e) {
+            var lineRE = /Line (\d+).*script (?:in )?(\S+)/i;
+            var lines = e.message.split('\n');
+            var result = [];
+
+            for (var i = 2, len = lines.length; i < len; i += 2) {
+                var match = lineRE.exec(lines[i]);
+                if (match) {
+                    result.push(new StackFrame({
+                        fileName: match[2],
+                        lineNumber: match[1],
+                        source: lines[i]
+                    }));
+                }
+            }
+
+            return result;
+        },
+
+        parseOpera10: function ErrorStackParser$$parseOpera10(e) {
+            var lineRE = /Line (\d+).*script (?:in )?(\S+)(?:: In function (\S+))?$/i;
+            var lines = e.stacktrace.split('\n');
+            var result = [];
+
+            for (var i = 0, len = lines.length; i < len; i += 2) {
+                var match = lineRE.exec(lines[i]);
+                if (match) {
+                    result.push(
+                        new StackFrame({
+                            functionName: match[3] || undefined,
+                            fileName: match[2],
+                            lineNumber: match[1],
+                            source: lines[i]
+                        })
+                    );
+                }
+            }
+
+            return result;
+        },
+
+        // Opera 10.65+ Error.stack very similar to FF/Safari
+        parseOpera11: function ErrorStackParser$$parseOpera11(error) {
+            var filtered = error.stack.split('\n').filter(function(line) {
+                return !!line.match(FIREFOX_SAFARI_STACK_REGEXP) && !line.match(/^Error created at/);
+            }, this);
+
+            return filtered.map(function(line) {
+                var tokens = line.split('@');
+                var locationParts = this.extractLocation(tokens.pop());
+                var functionCall = (tokens.shift() || '');
+                var functionName = functionCall
+                        .replace(/<anonymous function(: (\w+))?>/, '$2')
+                        .replace(/\([^\)]*\)/g, '') || undefined;
+                var argsRaw;
+                if (functionCall.match(/\(([^\)]*)\)/)) {
+                    argsRaw = functionCall.replace(/^[^\(]+\(([^\)]*)\)$/, '$1');
+                }
+                var args = (argsRaw === undefined || argsRaw === '[arguments not available]') ?
+                    undefined : argsRaw.split(',');
+
+                return new StackFrame({
+                    functionName: functionName,
+                    args: args,
+                    fileName: locationParts[0],
+                    lineNumber: locationParts[1],
+                    columnNumber: locationParts[2],
+                    source: line
+                });
+            }, this);
+        }
+    };
+}));
+
+
+/***/ }),
+
+/***/ "./node_modules/fbjs/lib/camelize.js":
+/*!*******************************************!*\
+  !*** ./node_modules/fbjs/lib/camelize.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @typechecks
+ */
+
+var _hyphenPattern = /-(.)/g;
+
+/**
+ * Camelcases a hyphenated string, for example:
+ *
+ *   > camelize('background-color')
+ *   < "backgroundColor"
+ *
+ * @param {string} string
+ * @return {string}
+ */
+function camelize(string) {
+  return string.replace(_hyphenPattern, function (_, character) {
+    return character.toUpperCase();
+  });
+}
+
+module.exports = camelize;
+
+/***/ }),
+
+/***/ "./node_modules/fbjs/lib/camelizeStyleName.js":
+/*!****************************************************!*\
+  !*** ./node_modules/fbjs/lib/camelizeStyleName.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @typechecks
+ */
+
+
+
+var camelize = __webpack_require__(/*! ./camelize */ "./node_modules/fbjs/lib/camelize.js");
+
+var msPattern = /^-ms-/;
+
+/**
+ * Camelcases a hyphenated CSS property name, for example:
+ *
+ *   > camelizeStyleName('background-color')
+ *   < "backgroundColor"
+ *   > camelizeStyleName('-moz-transition')
+ *   < "MozTransition"
+ *   > camelizeStyleName('-ms-transition')
+ *   < "msTransition"
+ *
+ * As Andi Smith suggests
+ * (http://www.andismith.com/blog/2012/02/modernizr-prefixed/), an `-ms` prefix
+ * is converted to lowercase `ms`.
+ *
+ * @param {string} string
+ * @return {string}
+ */
+function camelizeStyleName(string) {
+  return camelize(string.replace(msPattern, 'ms-'));
+}
+
+module.exports = camelizeStyleName;
+
+/***/ }),
+
+/***/ "./node_modules/fbjs/lib/emptyFunction.js":
+/*!************************************************!*\
+  !*** ./node_modules/fbjs/lib/emptyFunction.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * 
+ */
+
+function makeEmptyFunction(arg) {
+  return function () {
+    return arg;
+  };
+}
+
+/**
+ * This function accepts and discards inputs; it has no side effects. This is
+ * primarily useful idiomatically for overridable function endpoints which
+ * always need to be callable, since JS lacks a null-call idiom ala Cocoa.
+ */
+var emptyFunction = function emptyFunction() {};
+
+emptyFunction.thatReturns = makeEmptyFunction;
+emptyFunction.thatReturnsFalse = makeEmptyFunction(false);
+emptyFunction.thatReturnsTrue = makeEmptyFunction(true);
+emptyFunction.thatReturnsNull = makeEmptyFunction(null);
+emptyFunction.thatReturnsThis = function () {
+  return this;
+};
+emptyFunction.thatReturnsArgument = function (arg) {
+  return arg;
+};
+
+module.exports = emptyFunction;
+
+/***/ }),
+
+/***/ "./node_modules/fbjs/lib/emptyObject.js":
+/*!**********************************************!*\
+  !*** ./node_modules/fbjs/lib/emptyObject.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
+
+
+
+var emptyObject = {};
+
+if (true) {
+  Object.freeze(emptyObject);
+}
+
+module.exports = emptyObject;
+
+/***/ }),
+
+/***/ "./node_modules/fbjs/lib/invariant.js":
+/*!********************************************!*\
+  !*** ./node_modules/fbjs/lib/invariant.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
+
+
+
+/**
+ * Use invariant() to assert state which your program assumes to be true.
+ *
+ * Provide sprintf-style format (only %s is supported) and arguments
+ * to provide information about what broke and what you were
+ * expecting.
+ *
+ * The invariant message will be stripped in production, but the invariant
+ * will remain to ensure logic does not differ in production.
+ */
+
+var validateFormat = function validateFormat(format) {};
+
+if (true) {
+  validateFormat = function validateFormat(format) {
+    if (format === undefined) {
+      throw new Error('invariant requires an error message argument');
+    }
+  };
+}
+
+function invariant(condition, format, a, b, c, d, e, f) {
+  validateFormat(format);
+
+  if (!condition) {
+    var error;
+    if (format === undefined) {
+      error = new Error('Minified exception occurred; use the non-minified dev environment ' + 'for the full error message and additional helpful warnings.');
+    } else {
+      var args = [a, b, c, d, e, f];
+      var argIndex = 0;
+      error = new Error(format.replace(/%s/g, function () {
+        return args[argIndex++];
+      }));
+      error.name = 'Invariant Violation';
+    }
+
+    error.framesToPop = 1; // we don't care about invariant's own frame
+    throw error;
+  }
+}
+
+module.exports = invariant;
+
+/***/ }),
+
+/***/ "./node_modules/fbjs/lib/shallowEqual.js":
+/*!***********************************************!*\
+  !*** ./node_modules/fbjs/lib/shallowEqual.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @typechecks
+ * 
+ */
+
+/*eslint-disable no-self-compare */
+
+
+
+var hasOwnProperty = Object.prototype.hasOwnProperty;
+
+/**
+ * inlined Object.is polyfill to avoid requiring consumers ship their own
+ * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
+ */
+function is(x, y) {
+  // SameValue algorithm
+  if (x === y) {
+    // Steps 1-5, 7-10
+    // Steps 6.b-6.e: +0 != -0
+    // Added the nonzero y check to make Flow happy, but it is redundant
+    return x !== 0 || y !== 0 || 1 / x === 1 / y;
+  } else {
+    // Step 6.a: NaN == NaN
+    return x !== x && y !== y;
+  }
+}
+
+/**
+ * Performs equality by iterating through keys on an object and returning false
+ * when any key has values which are not strictly equal between the arguments.
+ * Returns true when the values of all keys are strictly equal.
+ */
+function shallowEqual(objA, objB) {
+  if (is(objA, objB)) {
+    return true;
+  }
+
+  if (typeof objA !== 'object' || objA === null || typeof objB !== 'object' || objB === null) {
+    return false;
+  }
+
+  var keysA = Object.keys(objA);
+  var keysB = Object.keys(objB);
+
+  if (keysA.length !== keysB.length) {
+    return false;
+  }
+
+  // Test for A's keys different from B.
+  for (var i = 0; i < keysA.length; i++) {
+    if (!hasOwnProperty.call(objB, keysA[i]) || !is(objA[keysA[i]], objB[keysA[i]])) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+module.exports = shallowEqual;
+
+/***/ }),
+
+/***/ "./node_modules/fbjs/lib/warning.js":
+/*!******************************************!*\
+  !*** ./node_modules/fbjs/lib/warning.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright (c) 2014-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
+
+
+
+var emptyFunction = __webpack_require__(/*! ./emptyFunction */ "./node_modules/fbjs/lib/emptyFunction.js");
+
+/**
+ * Similar to invariant but only logs a warning if the condition is not met.
+ * This can be used to log issues in development environments in critical
+ * paths. Removing the logging code for production environments will keep the
+ * same logic and follow the same code paths.
+ */
+
+var warning = emptyFunction;
+
+if (true) {
+  var printWarning = function printWarning(format) {
+    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      args[_key - 1] = arguments[_key];
+    }
+
+    var argIndex = 0;
+    var message = 'Warning: ' + format.replace(/%s/g, function () {
+      return args[argIndex++];
+    });
+    if (typeof console !== 'undefined') {
+      console.error(message);
+    }
+    try {
+      // --- Welcome to debugging React ---
+      // This error was thrown as a convenience so that you can use this stack
+      // to find the callsite that caused this warning to fire.
+      throw new Error(message);
+    } catch (x) {}
+  };
+
+  warning = function warning(condition, format) {
+    if (format === undefined) {
+      throw new Error('`warning(condition, format, ...args)` requires a warning ' + 'message argument');
+    }
+
+    if (format.indexOf('Failed Composite propType: ') === 0) {
+      return; // Ignore CompositeComponent proptype check.
+    }
+
+    if (!condition) {
+      for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
+        args[_key2 - 2] = arguments[_key2];
+      }
+
+      printWarning.apply(undefined, [format].concat(args));
+    }
+  };
+}
+
+module.exports = warning;
+
+/***/ }),
+
+/***/ "./node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js":
+/*!**********************************************************************************!*\
+  !*** ./node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js ***!
+  \**********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Copyright 2015, Yahoo! Inc.
+ * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
+ */
+var REACT_STATICS = {
+    childContextTypes: true,
+    contextTypes: true,
+    defaultProps: true,
+    displayName: true,
+    getDefaultProps: true,
+    getDerivedStateFromProps: true,
+    mixins: true,
+    propTypes: true,
+    type: true
+};
+
+var KNOWN_STATICS = {
+    name: true,
+    length: true,
+    prototype: true,
+    caller: true,
+    callee: true,
+    arguments: true,
+    arity: true
+};
+
+var defineProperty = Object.defineProperty;
+var getOwnPropertyNames = Object.getOwnPropertyNames;
+var getOwnPropertySymbols = Object.getOwnPropertySymbols;
+var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
+var getPrototypeOf = Object.getPrototypeOf;
+var objectPrototype = getPrototypeOf && getPrototypeOf(Object);
+
+function hoistNonReactStatics(targetComponent, sourceComponent, blacklist) {
+    if (typeof sourceComponent !== 'string') { // don't hoist over string (html) components
+
+        if (objectPrototype) {
+            var inheritedComponent = getPrototypeOf(sourceComponent);
+            if (inheritedComponent && inheritedComponent !== objectPrototype) {
+                hoistNonReactStatics(targetComponent, inheritedComponent, blacklist);
+            }
+        }
+
+        var keys = getOwnPropertyNames(sourceComponent);
+
+        if (getOwnPropertySymbols) {
+            keys = keys.concat(getOwnPropertySymbols(sourceComponent));
+        }
+
+        for (var i = 0; i < keys.length; ++i) {
+            var key = keys[i];
+            if (!REACT_STATICS[key] && !KNOWN_STATICS[key] && (!blacklist || !blacklist[key])) {
+                var descriptor = getOwnPropertyDescriptor(sourceComponent, key);
+                try { // Avoid failures from read-only properties
+                    defineProperty(targetComponent, key, descriptor);
+                } catch (e) {}
+            }
+        }
+
+        return targetComponent;
+    }
+
+    return targetComponent;
+}
+
+module.exports = hoistNonReactStatics;
+
+
+/***/ }),
+
+/***/ "./node_modules/ieee754/index.js":
+/*!***************************************!*\
+  !*** ./node_modules/ieee754/index.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+exports.read = function (buffer, offset, isLE, mLen, nBytes) {
+  var e, m
+  var eLen = (nBytes * 8) - mLen - 1
+  var eMax = (1 << eLen) - 1
+  var eBias = eMax >> 1
+  var nBits = -7
+  var i = isLE ? (nBytes - 1) : 0
+  var d = isLE ? -1 : 1
+  var s = buffer[offset + i]
+
+  i += d
+
+  e = s & ((1 << (-nBits)) - 1)
+  s >>= (-nBits)
+  nBits += eLen
+  for (; nBits > 0; e = (e * 256) + buffer[offset + i], i += d, nBits -= 8) {}
+
+  m = e & ((1 << (-nBits)) - 1)
+  e >>= (-nBits)
+  nBits += mLen
+  for (; nBits > 0; m = (m * 256) + buffer[offset + i], i += d, nBits -= 8) {}
+
+  if (e === 0) {
+    e = 1 - eBias
+  } else if (e === eMax) {
+    return m ? NaN : ((s ? -1 : 1) * Infinity)
+  } else {
+    m = m + Math.pow(2, mLen)
+    e = e - eBias
+  }
+  return (s ? -1 : 1) * m * Math.pow(2, e - mLen)
+}
+
+exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
+  var e, m, c
+  var eLen = (nBytes * 8) - mLen - 1
+  var eMax = (1 << eLen) - 1
+  var eBias = eMax >> 1
+  var rt = (mLen === 23 ? Math.pow(2, -24) - Math.pow(2, -77) : 0)
+  var i = isLE ? 0 : (nBytes - 1)
+  var d = isLE ? 1 : -1
+  var s = value < 0 || (value === 0 && 1 / value < 0) ? 1 : 0
+
+  value = Math.abs(value)
+
+  if (isNaN(value) || value === Infinity) {
+    m = isNaN(value) ? 1 : 0
+    e = eMax
+  } else {
+    e = Math.floor(Math.log(value) / Math.LN2)
+    if (value * (c = Math.pow(2, -e)) < 1) {
+      e--
+      c *= 2
+    }
+    if (e + eBias >= 1) {
+      value += rt / c
+    } else {
+      value += rt * Math.pow(2, 1 - eBias)
+    }
+    if (value * c >= 2) {
+      e++
+      c /= 2
+    }
+
+    if (e + eBias >= eMax) {
+      m = 0
+      e = eMax
+    } else if (e + eBias >= 1) {
+      m = ((value * c) - 1) * Math.pow(2, mLen)
+      e = e + eBias
+    } else {
+      m = value * Math.pow(2, eBias - 1) * Math.pow(2, mLen)
+      e = 0
+    }
+  }
+
+  for (; mLen >= 8; buffer[offset + i] = m & 0xff, i += d, m /= 256, mLen -= 8) {}
+
+  e = (e << mLen) | m
+  eLen += mLen
+  for (; eLen > 0; buffer[offset + i] = e & 0xff, i += d, e /= 256, eLen -= 8) {}
+
+  buffer[offset + i - d] |= s * 128
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/invariant/browser.js":
+/*!*******************************************!*\
+  !*** ./node_modules/invariant/browser.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+/**
+ * Use invariant() to assert state which your program assumes to be true.
+ *
+ * Provide sprintf-style format (only %s is supported) and arguments
+ * to provide information about what broke and what you were
+ * expecting.
+ *
+ * The invariant message will be stripped in production, but the invariant
+ * will remain to ensure logic does not differ in production.
+ */
+
+var invariant = function(condition, format, a, b, c, d, e, f) {
+  if (true) {
+    if (format === undefined) {
+      throw new Error('invariant requires an error message argument');
+    }
+  }
+
+  if (!condition) {
+    var error;
+    if (format === undefined) {
+      error = new Error(
+        'Minified exception occurred; use the non-minified dev environment ' +
+        'for the full error message and additional helpful warnings.'
+      );
+    } else {
+      var args = [a, b, c, d, e, f];
+      var argIndex = 0;
+      error = new Error(
+        format.replace(/%s/g, function() { return args[argIndex++]; })
+      );
+      error.name = 'Invariant Violation';
+    }
+
+    error.framesToPop = 1; // we don't care about invariant's own frame
+    throw error;
+  }
+};
+
+module.exports = invariant;
+
+
+/***/ }),
+
+/***/ "./node_modules/is-plain-object/index.js":
+/*!***********************************************!*\
+  !*** ./node_modules/is-plain-object/index.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*!
+ * is-plain-object <https://github.com/jonschlinkert/is-plain-object>
+ *
+ * Copyright (c) 2014-2017, Jon Schlinkert.
+ * Released under the MIT License.
+ */
+
+
+
+var isObject = __webpack_require__(/*! isobject */ "./node_modules/isobject/index.js");
+
+function isObjectObject(o) {
+  return isObject(o) === true
+    && Object.prototype.toString.call(o) === '[object Object]';
+}
+
+module.exports = function isPlainObject(o) {
+  var ctor,prot;
+
+  if (isObjectObject(o) === false) return false;
+
+  // If has modified constructor
+  ctor = o.constructor;
+  if (typeof ctor !== 'function') return false;
+
+  // If has modified prototype
+  prot = ctor.prototype;
+  if (isObjectObject(prot) === false) return false;
+
+  // If constructor does not have an Object-specific method
+  if (prot.hasOwnProperty('isPrototypeOf') === false) {
+    return false;
+  }
+
+  // Most likely a plain Object
+  return true;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/isarray/index.js":
+/*!***************************************!*\
+  !*** ./node_modules/isarray/index.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var toString = {}.toString;
+
+module.exports = Array.isArray || function (arr) {
+  return toString.call(arr) == '[object Array]';
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/isobject/index.js":
+/*!****************************************!*\
+  !*** ./node_modules/isobject/index.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*!
+ * isobject <https://github.com/jonschlinkert/isobject>
+ *
+ * Copyright (c) 2014-2017, Jon Schlinkert.
+ * Released under the MIT License.
+ */
+
+
+
+module.exports = function isObject(val) {
+  return val != null && typeof val === 'object' && Array.isArray(val) === false;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/murmur2js/index.js":
+/*!*****************************************!*\
+  !*** ./node_modules/murmur2js/index.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/**
+ * JS Implementation of MurmurHash2
+ *
+ * @author <a href="mailto:gary.court@gmail.com">Gary Court</a>
+ * @see http://github.com/garycourt/murmurhash-js
+ * @author <a href="mailto:aappleby@gmail.com">Austin Appleby</a>
+ * @see http://sites.google.com/site/murmurhash/
+ *
+ * @param {string} str ASCII only
+ * @return {int} hash result
+ */
+module.exports = function murmur2js(str) {
+  var l = str.length;
+  var h = l;
+  var i = 0;
+  var k;
+
+  while (l >= 4) {
+    k = ((str.charCodeAt(i) & 0xff)) |
+      ((str.charCodeAt(++i) & 0xff) << 8) |
+      ((str.charCodeAt(++i) & 0xff) << 16) |
+      ((str.charCodeAt(++i) & 0xff) << 24);
+
+    k = (((k & 0xffff) * 0x5bd1e995) + ((((k >>> 16) * 0x5bd1e995) & 0xffff) << 16));
+    k ^= k >>> 24;
+    k = (((k & 0xffff) * 0x5bd1e995) + ((((k >>> 16) * 0x5bd1e995) & 0xffff) << 16));
+
+    h = (((h & 0xffff) * 0x5bd1e995) + ((((h >>> 16) * 0x5bd1e995) & 0xffff) << 16)) ^ k;
+
+    l -= 4;
+    ++i;
+  }
+
+  switch (l) {
+    case 3: h ^= (str.charCodeAt(i + 2) & 0xff) << 16;
+    case 2: h ^= (str.charCodeAt(i + 1) & 0xff) << 8;
+    case 1: h ^= (str.charCodeAt(i) & 0xff);
+      h = (((h & 0xffff) * 0x5bd1e995) + ((((h >>> 16) * 0x5bd1e995) & 0xffff) << 16));
+  }
+
+  h ^= h >>> 13;
+  h = (((h & 0xffff) * 0x5bd1e995) + ((((h >>> 16) * 0x5bd1e995) & 0xffff) << 16));
+  h ^= h >>> 15;
+
+  return h >>> 0;
+};
+
 
 /***/ }),
 
@@ -3406,6 +8861,431 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 /***/ }),
 
+/***/ "./node_modules/postcss-value-parser/lib/index.js":
+/*!********************************************************!*\
+  !*** ./node_modules/postcss-value-parser/lib/index.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var parse = __webpack_require__(/*! ./parse */ "./node_modules/postcss-value-parser/lib/parse.js");
+var walk = __webpack_require__(/*! ./walk */ "./node_modules/postcss-value-parser/lib/walk.js");
+var stringify = __webpack_require__(/*! ./stringify */ "./node_modules/postcss-value-parser/lib/stringify.js");
+
+function ValueParser(value) {
+    if (this instanceof ValueParser) {
+        this.nodes = parse(value);
+        return this;
+    }
+    return new ValueParser(value);
+}
+
+ValueParser.prototype.toString = function () {
+    return Array.isArray(this.nodes) ? stringify(this.nodes) : '';
+};
+
+ValueParser.prototype.walk = function (cb, bubble) {
+    walk(this.nodes, cb, bubble);
+    return this;
+};
+
+ValueParser.unit = __webpack_require__(/*! ./unit */ "./node_modules/postcss-value-parser/lib/unit.js");
+
+ValueParser.walk = walk;
+
+ValueParser.stringify = stringify;
+
+module.exports = ValueParser;
+
+
+/***/ }),
+
+/***/ "./node_modules/postcss-value-parser/lib/parse.js":
+/*!********************************************************!*\
+  !*** ./node_modules/postcss-value-parser/lib/parse.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var openParentheses = '('.charCodeAt(0);
+var closeParentheses = ')'.charCodeAt(0);
+var singleQuote = '\''.charCodeAt(0);
+var doubleQuote = '"'.charCodeAt(0);
+var backslash = '\\'.charCodeAt(0);
+var slash = '/'.charCodeAt(0);
+var comma = ','.charCodeAt(0);
+var colon = ':'.charCodeAt(0);
+var star = '*'.charCodeAt(0);
+
+module.exports = function (input) {
+    var tokens = [];
+    var value = input;
+
+    var next, quote, prev, token, escape, escapePos, whitespacePos;
+    var pos = 0;
+    var code = value.charCodeAt(pos);
+    var max = value.length;
+    var stack = [{ nodes: tokens }];
+    var balanced = 0;
+    var parent;
+
+    var name = '';
+    var before = '';
+    var after = '';
+
+    while (pos < max) {
+        // Whitespaces
+        if (code <= 32) {
+            next = pos;
+            do {
+                next += 1;
+                code = value.charCodeAt(next);
+            } while (code <= 32);
+            token = value.slice(pos, next);
+
+            prev = tokens[tokens.length - 1];
+            if (code === closeParentheses && balanced) {
+                after = token;
+            } else if (prev && prev.type === 'div') {
+                prev.after = token;
+            } else if (code === comma || code === colon || code === slash && value.charCodeAt(next + 1) !== star) {
+                before = token;
+            } else {
+                tokens.push({
+                    type: 'space',
+                    sourceIndex: pos,
+                    value: token
+                });
+            }
+
+            pos = next;
+
+        // Quotes
+        } else if (code === singleQuote || code === doubleQuote) {
+            next = pos;
+            quote = code === singleQuote ? '\'' : '"';
+            token = {
+                type: 'string',
+                sourceIndex: pos,
+                quote: quote
+            };
+            do {
+                escape = false;
+                next = value.indexOf(quote, next + 1);
+                if (~next) {
+                    escapePos = next;
+                    while (value.charCodeAt(escapePos - 1) === backslash) {
+                        escapePos -= 1;
+                        escape = !escape;
+                    }
+                } else {
+                    value += quote;
+                    next = value.length - 1;
+                    token.unclosed = true;
+                }
+            } while (escape);
+            token.value = value.slice(pos + 1, next);
+
+            tokens.push(token);
+            pos = next + 1;
+            code = value.charCodeAt(pos);
+
+        // Comments
+        } else if (code === slash && value.charCodeAt(pos + 1) === star) {
+            token = {
+                type: 'comment',
+                sourceIndex: pos
+            };
+
+            next = value.indexOf('*/', pos);
+            if (next === -1) {
+                token.unclosed = true;
+                next = value.length;
+            }
+
+            token.value = value.slice(pos + 2, next);
+            tokens.push(token);
+
+            pos = next + 2;
+            code = value.charCodeAt(pos);
+
+        // Dividers
+        } else if (code === slash || code === comma || code === colon) {
+            token = value[pos];
+
+            tokens.push({
+                type: 'div',
+                sourceIndex: pos - before.length,
+                value: token,
+                before: before,
+                after: ''
+            });
+            before = '';
+
+            pos += 1;
+            code = value.charCodeAt(pos);
+
+        // Open parentheses
+        } else if (openParentheses === code) {
+            // Whitespaces after open parentheses
+            next = pos;
+            do {
+                next += 1;
+                code = value.charCodeAt(next);
+            } while (code <= 32);
+            token = {
+                type: 'function',
+                sourceIndex: pos - name.length,
+                value: name,
+                before: value.slice(pos + 1, next)
+            };
+            pos = next;
+
+            if (name === 'url' && code !== singleQuote && code !== doubleQuote) {
+                next -= 1;
+                do {
+                    escape = false;
+                    next = value.indexOf(')', next + 1);
+                    if (~next) {
+                        escapePos = next;
+                        while (value.charCodeAt(escapePos - 1) === backslash) {
+                            escapePos -= 1;
+                            escape = !escape;
+                        }
+                    } else {
+                        value += ')';
+                        next = value.length - 1;
+                        token.unclosed = true;
+                    }
+                } while (escape);
+                // Whitespaces before closed
+                whitespacePos = next;
+                do {
+                    whitespacePos -= 1;
+                    code = value.charCodeAt(whitespacePos);
+                } while (code <= 32);
+                if (pos !== whitespacePos + 1) {
+                    token.nodes = [{
+                        type: 'word',
+                        sourceIndex: pos,
+                        value: value.slice(pos, whitespacePos + 1)
+                    }];
+                } else {
+                    token.nodes = [];
+                }
+                if (token.unclosed && whitespacePos + 1 !== next) {
+                    token.after = '';
+                    token.nodes.push({
+                        type: 'space',
+                        sourceIndex: whitespacePos + 1,
+                        value: value.slice(whitespacePos + 1, next)
+                    });
+                } else {
+                    token.after = value.slice(whitespacePos + 1, next);
+                }
+                pos = next + 1;
+                code = value.charCodeAt(pos);
+                tokens.push(token);
+            } else {
+                balanced += 1;
+                token.after = '';
+                tokens.push(token);
+                stack.push(token);
+                tokens = token.nodes = [];
+                parent = token;
+            }
+            name = '';
+
+        // Close parentheses
+        } else if (closeParentheses === code && balanced) {
+            pos += 1;
+            code = value.charCodeAt(pos);
+
+            parent.after = after;
+            after = '';
+            balanced -= 1;
+            stack.pop();
+            parent = stack[balanced];
+            tokens = parent.nodes;
+
+        // Words
+        } else {
+            next = pos;
+            do {
+                if (code === backslash) {
+                    next += 1;
+                }
+                next += 1;
+                code = value.charCodeAt(next);
+            } while (next < max && !(
+                code <= 32 ||
+                code === singleQuote ||
+                code === doubleQuote ||
+                code === comma ||
+                code === colon ||
+                code === slash ||
+                code === openParentheses ||
+                code === closeParentheses && balanced
+            ));
+            token = value.slice(pos, next);
+
+            if (openParentheses === code) {
+                name = token;
+            } else {
+                tokens.push({
+                    type: 'word',
+                    sourceIndex: pos,
+                    value: token
+                });
+            }
+
+            pos = next;
+        }
+    }
+
+    for (pos = stack.length - 1; pos; pos -= 1) {
+        stack[pos].unclosed = true;
+    }
+
+    return stack[0].nodes;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/postcss-value-parser/lib/stringify.js":
+/*!************************************************************!*\
+  !*** ./node_modules/postcss-value-parser/lib/stringify.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function stringifyNode(node, custom) {
+    var type = node.type;
+    var value = node.value;
+    var buf;
+    var customResult;
+
+    if (custom && (customResult = custom(node)) !== undefined) {
+        return customResult;
+    } else if (type === 'word' || type === 'space') {
+        return value;
+    } else if (type === 'string') {
+        buf = node.quote || '';
+        return buf + value + (node.unclosed ? '' : buf);
+    } else if (type === 'comment') {
+        return '/*' + value + (node.unclosed ? '' : '*/');
+    } else if (type === 'div') {
+        return (node.before || '') + value + (node.after || '');
+    } else if (Array.isArray(node.nodes)) {
+        buf = stringify(node.nodes);
+        if (type !== 'function') {
+            return buf;
+        }
+        return value + '(' + (node.before || '') + buf + (node.after || '') + (node.unclosed ? '' : ')');
+    }
+    return value;
+}
+
+function stringify(nodes, custom) {
+    var result, i;
+
+    if (Array.isArray(nodes)) {
+        result = '';
+        for (i = nodes.length - 1; ~i; i -= 1) {
+            result = stringifyNode(nodes[i], custom) + result;
+        }
+        return result;
+    }
+    return stringifyNode(nodes, custom);
+}
+
+module.exports = stringify;
+
+
+/***/ }),
+
+/***/ "./node_modules/postcss-value-parser/lib/unit.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/postcss-value-parser/lib/unit.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var minus = '-'.charCodeAt(0);
+var plus  = '+'.charCodeAt(0);
+var dot   = '.'.charCodeAt(0);
+
+module.exports = function (value) {
+    var pos = 0;
+    var length = value.length;
+    var dotted = false;
+    var containsNumber = false;
+    var code;
+    var number = '';
+
+    while (pos < length) {
+        code = value.charCodeAt(pos);
+
+        if (code >= 48 && code <= 57) {
+            number += value[pos];
+            containsNumber = true;
+        } else if (code === dot) {
+            if (dotted) {
+                break;
+            }
+            dotted = true;
+            number += value[pos];
+        } else if (code === plus || code === minus) {
+            if (pos !== 0) {
+                break;
+            }
+            number += value[pos];
+        } else {
+            break;
+        }
+
+        pos += 1;
+    }
+
+    return containsNumber ? {
+        number: number,
+        unit: value.slice(pos)
+    } : false;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/postcss-value-parser/lib/walk.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/postcss-value-parser/lib/walk.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = function walk(nodes, cb, bubble) {
+    var i, max, node, result;
+
+    for (i = 0, max = nodes.length; i < max; i += 1) {
+        node = nodes[i];
+        if (!bubble) {
+            result = cb(node, i, nodes);
+        }
+
+        if (result !== false && node.type === 'function' && Array.isArray(node.nodes)) {
+            walk(node.nodes, cb, bubble);
+        }
+
+        if (bubble) {
+            cb(node, i, nodes);
+        }
+    }
+};
+
+
+/***/ }),
+
 /***/ "./node_modules/process/browser.js":
 /*!*****************************************!*\
   !*** ./node_modules/process/browser.js ***!
@@ -3599,6 +9479,261 @@ process.chdir = function (dir) {
 process.umask = function() { return 0; };
 
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@skpm/timers/timeout.js */ "./node_modules/@skpm/timers/timeout.js")["setTimeout"], __webpack_require__(/*! ./node_modules/@skpm/timers/timeout.js */ "./node_modules/@skpm/timers/timeout.js")["clearTimeout"]))
+
+/***/ }),
+
+/***/ "./node_modules/promise-polyfill/lib/index.js":
+/*!****************************************************!*\
+  !*** ./node_modules/promise-polyfill/lib/index.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(setTimeout, setImmediate) {
+
+// Store setTimeout reference so promise-polyfill will be unaffected by
+// other code modifying setTimeout (like sinon.useFakeTimers())
+var setTimeoutFunc = setTimeout;
+
+function noop() {}
+
+// Polyfill for Function.prototype.bind
+function bind(fn, thisArg) {
+  return function() {
+    fn.apply(thisArg, arguments);
+  };
+}
+
+function Promise(fn) {
+  if (!(this instanceof Promise))
+    throw new TypeError('Promises must be constructed via new');
+  if (typeof fn !== 'function') throw new TypeError('not a function');
+  this._state = 0;
+  this._handled = false;
+  this._value = undefined;
+  this._deferreds = [];
+
+  doResolve(fn, this);
+}
+
+function handle(self, deferred) {
+  while (self._state === 3) {
+    self = self._value;
+  }
+  if (self._state === 0) {
+    self._deferreds.push(deferred);
+    return;
+  }
+  self._handled = true;
+  Promise._immediateFn(function() {
+    var cb = self._state === 1 ? deferred.onFulfilled : deferred.onRejected;
+    if (cb === null) {
+      (self._state === 1 ? resolve : reject)(deferred.promise, self._value);
+      return;
+    }
+    var ret;
+    try {
+      ret = cb(self._value);
+    } catch (e) {
+      reject(deferred.promise, e);
+      return;
+    }
+    resolve(deferred.promise, ret);
+  });
+}
+
+function resolve(self, newValue) {
+  try {
+    // Promise Resolution Procedure: https://github.com/promises-aplus/promises-spec#the-promise-resolution-procedure
+    if (newValue === self)
+      throw new TypeError('A promise cannot be resolved with itself.');
+    if (
+      newValue &&
+      (typeof newValue === 'object' || typeof newValue === 'function')
+    ) {
+      var then = newValue.then;
+      if (newValue instanceof Promise) {
+        self._state = 3;
+        self._value = newValue;
+        finale(self);
+        return;
+      } else if (typeof then === 'function') {
+        doResolve(bind(then, newValue), self);
+        return;
+      }
+    }
+    self._state = 1;
+    self._value = newValue;
+    finale(self);
+  } catch (e) {
+    reject(self, e);
+  }
+}
+
+function reject(self, newValue) {
+  self._state = 2;
+  self._value = newValue;
+  finale(self);
+}
+
+function finale(self) {
+  if (self._state === 2 && self._deferreds.length === 0) {
+    Promise._immediateFn(function() {
+      if (!self._handled) {
+        Promise._unhandledRejectionFn(self._value);
+      }
+    });
+  }
+
+  for (var i = 0, len = self._deferreds.length; i < len; i++) {
+    handle(self, self._deferreds[i]);
+  }
+  self._deferreds = null;
+}
+
+function Handler(onFulfilled, onRejected, promise) {
+  this.onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : null;
+  this.onRejected = typeof onRejected === 'function' ? onRejected : null;
+  this.promise = promise;
+}
+
+/**
+ * Take a potentially misbehaving resolver function and make sure
+ * onFulfilled and onRejected are only called once.
+ *
+ * Makes no guarantees about asynchrony.
+ */
+function doResolve(fn, self) {
+  var done = false;
+  try {
+    fn(
+      function(value) {
+        if (done) return;
+        done = true;
+        resolve(self, value);
+      },
+      function(reason) {
+        if (done) return;
+        done = true;
+        reject(self, reason);
+      }
+    );
+  } catch (ex) {
+    if (done) return;
+    done = true;
+    reject(self, ex);
+  }
+}
+
+Promise.prototype['catch'] = function(onRejected) {
+  return this.then(null, onRejected);
+};
+
+Promise.prototype.then = function(onFulfilled, onRejected) {
+  var prom = new this.constructor(noop);
+
+  handle(this, new Handler(onFulfilled, onRejected, prom));
+  return prom;
+};
+
+Promise.prototype['finally'] = function(callback) {
+  var constructor = this.constructor;
+  return this.then(
+    function(value) {
+      return constructor.resolve(callback()).then(function() {
+        return value;
+      });
+    },
+    function(reason) {
+      return constructor.resolve(callback()).then(function() {
+        return constructor.reject(reason);
+      });
+    }
+  );
+};
+
+Promise.all = function(arr) {
+  return new Promise(function(resolve, reject) {
+    if (!arr || typeof arr.length === 'undefined')
+      throw new TypeError('Promise.all accepts an array');
+    var args = Array.prototype.slice.call(arr);
+    if (args.length === 0) return resolve([]);
+    var remaining = args.length;
+
+    function res(i, val) {
+      try {
+        if (val && (typeof val === 'object' || typeof val === 'function')) {
+          var then = val.then;
+          if (typeof then === 'function') {
+            then.call(
+              val,
+              function(val) {
+                res(i, val);
+              },
+              reject
+            );
+            return;
+          }
+        }
+        args[i] = val;
+        if (--remaining === 0) {
+          resolve(args);
+        }
+      } catch (ex) {
+        reject(ex);
+      }
+    }
+
+    for (var i = 0; i < args.length; i++) {
+      res(i, args[i]);
+    }
+  });
+};
+
+Promise.resolve = function(value) {
+  if (value && typeof value === 'object' && value.constructor === Promise) {
+    return value;
+  }
+
+  return new Promise(function(resolve) {
+    resolve(value);
+  });
+};
+
+Promise.reject = function(value) {
+  return new Promise(function(resolve, reject) {
+    reject(value);
+  });
+};
+
+Promise.race = function(values) {
+  return new Promise(function(resolve, reject) {
+    for (var i = 0, len = values.length; i < len; i++) {
+      values[i].then(resolve, reject);
+    }
+  });
+};
+
+// Use polyfill for setImmediate for performance gains
+Promise._immediateFn =
+  (typeof setImmediate === 'function' &&
+    function(fn) {
+      setImmediate(fn);
+    }) ||
+  function(fn) {
+    setTimeoutFunc(fn, 0);
+  };
+
+Promise._unhandledRejectionFn = function _unhandledRejectionFn(err) {
+  if (typeof console !== 'undefined' && console) {
+    console.warn('Possible Unhandled Promise Rejection:', err); // eslint-disable-line no-console
+  }
+};
+
+module.exports = Promise;
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@skpm/timers/timeout.js */ "./node_modules/@skpm/timers/timeout.js")["setTimeout"], __webpack_require__(/*! ./node_modules/@skpm/timers/immediate.js */ "./node_modules/@skpm/timers/immediate.js")["setImmediate"]))
 
 /***/ }),
 
@@ -4328,6 +10463,247 @@ var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 
 module.exports = ReactPropTypesSecret;
 
+
+/***/ }),
+
+/***/ "./node_modules/react-is/cjs/react-is.development.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/react-is/cjs/react-is.development.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/** @license React v16.4.1
+ * react-is.development.js
+ *
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+
+
+if (true) {
+  (function() {
+'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+// The Symbol used to tag the ReactElement-like types. If there is no native Symbol
+// nor polyfill, then a plain number is used for performance.
+var hasSymbol = typeof Symbol === 'function' && Symbol.for;
+
+var REACT_ELEMENT_TYPE = hasSymbol ? Symbol.for('react.element') : 0xeac7;
+var REACT_PORTAL_TYPE = hasSymbol ? Symbol.for('react.portal') : 0xeaca;
+var REACT_FRAGMENT_TYPE = hasSymbol ? Symbol.for('react.fragment') : 0xeacb;
+var REACT_STRICT_MODE_TYPE = hasSymbol ? Symbol.for('react.strict_mode') : 0xeacc;
+var REACT_PROFILER_TYPE = hasSymbol ? Symbol.for('react.profiler') : 0xead2;
+var REACT_PROVIDER_TYPE = hasSymbol ? Symbol.for('react.provider') : 0xeacd;
+var REACT_CONTEXT_TYPE = hasSymbol ? Symbol.for('react.context') : 0xeace;
+var REACT_ASYNC_MODE_TYPE = hasSymbol ? Symbol.for('react.async_mode') : 0xeacf;
+var REACT_FORWARD_REF_TYPE = hasSymbol ? Symbol.for('react.forward_ref') : 0xead0;
+var REACT_TIMEOUT_TYPE = hasSymbol ? Symbol.for('react.timeout') : 0xead1;
+
+function isValidElementType(type) {
+  return typeof type === 'string' || typeof type === 'function' ||
+  // Note: its typeof might be other than 'symbol' or 'number' if it's a polyfill.
+  type === REACT_FRAGMENT_TYPE || type === REACT_ASYNC_MODE_TYPE || type === REACT_PROFILER_TYPE || type === REACT_STRICT_MODE_TYPE || type === REACT_TIMEOUT_TYPE || typeof type === 'object' && type !== null && (type.$$typeof === REACT_PROVIDER_TYPE || type.$$typeof === REACT_CONTEXT_TYPE || type.$$typeof === REACT_FORWARD_REF_TYPE);
+}
+
+function typeOf(object) {
+  if (typeof object === 'object' && object !== null) {
+    var $$typeof = object.$$typeof;
+
+    switch ($$typeof) {
+      case REACT_ELEMENT_TYPE:
+        var type = object.type;
+
+        switch (type) {
+          case REACT_ASYNC_MODE_TYPE:
+          case REACT_FRAGMENT_TYPE:
+          case REACT_PROFILER_TYPE:
+          case REACT_STRICT_MODE_TYPE:
+            return type;
+          default:
+            var $$typeofType = type && type.$$typeof;
+
+            switch ($$typeofType) {
+              case REACT_CONTEXT_TYPE:
+              case REACT_FORWARD_REF_TYPE:
+              case REACT_PROVIDER_TYPE:
+                return $$typeofType;
+              default:
+                return $$typeof;
+            }
+        }
+      case REACT_PORTAL_TYPE:
+        return $$typeof;
+    }
+  }
+
+  return undefined;
+}
+
+var AsyncMode = REACT_ASYNC_MODE_TYPE;
+var ContextConsumer = REACT_CONTEXT_TYPE;
+var ContextProvider = REACT_PROVIDER_TYPE;
+var Element = REACT_ELEMENT_TYPE;
+var ForwardRef = REACT_FORWARD_REF_TYPE;
+var Fragment = REACT_FRAGMENT_TYPE;
+var Profiler = REACT_PROFILER_TYPE;
+var Portal = REACT_PORTAL_TYPE;
+var StrictMode = REACT_STRICT_MODE_TYPE;
+
+function isAsyncMode(object) {
+  return typeOf(object) === REACT_ASYNC_MODE_TYPE;
+}
+function isContextConsumer(object) {
+  return typeOf(object) === REACT_CONTEXT_TYPE;
+}
+function isContextProvider(object) {
+  return typeOf(object) === REACT_PROVIDER_TYPE;
+}
+function isElement(object) {
+  return typeof object === 'object' && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
+}
+function isForwardRef(object) {
+  return typeOf(object) === REACT_FORWARD_REF_TYPE;
+}
+function isFragment(object) {
+  return typeOf(object) === REACT_FRAGMENT_TYPE;
+}
+function isProfiler(object) {
+  return typeOf(object) === REACT_PROFILER_TYPE;
+}
+function isPortal(object) {
+  return typeOf(object) === REACT_PORTAL_TYPE;
+}
+function isStrictMode(object) {
+  return typeOf(object) === REACT_STRICT_MODE_TYPE;
+}
+
+exports.typeOf = typeOf;
+exports.AsyncMode = AsyncMode;
+exports.ContextConsumer = ContextConsumer;
+exports.ContextProvider = ContextProvider;
+exports.Element = Element;
+exports.ForwardRef = ForwardRef;
+exports.Fragment = Fragment;
+exports.Profiler = Profiler;
+exports.Portal = Portal;
+exports.StrictMode = StrictMode;
+exports.isValidElementType = isValidElementType;
+exports.isAsyncMode = isAsyncMode;
+exports.isContextConsumer = isContextConsumer;
+exports.isContextProvider = isContextProvider;
+exports.isElement = isElement;
+exports.isForwardRef = isForwardRef;
+exports.isFragment = isFragment;
+exports.isProfiler = isProfiler;
+exports.isPortal = isPortal;
+exports.isStrictMode = isStrictMode;
+  })();
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/react-is/index.js":
+/*!****************************************!*\
+  !*** ./node_modules/react-is/index.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+if (false) {} else {
+  module.exports = __webpack_require__(/*! ./cjs/react-is.development.js */ "./node_modules/react-is/cjs/react-is.development.js");
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/react-primitives/index.js":
+/*!************************************************!*\
+  !*** ./node_modules/react-primitives/index.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! ./lib */ "./node_modules/react-primitives/lib/index.sketch.js");
+
+
+/***/ }),
+
+/***/ "./node_modules/react-primitives/lib/ReactPrimitives.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/react-primitives/lib/ReactPrimitives.js ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var ReactPrimitives={StyleSheet:null,View:null,Text:null,Image:null,Touchable:null,Easing:null,Animated:null,Dimensions:null,PixelRatio:__webpack_require__(/*! ./modules/PixelRatio */ "./node_modules/react-primitives/lib/modules/PixelRatio.js"),Platform:__webpack_require__(/*! ./modules/Platform */ "./node_modules/react-primitives/lib/modules/Platform.js"),inject:function inject(api){if(api.StyleSheet){ReactPrimitives.StyleSheet=api.StyleSheet;}if(api.View){ReactPrimitives.View=api.View;}if(api.Text){ReactPrimitives.Text=api.Text;}if(api.Image){ReactPrimitives.Image=api.Image;}if(api.Touchable){ReactPrimitives.Touchable=api.Touchable;}if(api.Easing){ReactPrimitives.Easing=api.Easing;}if(api.Animated){ReactPrimitives.Animated=api.Animated;}if(api.Dimensions){ReactPrimitives.Dimensions=api.Dimensions;}if(api.Platform){ReactPrimitives.Platform.inject(api.Platform);}}};module.exports=ReactPrimitives;
+
+/***/ }),
+
+/***/ "./node_modules/react-primitives/lib/index.sketch.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/react-primitives/lib/index.sketch.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(/*! ./injection/react-sketchapp */ "./node_modules/react-primitives/lib/injection/react-sketchapp.js");module.exports=__webpack_require__(/*! ./ReactPrimitives */ "./node_modules/react-primitives/lib/ReactPrimitives.js");
+
+/***/ }),
+
+/***/ "./node_modules/react-primitives/lib/injection/react-sketchapp.js":
+/*!************************************************************************!*\
+  !*** ./node_modules/react-primitives/lib/injection/react-sketchapp.js ***!
+  \************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var ReactPrimitives=__webpack_require__(/*! ../ReactPrimitives */ "./node_modules/react-primitives/lib/ReactPrimitives.js");var Animated=__webpack_require__(/*! animated */ "./node_modules/animated/lib/index.js");var Easing=__webpack_require__(/*! animated/lib/Easing */ "./node_modules/animated/lib/Easing.js");var _require=__webpack_require__(/*! react-sketchapp */ "./node_modules/react-sketchapp/lib/index.js"),View=_require.View,Text=_require.Text,Image=_require.Image,StyleSheet=_require.StyleSheet;var TouchableMixin={componentWillUnmount:function componentWillUnmount(){},touchableGetInitialState:function touchableGetInitialState(){return{touchable:{touchState:undefined,responderID:null}};},touchableHandleResponderTerminationRequest:function touchableHandleResponderTerminationRequest(){return false;},touchableHandleStartShouldSetResponder:function touchableHandleStartShouldSetResponder(){return false;},touchableLongPressCancelsPress:function touchableLongPressCancelsPress(){return true;},touchableHandleResponderGrant:function touchableHandleResponderGrant(){},touchableHandleResponderRelease:function touchableHandleResponderRelease(){},touchableHandleResponderTerminate:function touchableHandleResponderTerminate(){},touchableHandleResponderMove:function touchableHandleResponderMove(){}};Animated.inject.FlattenStyle(StyleSheet.flatten);ReactPrimitives.inject({StyleSheet:StyleSheet,View:View,Text:Text,Image:Image,Easing:Easing,Animated:_extends({},Animated,{View:Animated.createAnimatedComponent(View),Text:Animated.createAnimatedComponent(Text),Image:Animated.createAnimatedComponent(Image)}),Platform:{OS:'sketch',Version:1}});ReactPrimitives.inject({Touchable:__webpack_require__(/*! ../modules/Touchable */ "./node_modules/react-primitives/lib/modules/Touchable.js")(Animated,StyleSheet,ReactPrimitives.Platform,TouchableMixin)});
+
+/***/ }),
+
+/***/ "./node_modules/react-primitives/lib/modules/PixelRatio.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/react-primitives/lib/modules/PixelRatio.js ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var ReactPrimitives=__webpack_require__(/*! ../ReactPrimitives */ "./node_modules/react-primitives/lib/ReactPrimitives.js");var PixelRatio={get:function get(){return ReactPrimitives.Dimensions.get('window').scale;},getFontScale:function getFontScale(){return ReactPrimitives.Dimensions.get('window').fontScale||PixelRatio.get();},getPixelSizeForLayoutSize:function getPixelSizeForLayoutSize(layoutSize){return Math.round(layoutSize*PixelRatio.get());},roundToNearestPixel:function roundToNearestPixel(layoutSize){var ratio=PixelRatio.get();return Math.round(layoutSize*ratio)/ratio;}};module.exports=PixelRatio;
+
+/***/ }),
+
+/***/ "./node_modules/react-primitives/lib/modules/Platform.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/react-primitives/lib/modules/Platform.js ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var hasOwnProperty=Object.prototype.hasOwnProperty;var Platform={OS:'unknown',Version:0,select:function select(obj){if(hasOwnProperty.call(obj,Platform.OS)){return obj[Platform.OS];}return obj.default;},inject:function inject(platform){Platform['OS']=platform.OS;Platform['Version']=platform.Version;}};module.exports=Platform;
+
+/***/ }),
+
+/***/ "./node_modules/react-primitives/lib/modules/Touchable.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/react-primitives/lib/modules/Touchable.js ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var React=__webpack_require__(/*! react */ "./node_modules/react/index.js");var createReactClass=__webpack_require__(/*! create-react-class */ "./node_modules/create-react-class/index.js");var PropTypes=__webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");var TimerMixin=__webpack_require__(/*! react-timer-mixin */ "./node_modules/react-timer-mixin/TimerMixin.js");var ensurePositiveDelayProps=function ensurePositiveDelayProps(){};var InsetPropType=PropTypes.shape({top:PropTypes.number,left:PropTypes.number,bottom:PropTypes.number,right:PropTypes.number});var THROTTLE_MS=500;function throttle(fn,throttleMs){var lastCall=null;return function(){var now=new Date();if(lastCall===null||now-lastCall>throttleMs){for(var _len=arguments.length,args=Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}fn.apply(this,args);lastCall=new Date();}};}var Touchable=function Touchable(Animated,StyleSheet,Platform,TouchableMixin){var styles=StyleSheet.create({touchable:Platform.select({web:{cursor:'pointer'},ios:{},android:{},sketch:{},vr:{}})});return createReactClass({displayName:'Touchable',propTypes:{accessible:PropTypes.bool,disabled:PropTypes.bool,onPress:PropTypes.func,onPressIn:PropTypes.func,onPressOut:PropTypes.func,onLayout:PropTypes.func,onLongPress:PropTypes.func,delayPressIn:PropTypes.number,delayPressOut:PropTypes.number,delayLongPress:PropTypes.number,pressRetentionOffset:InsetPropType,hitSlop:InsetPropType,activeValue:PropTypes.number,press:PropTypes.instanceOf(Animated.Value),pressDuration:PropTypes.number,children:PropTypes.node},mixins:[TimerMixin,TouchableMixin],statics:{Mixin:TouchableMixin},getDefaultProps:function getDefaultProps(){return{activeValue:1,delayPressIn:0,delayPressOut:100,delayLongPress:500,pressDuration:150,pressRetentionOffset:{top:20,left:20,right:20,bottom:30},press:new Animated.Value(0)};},getInitialState:function getInitialState(){return this.touchableGetInitialState();},componentDidMount:function componentDidMount(){ensurePositiveDelayProps(this.props);},componentWillReceiveProps:function componentWillReceiveProps(nextProps){ensurePositiveDelayProps(nextProps);},setPressValue:function setPressValue(toValue){Animated.timing(this.props.press,{toValue:toValue,duration:this.props.pressDuration}).start();},touchableHandleActivePressIn:throttle(function(e){if(e.dispatchConfig.registrationName==='onResponderGrant'){this._setActive(0);}else{this._setActive(150);}this.props.onPressIn&&this.props.onPressIn(e);},THROTTLE_MS),touchableHandleActivePressOut:throttle(function(e){this._setInactive(250);this.props.onPressOut&&this.props.onPressOut(e);},THROTTLE_MS),touchableHandlePress:throttle(function(e){this.props.onPress&&this.props.onPress(e);},THROTTLE_MS),touchableHandleLongPress:throttle(function(e){this.props.onLongPress&&this.props.onLongPress(e);},THROTTLE_MS),touchableGetPressRectOffset:function touchableGetPressRectOffset(){return this.props.pressRetentionOffset;},touchableGetHitSlop:function touchableGetHitSlop(){return this.props.hitSlop;},touchableGetHighlightDelayMS:function touchableGetHighlightDelayMS(){return this.props.delayPressIn;},touchableGetLongPressDelayMS:function touchableGetLongPressDelayMS(){return this.props.delayLongPress;},touchableGetPressOutDelayMS:function touchableGetPressOutDelayMS(){return this.props.delayPressOut;},_setActive:function _setActive(duration){this.setPressValue(1,duration);},_setInactive:function _setInactive(duration){this.setPressValue(0,duration);},render:function render(){var child=this.props.children;var childStyle=child&&child.props&&child.props.style;return React.cloneElement(child,{onStartShouldSetResponder:this.touchableHandleStartShouldSetResponder,onResponderTerminationRequest:this.touchableHandleResponderTerminationRequest,onResponderGrant:this.touchableHandleResponderGrant,onResponderMove:this.touchableHandleResponderMove,onResponderRelease:this.touchableHandleResponderRelease,onResponderTerminate:this.touchableHandleResponderTerminate,style:[styles.touchable,childStyle]});}});};module.exports=Touchable;
 
 /***/ }),
 
@@ -20983,6 +27359,108 @@ if (false) {} else {
 
 /***/ }),
 
+/***/ "./node_modules/react-timer-mixin/TimerMixin.js":
+/*!******************************************************!*\
+  !*** ./node_modules/react-timer-mixin/TimerMixin.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(global) {/*
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
+
+
+var GLOBAL = typeof window === 'undefined' ? global : window;
+
+var setter = function(_setter, _clearer, array) {
+  return function(callback, delta) {
+    var id = _setter(function() {
+      _clearer.call(this, id);
+      callback.apply(this, arguments);
+    }.bind(this), delta);
+
+    if (!this[array]) {
+      this[array] = [id];
+    } else {
+      this[array].push(id);
+    }
+    return id;
+  };
+};
+
+var clearer = function(_clearer, array) {
+  return function(id) {
+    if (this[array]) {
+      var index = this[array].indexOf(id);
+      if (index !== -1) {
+        this[array].splice(index, 1);
+      }
+    }
+    _clearer(id);
+  };
+};
+
+var _timeouts = 'TimerMixin_timeouts';
+var _clearTimeout = clearer(GLOBAL.clearTimeout, _timeouts);
+var _setTimeout = setter(GLOBAL.setTimeout, _clearTimeout, _timeouts);
+
+var _intervals = 'TimerMixin_intervals';
+var _clearInterval = clearer(GLOBAL.clearInterval, _intervals);
+var _setInterval = setter(GLOBAL.setInterval, function() {/* noop */}, _intervals);
+
+var _immediates = 'TimerMixin_immediates';
+var _clearImmediate = clearer(GLOBAL.clearImmediate, _immediates);
+var _setImmediate = setter(GLOBAL.setImmediate, _clearImmediate, _immediates);
+
+var _rafs = 'TimerMixin_rafs';
+var _cancelAnimationFrame = clearer(GLOBAL.cancelAnimationFrame, _rafs);
+var _requestAnimationFrame = setter(GLOBAL.requestAnimationFrame, _cancelAnimationFrame, _rafs);
+
+var TimerMixin = {
+  componentWillUnmount: function() {
+    this[_timeouts] && this[_timeouts].forEach(function(id) {
+      GLOBAL.clearTimeout(id);
+    });
+    this[_timeouts] = null;
+    this[_intervals] && this[_intervals].forEach(function(id) {
+      GLOBAL.clearInterval(id);
+    });
+    this[_intervals] = null;
+    this[_immediates] && this[_immediates].forEach(function(id) {
+      GLOBAL.clearImmediate(id);
+    });
+    this[_immediates] = null;
+    this[_rafs] && this[_rafs].forEach(function(id) {
+      GLOBAL.cancelAnimationFrame(id);
+    });
+    this[_rafs] = null;
+  },
+
+  setTimeout: _setTimeout,
+  clearTimeout: _clearTimeout,
+
+  setInterval: _setInterval,
+  clearInterval: _clearInterval,
+
+  setImmediate: _setImmediate,
+  clearImmediate: _clearImmediate,
+
+  requestAnimationFrame: _requestAnimationFrame,
+  cancelAnimationFrame: _cancelAnimationFrame,
+};
+
+module.exports = TimerMixin;
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
+
+/***/ }),
+
 /***/ "./node_modules/react/cjs/react.development.js":
 /*!*****************************************************!*\
   !*** ./node_modules/react/cjs/react.development.js ***!
@@ -22833,6 +29311,5561 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
     return StackFrame;
 }));
+
+
+/***/ }),
+
+/***/ "./node_modules/styled-components/dist/styled-components-primitives.es.js":
+/*!********************************************************************************!*\
+  !*** ./node_modules/styled-components/dist/styled-components-primitives.es.js ***!
+  \********************************************************************************/
+/*! exports provided: css, isStyledComponent, ThemeProvider, withTheme, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* WEBPACK VAR INJECTION */(function(Promise) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "css", function() { return css; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isStyledComponent", function() { return isStyledComponent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ThemeProvider", function() { return ThemeProvider; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "withTheme", function() { return wrapWithTheme; });
+/* harmony import */ var react_primitives__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-primitives */ "./node_modules/react-primitives/index.js");
+/* harmony import */ var react_primitives__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(react_primitives__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var css_to_react_native__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! css-to-react-native */ "./node_modules/css-to-react-native/index.js");
+/* harmony import */ var css_to_react_native__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(css_to_react_native__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var is_plain_object__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! is-plain-object */ "./node_modules/is-plain-object/index.js");
+/* harmony import */ var is_plain_object__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(is_plain_object__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var supports_color__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! supports-color */ "./node_modules/styled-components/node_modules/supports-color/browser.js");
+/* harmony import */ var supports_color__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(supports_color__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var hoist_non_react_statics__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! hoist-non-react-statics */ "./node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js");
+/* harmony import */ var hoist_non_react_statics__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(hoist_non_react_statics__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var react_is__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-is */ "./node_modules/react-is/index.js");
+/* harmony import */ var react_is__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react_is__WEBPACK_IMPORTED_MODULE_7__);
+
+
+
+
+
+
+
+
+
+// Source: https://github.com/garycourt/murmurhash-js/blob/master/murmurhash2_gc.js
+function murmurhash(str) {
+  var l = str.length | 0,
+      h = l | 0,
+      i = 0,
+      k;
+
+  while (l >= 4) {
+    k = str.charCodeAt(i) & 0xff | (str.charCodeAt(++i) & 0xff) << 8 | (str.charCodeAt(++i) & 0xff) << 16 | (str.charCodeAt(++i) & 0xff) << 24;
+
+    k = (k & 0xffff) * 0x5bd1e995 + (((k >>> 16) * 0x5bd1e995 & 0xffff) << 16);
+    k ^= k >>> 24;
+    k = (k & 0xffff) * 0x5bd1e995 + (((k >>> 16) * 0x5bd1e995 & 0xffff) << 16);
+
+    h = (h & 0xffff) * 0x5bd1e995 + (((h >>> 16) * 0x5bd1e995 & 0xffff) << 16) ^ k;
+
+    l -= 4;
+    ++i;
+  }
+
+  switch (l) {
+    case 3:
+      h ^= (str.charCodeAt(i + 2) & 0xff) << 16;
+    case 2:
+      h ^= (str.charCodeAt(i + 1) & 0xff) << 8;
+    case 1:
+      h ^= str.charCodeAt(i) & 0xff;
+      h = (h & 0xffff) * 0x5bd1e995 + (((h >>> 16) * 0x5bd1e995 & 0xffff) << 16);
+  }
+
+  h ^= h >>> 13;
+  h = (h & 0xffff) * 0x5bd1e995 + (((h >>> 16) * 0x5bd1e995 & 0xffff) << 16);
+  h ^= h >>> 15;
+
+  return h >>> 0;
+}
+
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @typechecks
+ */
+
+var _uppercasePattern = /([A-Z])/g;
+
+/**
+ * Hyphenates a camelcased string, for example:
+ *
+ *   > hyphenate('backgroundColor')
+ *   < "background-color"
+ *
+ * For CSS style names, use `hyphenateStyleName` instead which works properly
+ * with all vendor prefixes, including `ms`.
+ *
+ * @param {string} string
+ * @return {string}
+ */
+function hyphenate$2(string) {
+  return string.replace(_uppercasePattern, '-$1').toLowerCase();
+}
+
+var hyphenate_1 = hyphenate$2;
+
+var hyphenate = hyphenate_1;
+
+var msPattern = /^ms-/;
+
+/**
+ * Hyphenates a camelcased CSS property name, for example:
+ *
+ *   > hyphenateStyleName('backgroundColor')
+ *   < "background-color"
+ *   > hyphenateStyleName('MozTransition')
+ *   < "-moz-transition"
+ *   > hyphenateStyleName('msTransition')
+ *   < "-ms-transition"
+ *
+ * As Modernizr suggests (http://modernizr.com/docs/#prefixed), an `ms` prefix
+ * is converted to `-ms-`.
+ *
+ * @param {string} string
+ * @return {string}
+ */
+function hyphenateStyleName(string) {
+  return hyphenate(string).replace(msPattern, '-ms-');
+}
+
+var hyphenateStyleName_1 = hyphenateStyleName;
+
+// 
+var objToCss = function objToCss(obj, prevKey) {
+  var css = Object.keys(obj).filter(function (key) {
+    var chunk = obj[key];
+    return chunk !== undefined && chunk !== null && chunk !== false && chunk !== '';
+  }).map(function (key) {
+    if (is_plain_object__WEBPACK_IMPORTED_MODULE_2___default()(obj[key])) return objToCss(obj[key], key);
+    return hyphenateStyleName_1(key) + ': ' + obj[key] + ';';
+  }).join(' ');
+  return prevKey ? prevKey + ' {\n  ' + css + '\n}' : css;
+};
+
+var flatten = function flatten(chunks, executionContext) {
+  return chunks.reduce(function (ruleSet, chunk) {
+    /* Remove falsey values */
+    if (chunk === undefined || chunk === null || chunk === false || chunk === '') {
+      return ruleSet;
+    }
+    /* Flatten ruleSet */
+    if (Array.isArray(chunk)) {
+      return [].concat(ruleSet, flatten(chunk, executionContext));
+    }
+
+    /* Handle other components */
+    if (chunk.hasOwnProperty('styledComponentId')) {
+      // $FlowFixMe not sure how to make this pass
+      return [].concat(ruleSet, ['.' + chunk.styledComponentId]);
+    }
+
+    /* Either execute or defer the function */
+    if (typeof chunk === 'function') {
+      return executionContext ? ruleSet.concat.apply(ruleSet, flatten([chunk(executionContext)], executionContext)) : ruleSet.concat(chunk);
+    }
+
+    /* Handle objects */
+    return ruleSet.concat(
+    // $FlowFixMe have to add %checks somehow to isPlainObject
+    is_plain_object__WEBPACK_IMPORTED_MODULE_2___default()(chunk) ? objToCss(chunk) : chunk.toString());
+  }, []);
+};
+
+var printed = {};
+
+function warnOnce(message) {
+    if (printed[message]) return;
+    printed[message] = true;
+
+    if (typeof console !== 'undefined' && console.warn) console.warn(message);
+}
+
+var SINGLE_QUOTE = '\''.charCodeAt(0);
+var DOUBLE_QUOTE = '"'.charCodeAt(0);
+var BACKSLASH = '\\'.charCodeAt(0);
+var SLASH = '/'.charCodeAt(0);
+var NEWLINE = '\n'.charCodeAt(0);
+var SPACE = ' '.charCodeAt(0);
+var FEED = '\f'.charCodeAt(0);
+var TAB = '\t'.charCodeAt(0);
+var CR = '\r'.charCodeAt(0);
+var OPEN_SQUARE = '['.charCodeAt(0);
+var CLOSE_SQUARE = ']'.charCodeAt(0);
+var OPEN_PARENTHESES = '('.charCodeAt(0);
+var CLOSE_PARENTHESES = ')'.charCodeAt(0);
+var OPEN_CURLY = '{'.charCodeAt(0);
+var CLOSE_CURLY = '}'.charCodeAt(0);
+var SEMICOLON = ';'.charCodeAt(0);
+var ASTERISK = '*'.charCodeAt(0);
+var COLON = ':'.charCodeAt(0);
+var AT = '@'.charCodeAt(0);
+
+var RE_AT_END = /[ \n\t\r\f\{\(\)'"\\;/\[\]#]/g;
+var RE_WORD_END = /[ \n\t\r\f\(\)\{\}:;@!'"\\\]\[#]|\/(?=\*)/g;
+var RE_BAD_BRACKET = /.[\\\/\("'\n]/;
+
+function tokenize(input) {
+    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+    var tokens = [];
+    var css = input.css.valueOf();
+
+    var ignore = options.ignoreErrors;
+
+    var code = void 0,
+        next = void 0,
+        quote = void 0,
+        lines = void 0,
+        last = void 0,
+        content = void 0,
+        escape = void 0,
+        nextLine = void 0,
+        nextOffset = void 0,
+        escaped = void 0,
+        escapePos = void 0,
+        prev = void 0,
+        n = void 0;
+
+    var length = css.length;
+    var offset = -1;
+    var line = 1;
+    var pos = 0;
+
+    function unclosed(what) {
+        throw input.error('Unclosed ' + what, line, pos - offset);
+    }
+
+    while (pos < length) {
+        code = css.charCodeAt(pos);
+
+        if (code === NEWLINE || code === FEED || code === CR && css.charCodeAt(pos + 1) !== NEWLINE) {
+            offset = pos;
+            line += 1;
+        }
+
+        switch (code) {
+            case NEWLINE:
+            case SPACE:
+            case TAB:
+            case CR:
+            case FEED:
+                next = pos;
+                do {
+                    next += 1;
+                    code = css.charCodeAt(next);
+                    if (code === NEWLINE) {
+                        offset = next;
+                        line += 1;
+                    }
+                } while (code === SPACE || code === NEWLINE || code === TAB || code === CR || code === FEED);
+
+                tokens.push(['space', css.slice(pos, next)]);
+                pos = next - 1;
+                break;
+
+            case OPEN_SQUARE:
+                tokens.push(['[', '[', line, pos - offset]);
+                break;
+
+            case CLOSE_SQUARE:
+                tokens.push([']', ']', line, pos - offset]);
+                break;
+
+            case OPEN_CURLY:
+                tokens.push(['{', '{', line, pos - offset]);
+                break;
+
+            case CLOSE_CURLY:
+                tokens.push(['}', '}', line, pos - offset]);
+                break;
+
+            case COLON:
+                tokens.push([':', ':', line, pos - offset]);
+                break;
+
+            case SEMICOLON:
+                tokens.push([';', ';', line, pos - offset]);
+                break;
+
+            case OPEN_PARENTHESES:
+                prev = tokens.length ? tokens[tokens.length - 1][1] : '';
+                n = css.charCodeAt(pos + 1);
+                if (prev === 'url' && n !== SINGLE_QUOTE && n !== DOUBLE_QUOTE && n !== SPACE && n !== NEWLINE && n !== TAB && n !== FEED && n !== CR) {
+                    next = pos;
+                    do {
+                        escaped = false;
+                        next = css.indexOf(')', next + 1);
+                        if (next === -1) {
+                            if (ignore) {
+                                next = pos;
+                                break;
+                            } else {
+                                unclosed('bracket');
+                            }
+                        }
+                        escapePos = next;
+                        while (css.charCodeAt(escapePos - 1) === BACKSLASH) {
+                            escapePos -= 1;
+                            escaped = !escaped;
+                        }
+                    } while (escaped);
+
+                    tokens.push(['brackets', css.slice(pos, next + 1), line, pos - offset, line, next - offset]);
+                    pos = next;
+                } else {
+                    next = css.indexOf(')', pos + 1);
+                    content = css.slice(pos, next + 1);
+
+                    if (next === -1 || RE_BAD_BRACKET.test(content)) {
+                        tokens.push(['(', '(', line, pos - offset]);
+                    } else {
+                        tokens.push(['brackets', content, line, pos - offset, line, next - offset]);
+                        pos = next;
+                    }
+                }
+
+                break;
+
+            case CLOSE_PARENTHESES:
+                tokens.push([')', ')', line, pos - offset]);
+                break;
+
+            case SINGLE_QUOTE:
+            case DOUBLE_QUOTE:
+                quote = code === SINGLE_QUOTE ? '\'' : '"';
+                next = pos;
+                do {
+                    escaped = false;
+                    next = css.indexOf(quote, next + 1);
+                    if (next === -1) {
+                        if (ignore) {
+                            next = pos + 1;
+                            break;
+                        } else {
+                            unclosed('quote');
+                        }
+                    }
+                    escapePos = next;
+                    while (css.charCodeAt(escapePos - 1) === BACKSLASH) {
+                        escapePos -= 1;
+                        escaped = !escaped;
+                    }
+                } while (escaped);
+
+                content = css.slice(pos, next + 1);
+                lines = content.split('\n');
+                last = lines.length - 1;
+
+                if (last > 0) {
+                    nextLine = line + last;
+                    nextOffset = next - lines[last].length;
+                } else {
+                    nextLine = line;
+                    nextOffset = offset;
+                }
+
+                tokens.push(['string', css.slice(pos, next + 1), line, pos - offset, nextLine, next - nextOffset]);
+
+                offset = nextOffset;
+                line = nextLine;
+                pos = next;
+                break;
+
+            case AT:
+                RE_AT_END.lastIndex = pos + 1;
+                RE_AT_END.test(css);
+                if (RE_AT_END.lastIndex === 0) {
+                    next = css.length - 1;
+                } else {
+                    next = RE_AT_END.lastIndex - 2;
+                }
+                tokens.push(['at-word', css.slice(pos, next + 1), line, pos - offset, line, next - offset]);
+                pos = next;
+                break;
+
+            case BACKSLASH:
+                next = pos;
+                escape = true;
+                while (css.charCodeAt(next + 1) === BACKSLASH) {
+                    next += 1;
+                    escape = !escape;
+                }
+                code = css.charCodeAt(next + 1);
+                if (escape && code !== SLASH && code !== SPACE && code !== NEWLINE && code !== TAB && code !== CR && code !== FEED) {
+                    next += 1;
+                }
+                tokens.push(['word', css.slice(pos, next + 1), line, pos - offset, line, next - offset]);
+                pos = next;
+                break;
+
+            default:
+                if (code === SLASH && css.charCodeAt(pos + 1) === ASTERISK) {
+                    next = css.indexOf('*/', pos + 2) + 1;
+                    if (next === 0) {
+                        if (ignore) {
+                            next = css.length;
+                        } else {
+                            unclosed('comment');
+                        }
+                    }
+
+                    content = css.slice(pos, next + 1);
+                    lines = content.split('\n');
+                    last = lines.length - 1;
+
+                    if (last > 0) {
+                        nextLine = line + last;
+                        nextOffset = next - lines[last].length;
+                    } else {
+                        nextLine = line;
+                        nextOffset = offset;
+                    }
+
+                    tokens.push(['comment', content, line, pos - offset, nextLine, next - nextOffset]);
+
+                    offset = nextOffset;
+                    line = nextLine;
+                    pos = next;
+                } else {
+                    RE_WORD_END.lastIndex = pos + 1;
+                    RE_WORD_END.test(css);
+                    if (RE_WORD_END.lastIndex === 0) {
+                        next = css.length - 1;
+                    } else {
+                        next = RE_WORD_END.lastIndex - 2;
+                    }
+
+                    tokens.push(['word', css.slice(pos, next + 1), line, pos - offset, line, next - offset]);
+                    pos = next;
+                }
+
+                break;
+        }
+
+        pos++;
+    }
+
+    return tokens;
+}
+
+var HIGHLIGHT_THEME = {
+    'brackets': [36, 39], // cyan
+    'string': [31, 39], // red
+    'at-word': [31, 39], // red
+    'comment': [90, 39], // gray
+    '{': [32, 39], // green
+    '}': [32, 39], // green
+    ':': [1, 22], // bold
+    ';': [1, 22], // bold
+    '(': [1, 22], // bold
+    ')': [1, 22] // bold
+};
+
+function code(color) {
+    return '\x1B[' + color + 'm';
+}
+
+function terminalHighlight(css) {
+    var tokens = tokenize(new Input(css), { ignoreErrors: true });
+    var result = [];
+    tokens.forEach(function (token) {
+        var color = HIGHLIGHT_THEME[token[0]];
+        if (color) {
+            result.push(token[1].split(/\r?\n/).map(function (i) {
+                return code(color[0]) + i + code(color[1]);
+            }).join('\n'));
+        } else {
+            result.push(token[1]);
+        }
+    });
+    return result.join('');
+}
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
+  return typeof obj;
+} : function (obj) {
+  return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+};
+
+
+
+
+
+
+
+
+
+
+
+var classCallCheck = function (instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+};
+
+var createClass = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+
+  return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) defineProperties(Constructor, staticProps);
+    return Constructor;
+  };
+}();
+
+
+
+
+
+
+
+var _extends = Object.assign || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];
+
+    for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }
+
+  return target;
+};
+
+
+
+var inherits = function (subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+  }
+
+  subClass.prototype = Object.create(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      enumerable: false,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+};
+
+
+
+
+
+
+
+
+
+var objectWithoutProperties = function (obj, keys) {
+  var target = {};
+
+  for (var i in obj) {
+    if (keys.indexOf(i) >= 0) continue;
+    if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;
+    target[i] = obj[i];
+  }
+
+  return target;
+};
+
+var possibleConstructorReturn = function (self, call) {
+  if (!self) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return call && (typeof call === "object" || typeof call === "function") ? call : self;
+};
+
+/**
+ * The CSS parser throws this error for broken CSS.
+ *
+ * Custom parsers can throw this error for broken custom syntax using
+ * the {@link Node#error} method.
+ *
+ * PostCSS will use the input source map to detect the original error location.
+ * If you wrote a Sass file, compiled it to CSS and then parsed it with PostCSS,
+ * PostCSS will show the original position in the Sass file.
+ *
+ * If you need the position in the PostCSS input
+ * (e.g., to debug the previous compiler), use `error.input.file`.
+ *
+ * @example
+ * // Catching and checking syntax error
+ * try {
+ *   postcss.parse('a{')
+ * } catch (error) {
+ *   if ( error.name === 'CssSyntaxError' ) {
+ *     error //=> CssSyntaxError
+ *   }
+ * }
+ *
+ * @example
+ * // Raising error from plugin
+ * throw node.error('Unknown variable', { plugin: 'postcss-vars' });
+ */
+
+var CssSyntaxError = function () {
+
+    /**
+     * @param {string} message  - error message
+     * @param {number} [line]   - source line of the error
+     * @param {number} [column] - source column of the error
+     * @param {string} [source] - source code of the broken file
+     * @param {string} [file]   - absolute path to the broken file
+     * @param {string} [plugin] - PostCSS plugin name, if error came from plugin
+     */
+    function CssSyntaxError(message, line, column, source, file, plugin) {
+        classCallCheck(this, CssSyntaxError);
+
+        /**
+         * @member {string} - Always equal to `'CssSyntaxError'`. You should
+         *                    always check error type
+         *                    by `error.name === 'CssSyntaxError'` instead of
+         *                    `error instanceof CssSyntaxError`, because
+         *                    npm could have several PostCSS versions.
+         *
+         * @example
+         * if ( error.name === 'CssSyntaxError' ) {
+         *   error //=> CssSyntaxError
+         * }
+         */
+        this.name = 'CssSyntaxError';
+        /**
+         * @member {string} - Error message.
+         *
+         * @example
+         * error.message //=> 'Unclosed block'
+         */
+        this.reason = message;
+
+        if (file) {
+            /**
+             * @member {string} - Absolute path to the broken file.
+             *
+             * @example
+             * error.file       //=> 'a.sass'
+             * error.input.file //=> 'a.css'
+             */
+            this.file = file;
+        }
+        if (source) {
+            /**
+             * @member {string} - Source code of the broken file.
+             *
+             * @example
+             * error.source       //=> 'a { b {} }'
+             * error.input.column //=> 'a b { }'
+             */
+            this.source = source;
+        }
+        if (plugin) {
+            /**
+             * @member {string} - Plugin name, if error came from plugin.
+             *
+             * @example
+             * error.plugin //=> 'postcss-vars'
+             */
+            this.plugin = plugin;
+        }
+        if (typeof line !== 'undefined' && typeof column !== 'undefined') {
+            /**
+             * @member {number} - Source line of the error.
+             *
+             * @example
+             * error.line       //=> 2
+             * error.input.line //=> 4
+             */
+            this.line = line;
+            /**
+             * @member {number} - Source column of the error.
+             *
+             * @example
+             * error.column       //=> 1
+             * error.input.column //=> 4
+             */
+            this.column = column;
+        }
+
+        this.setMessage();
+
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, CssSyntaxError);
+        }
+    }
+
+    CssSyntaxError.prototype.setMessage = function setMessage() {
+        /**
+         * @member {string} - Full error text in the GNU error format
+         *                    with plugin, file, line and column.
+         *
+         * @example
+         * error.message //=> 'a.css:1:1: Unclosed block'
+         */
+        this.message = this.plugin ? this.plugin + ': ' : '';
+        this.message += this.file ? this.file : '<css input>';
+        if (typeof this.line !== 'undefined') {
+            this.message += ':' + this.line + ':' + this.column;
+        }
+        this.message += ': ' + this.reason;
+    };
+
+    /**
+     * Returns a few lines of CSS source that caused the error.
+     *
+     * If the CSS has an input source map without `sourceContent`,
+     * this method will return an empty string.
+     *
+     * @param {boolean} [color] whether arrow will be colored red by terminal
+     *                          color codes. By default, PostCSS will detect
+     *                          color support by `process.stdout.isTTY`
+     *                          and `process.env.NODE_DISABLE_COLORS`.
+     *
+     * @example
+     * error.showSourceCode() //=> "  4 | }
+     *                        //      5 | a {
+     *                        //    > 6 |   bad
+     *                        //        |   ^
+     *                        //      7 | }
+     *                        //      8 | b {"
+     *
+     * @return {string} few lines of CSS source that caused the error
+     */
+
+
+    CssSyntaxError.prototype.showSourceCode = function showSourceCode(color) {
+        var _this = this;
+
+        if (!this.source) return '';
+
+        var css = this.source;
+        if (typeof color === 'undefined') color = supports_color__WEBPACK_IMPORTED_MODULE_3___default.a;
+        if (color) css = terminalHighlight(css);
+
+        var lines = css.split(/\r?\n/);
+        var start = Math.max(this.line - 3, 0);
+        var end = Math.min(this.line + 2, lines.length);
+
+        var maxWidth = String(end).length;
+
+        return lines.slice(start, end).map(function (line, index) {
+            var number = start + 1 + index;
+            var padded = (' ' + number).slice(-maxWidth);
+            var gutter = ' ' + padded + ' | ';
+            if (number === _this.line) {
+                var spacing = gutter.replace(/\d/g, ' ') + line.slice(0, _this.column - 1).replace(/[^\t]/g, ' ');
+                return '>' + gutter + line + '\n ' + spacing + '^';
+            } else {
+                return ' ' + gutter + line;
+            }
+        }).join('\n');
+    };
+
+    /**
+     * Returns error position, message and source code of the broken part.
+     *
+     * @example
+     * error.toString() //=> "CssSyntaxError: app.css:1:1: Unclosed block
+     *                  //    > 1 | a {
+     *                  //        | ^"
+     *
+     * @return {string} error position, message and source code
+     */
+
+
+    CssSyntaxError.prototype.toString = function toString() {
+        var code = this.showSourceCode();
+        if (code) {
+            code = '\n\n' + code + '\n';
+        }
+        return this.name + ': ' + this.message + code;
+    };
+
+    createClass(CssSyntaxError, [{
+        key: 'generated',
+        get: function get$$1() {
+            warnOnce('CssSyntaxError#generated is depreacted. Use input instead.');
+            return this.input;
+        }
+
+        /**
+         * @memberof CssSyntaxError#
+         * @member {Input} input - Input object with PostCSS internal information
+         *                         about input file. If input has source map
+         *                         from previous tool, PostCSS will use origin
+         *                         (for example, Sass) source. You can use this
+         *                         object to get PostCSS input source.
+         *
+         * @example
+         * error.input.file //=> 'a.css'
+         * error.file       //=> 'a.sass'
+         */
+
+    }]);
+    return CssSyntaxError;
+}();
+
+/* eslint-disable valid-jsdoc */
+
+var defaultRaw = {
+    colon: ': ',
+    indent: '    ',
+    beforeDecl: '\n',
+    beforeRule: '\n',
+    beforeOpen: ' ',
+    beforeClose: '\n',
+    beforeComment: '\n',
+    after: '\n',
+    emptyBody: '',
+    commentLeft: ' ',
+    commentRight: ' '
+};
+
+function capitalize(str) {
+    return str[0].toUpperCase() + str.slice(1);
+}
+
+var Stringifier = function () {
+    function Stringifier(builder) {
+        classCallCheck(this, Stringifier);
+
+        this.builder = builder;
+    }
+
+    Stringifier.prototype.stringify = function stringify(node, semicolon) {
+        this[node.type](node, semicolon);
+    };
+
+    Stringifier.prototype.root = function root(node) {
+        this.body(node);
+        if (node.raws.after) this.builder(node.raws.after);
+    };
+
+    Stringifier.prototype.comment = function comment(node) {
+        var left = this.raw(node, 'left', 'commentLeft');
+        var right = this.raw(node, 'right', 'commentRight');
+        this.builder('/*' + left + node.text + right + '*/', node);
+    };
+
+    Stringifier.prototype.decl = function decl(node, semicolon) {
+        var between = this.raw(node, 'between', 'colon');
+        var string = node.prop + between + this.rawValue(node, 'value');
+
+        if (node.important) {
+            string += node.raws.important || ' !important';
+        }
+
+        if (semicolon) string += ';';
+        this.builder(string, node);
+    };
+
+    Stringifier.prototype.rule = function rule(node) {
+        this.block(node, this.rawValue(node, 'selector'));
+    };
+
+    Stringifier.prototype.atrule = function atrule(node, semicolon) {
+        var name = '@' + node.name;
+        var params = node.params ? this.rawValue(node, 'params') : '';
+
+        if (typeof node.raws.afterName !== 'undefined') {
+            name += node.raws.afterName;
+        } else if (params) {
+            name += ' ';
+        }
+
+        if (node.nodes) {
+            this.block(node, name + params);
+        } else {
+            var end = (node.raws.between || '') + (semicolon ? ';' : '');
+            this.builder(name + params + end, node);
+        }
+    };
+
+    Stringifier.prototype.body = function body(node) {
+        var last = node.nodes.length - 1;
+        while (last > 0) {
+            if (node.nodes[last].type !== 'comment') break;
+            last -= 1;
+        }
+
+        var semicolon = this.raw(node, 'semicolon');
+        for (var i = 0; i < node.nodes.length; i++) {
+            var child = node.nodes[i];
+            var before = this.raw(child, 'before');
+            if (before) this.builder(before);
+            this.stringify(child, last !== i || semicolon);
+        }
+    };
+
+    Stringifier.prototype.block = function block(node, start) {
+        var between = this.raw(node, 'between', 'beforeOpen');
+        this.builder(start + between + '{', node, 'start');
+
+        var after = void 0;
+        if (node.nodes && node.nodes.length) {
+            this.body(node);
+            after = this.raw(node, 'after');
+        } else {
+            after = this.raw(node, 'after', 'emptyBody');
+        }
+
+        if (after) this.builder(after);
+        this.builder('}', node, 'end');
+    };
+
+    Stringifier.prototype.raw = function raw(node, own, detect) {
+        var value = void 0;
+        if (!detect) detect = own;
+
+        // Already had
+        if (own) {
+            value = node.raws[own];
+            if (typeof value !== 'undefined') return value;
+        }
+
+        var parent = node.parent;
+
+        // Hack for first rule in CSS
+        if (detect === 'before') {
+            if (!parent || parent.type === 'root' && parent.first === node) {
+                return '';
+            }
+        }
+
+        // Floating child without parent
+        if (!parent) return defaultRaw[detect];
+
+        // Detect style by other nodes
+        var root = node.root();
+        if (!root.rawCache) root.rawCache = {};
+        if (typeof root.rawCache[detect] !== 'undefined') {
+            return root.rawCache[detect];
+        }
+
+        if (detect === 'before' || detect === 'after') {
+            return this.beforeAfter(node, detect);
+        } else {
+            var method = 'raw' + capitalize(detect);
+            if (this[method]) {
+                value = this[method](root, node);
+            } else {
+                root.walk(function (i) {
+                    value = i.raws[own];
+                    if (typeof value !== 'undefined') return false;
+                });
+            }
+        }
+
+        if (typeof value === 'undefined') value = defaultRaw[detect];
+
+        root.rawCache[detect] = value;
+        return value;
+    };
+
+    Stringifier.prototype.rawSemicolon = function rawSemicolon(root) {
+        var value = void 0;
+        root.walk(function (i) {
+            if (i.nodes && i.nodes.length && i.last.type === 'decl') {
+                value = i.raws.semicolon;
+                if (typeof value !== 'undefined') return false;
+            }
+        });
+        return value;
+    };
+
+    Stringifier.prototype.rawEmptyBody = function rawEmptyBody(root) {
+        var value = void 0;
+        root.walk(function (i) {
+            if (i.nodes && i.nodes.length === 0) {
+                value = i.raws.after;
+                if (typeof value !== 'undefined') return false;
+            }
+        });
+        return value;
+    };
+
+    Stringifier.prototype.rawIndent = function rawIndent(root) {
+        if (root.raws.indent) return root.raws.indent;
+        var value = void 0;
+        root.walk(function (i) {
+            var p = i.parent;
+            if (p && p !== root && p.parent && p.parent === root) {
+                if (typeof i.raws.before !== 'undefined') {
+                    var parts = i.raws.before.split('\n');
+                    value = parts[parts.length - 1];
+                    value = value.replace(/[^\s]/g, '');
+                    return false;
+                }
+            }
+        });
+        return value;
+    };
+
+    Stringifier.prototype.rawBeforeComment = function rawBeforeComment(root, node) {
+        var value = void 0;
+        root.walkComments(function (i) {
+            if (typeof i.raws.before !== 'undefined') {
+                value = i.raws.before;
+                if (value.indexOf('\n') !== -1) {
+                    value = value.replace(/[^\n]+$/, '');
+                }
+                return false;
+            }
+        });
+        if (typeof value === 'undefined') {
+            value = this.raw(node, null, 'beforeDecl');
+        }
+        return value;
+    };
+
+    Stringifier.prototype.rawBeforeDecl = function rawBeforeDecl(root, node) {
+        var value = void 0;
+        root.walkDecls(function (i) {
+            if (typeof i.raws.before !== 'undefined') {
+                value = i.raws.before;
+                if (value.indexOf('\n') !== -1) {
+                    value = value.replace(/[^\n]+$/, '');
+                }
+                return false;
+            }
+        });
+        if (typeof value === 'undefined') {
+            value = this.raw(node, null, 'beforeRule');
+        }
+        return value;
+    };
+
+    Stringifier.prototype.rawBeforeRule = function rawBeforeRule(root) {
+        var value = void 0;
+        root.walk(function (i) {
+            if (i.nodes && (i.parent !== root || root.first !== i)) {
+                if (typeof i.raws.before !== 'undefined') {
+                    value = i.raws.before;
+                    if (value.indexOf('\n') !== -1) {
+                        value = value.replace(/[^\n]+$/, '');
+                    }
+                    return false;
+                }
+            }
+        });
+        return value;
+    };
+
+    Stringifier.prototype.rawBeforeClose = function rawBeforeClose(root) {
+        var value = void 0;
+        root.walk(function (i) {
+            if (i.nodes && i.nodes.length > 0) {
+                if (typeof i.raws.after !== 'undefined') {
+                    value = i.raws.after;
+                    if (value.indexOf('\n') !== -1) {
+                        value = value.replace(/[^\n]+$/, '');
+                    }
+                    return false;
+                }
+            }
+        });
+        return value;
+    };
+
+    Stringifier.prototype.rawBeforeOpen = function rawBeforeOpen(root) {
+        var value = void 0;
+        root.walk(function (i) {
+            if (i.type !== 'decl') {
+                value = i.raws.between;
+                if (typeof value !== 'undefined') return false;
+            }
+        });
+        return value;
+    };
+
+    Stringifier.prototype.rawColon = function rawColon(root) {
+        var value = void 0;
+        root.walkDecls(function (i) {
+            if (typeof i.raws.between !== 'undefined') {
+                value = i.raws.between.replace(/[^\s:]/g, '');
+                return false;
+            }
+        });
+        return value;
+    };
+
+    Stringifier.prototype.beforeAfter = function beforeAfter(node, detect) {
+        var value = void 0;
+        if (node.type === 'decl') {
+            value = this.raw(node, null, 'beforeDecl');
+        } else if (node.type === 'comment') {
+            value = this.raw(node, null, 'beforeComment');
+        } else if (detect === 'before') {
+            value = this.raw(node, null, 'beforeRule');
+        } else {
+            value = this.raw(node, null, 'beforeClose');
+        }
+
+        var buf = node.parent;
+        var depth = 0;
+        while (buf && buf.type !== 'root') {
+            depth += 1;
+            buf = buf.parent;
+        }
+
+        if (value.indexOf('\n') !== -1) {
+            var indent = this.raw(node, null, 'indent');
+            if (indent.length) {
+                for (var step = 0; step < depth; step++) {
+                    value += indent;
+                }
+            }
+        }
+
+        return value;
+    };
+
+    Stringifier.prototype.rawValue = function rawValue(node, prop) {
+        var value = node[prop];
+        var raw = node.raws[prop];
+        if (raw && raw.value === value) {
+            return raw.raw;
+        } else {
+            return value;
+        }
+    };
+
+    return Stringifier;
+}();
+
+function stringify(node, builder) {
+    var str = new Stringifier(builder);
+    str.stringify(node);
+}
+
+/**
+ * @typedef {object} position
+ * @property {number} line   - source line in file
+ * @property {number} column - source column in file
+ */
+
+/**
+ * @typedef {object} source
+ * @property {Input} input    - {@link Input} with input file
+ * @property {position} start - The starting position of the node’s source
+ * @property {position} end   - The ending position of the node’s source
+ */
+
+var cloneNode = function cloneNode(obj, parent) {
+    var cloned = new obj.constructor();
+
+    for (var i in obj) {
+        if (!obj.hasOwnProperty(i)) continue;
+        var value = obj[i];
+        var type = typeof value === 'undefined' ? 'undefined' : _typeof(value);
+
+        if (i === 'parent' && type === 'object') {
+            if (parent) cloned[i] = parent;
+        } else if (i === 'source') {
+            cloned[i] = value;
+        } else if (value instanceof Array) {
+            cloned[i] = value.map(function (j) {
+                return cloneNode(j, cloned);
+            });
+        } else if (i !== 'before' && i !== 'after' && i !== 'between' && i !== 'semicolon') {
+            if (type === 'object' && value !== null) value = cloneNode(value);
+            cloned[i] = value;
+        }
+    }
+
+    return cloned;
+};
+
+/**
+ * All node classes inherit the following common methods.
+ *
+ * @abstract
+ */
+
+var Node = function () {
+
+    /**
+     * @param {object} [defaults] - value for node properties
+     */
+    function Node() {
+        var defaults$$1 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+        classCallCheck(this, Node);
+
+        this.raws = {};
+        for (var name in defaults$$1) {
+            this[name] = defaults$$1[name];
+        }
+    }
+
+    /**
+     * Returns a CssSyntaxError instance containing the original position
+     * of the node in the source, showing line and column numbers and also
+     * a small excerpt to facilitate debugging.
+     *
+     * If present, an input source map will be used to get the original position
+     * of the source, even from a previous compilation step
+     * (e.g., from Sass compilation).
+     *
+     * This method produces very useful error messages.
+     *
+     * @param {string} message     - error description
+     * @param {object} [opts]      - options
+     * @param {string} opts.plugin - plugin name that created this error.
+     *                               PostCSS will set it automatically.
+     * @param {string} opts.word   - a word inside a node’s string that should
+     *                               be highlighted as the source of the error
+     * @param {number} opts.index  - an index inside a node’s string that should
+     *                               be highlighted as the source of the error
+     *
+     * @return {CssSyntaxError} error object to throw it
+     *
+     * @example
+     * if ( !variables[name] ) {
+     *   throw decl.error('Unknown variable ' + name, { word: name });
+     *   // CssSyntaxError: postcss-vars:a.sass:4:3: Unknown variable $black
+     *   //   color: $black
+     *   // a
+     *   //          ^
+     *   //   background: white
+     * }
+     */
+
+
+    Node.prototype.error = function error(message) {
+        var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+        if (this.source) {
+            var pos = this.positionBy(opts);
+            return this.source.input.error(message, pos.line, pos.column, opts);
+        } else {
+            return new CssSyntaxError(message);
+        }
+    };
+
+    /**
+     * This method is provided as a convenience wrapper for {@link Result#warn}.
+     *
+     * @param {Result} result      - the {@link Result} instance
+     *                               that will receive the warning
+     * @param {string} text        - warning message
+     * @param {object} [opts]      - options
+     * @param {string} opts.plugin - plugin name that created this warning.
+     *                               PostCSS will set it automatically.
+     * @param {string} opts.word   - a word inside a node’s string that should
+     *                               be highlighted as the source of the warning
+     * @param {number} opts.index  - an index inside a node’s string that should
+     *                               be highlighted as the source of the warning
+     *
+     * @return {Warning} created warning object
+     *
+     * @example
+     * const plugin = postcss.plugin('postcss-deprecated', () => {
+     *   return (root, result) => {
+     *     root.walkDecls('bad', decl => {
+     *       decl.warn(result, 'Deprecated property bad');
+     *     });
+     *   };
+     * });
+     */
+
+
+    Node.prototype.warn = function warn(result, text, opts) {
+        var data = { node: this };
+        for (var i in opts) {
+            data[i] = opts[i];
+        }return result.warn(text, data);
+    };
+
+    /**
+     * Removes the node from its parent and cleans the parent properties
+     * from the node and its children.
+     *
+     * @example
+     * if ( decl.prop.match(/^-webkit-/) ) {
+     *   decl.remove();
+     * }
+     *
+     * @return {Node} node to make calls chain
+     */
+
+
+    Node.prototype.remove = function remove() {
+        if (this.parent) {
+            this.parent.removeChild(this);
+        }
+        this.parent = undefined;
+        return this;
+    };
+
+    /**
+     * Returns a CSS string representing the node.
+     *
+     * @param {stringifier|syntax} [stringifier] - a syntax to use
+     *                                             in string generation
+     *
+     * @return {string} CSS string of this node
+     *
+     * @example
+     * postcss.rule({ selector: 'a' }).toString() //=> "a {}"
+     */
+
+
+    Node.prototype.toString = function toString() {
+        var stringifier = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : stringify;
+
+        if (stringifier.stringify) stringifier = stringifier.stringify;
+        var result = '';
+        stringifier(this, function (i) {
+            result += i;
+        });
+        return result;
+    };
+
+    /**
+     * Returns a clone of the node.
+     *
+     * The resulting cloned node and its (cloned) children will have
+     * a clean parent and code style properties.
+     *
+     * @param {object} [overrides] - new properties to override in the clone.
+     *
+     * @example
+     * const cloned = decl.clone({ prop: '-moz-' + decl.prop });
+     * cloned.raws.before  //=> undefined
+     * cloned.parent       //=> undefined
+     * cloned.toString()   //=> -moz-transform: scale(0)
+     *
+     * @return {Node} clone of the node
+     */
+
+
+    Node.prototype.clone = function clone() {
+        var overrides = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+        var cloned = cloneNode(this);
+        for (var name in overrides) {
+            cloned[name] = overrides[name];
+        }
+        return cloned;
+    };
+
+    /**
+     * Shortcut to clone the node and insert the resulting cloned node
+     * before the current node.
+     *
+     * @param {object} [overrides] - new properties to override in the clone.
+     *
+     * @example
+     * decl.cloneBefore({ prop: '-moz-' + decl.prop });
+     *
+     * @return {Node} - new node
+     */
+
+
+    Node.prototype.cloneBefore = function cloneBefore() {
+        var overrides = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+        var cloned = this.clone(overrides);
+        this.parent.insertBefore(this, cloned);
+        return cloned;
+    };
+
+    /**
+     * Shortcut to clone the node and insert the resulting cloned node
+     * after the current node.
+     *
+     * @param {object} [overrides] - new properties to override in the clone.
+     *
+     * @return {Node} - new node
+     */
+
+
+    Node.prototype.cloneAfter = function cloneAfter() {
+        var overrides = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+        var cloned = this.clone(overrides);
+        this.parent.insertAfter(this, cloned);
+        return cloned;
+    };
+
+    /**
+     * Inserts node(s) before the current node and removes the current node.
+     *
+     * @param {...Node} nodes - node(s) to replace current one
+     *
+     * @example
+     * if ( atrule.name == 'mixin' ) {
+     *   atrule.replaceWith(mixinRules[atrule.params]);
+     * }
+     *
+     * @return {Node} current node to methods chain
+     */
+
+
+    Node.prototype.replaceWith = function replaceWith() {
+        var _this = this;
+
+        if (this.parent) {
+            for (var _len = arguments.length, nodes = Array(_len), _key = 0; _key < _len; _key++) {
+                nodes[_key] = arguments[_key];
+            }
+
+            nodes.forEach(function (node) {
+                _this.parent.insertBefore(_this, node);
+            });
+
+            this.remove();
+        }
+
+        return this;
+    };
+
+    /**
+     * Removes the node from its current parent and inserts it
+     * at the end of `newParent`.
+     *
+     * This will clean the `before` and `after` code {@link Node#raws} data
+     * from the node and replace them with the indentation style of `newParent`.
+     * It will also clean the `between` property
+     * if `newParent` is in another {@link Root}.
+     *
+     * @param {Container} newParent - container node where the current node
+     *                                will be moved
+     *
+     * @example
+     * atrule.moveTo(atrule.root());
+     *
+     * @return {Node} current node to methods chain
+     */
+
+
+    Node.prototype.moveTo = function moveTo(newParent) {
+        this.cleanRaws(this.root() === newParent.root());
+        this.remove();
+        newParent.append(this);
+        return this;
+    };
+
+    /**
+     * Removes the node from its current parent and inserts it into
+     * a new parent before `otherNode`.
+     *
+     * This will also clean the node’s code style properties just as it would
+     * in {@link Node#moveTo}.
+     *
+     * @param {Node} otherNode - node that will be before current node
+     *
+     * @return {Node} current node to methods chain
+     */
+
+
+    Node.prototype.moveBefore = function moveBefore(otherNode) {
+        this.cleanRaws(this.root() === otherNode.root());
+        this.remove();
+        otherNode.parent.insertBefore(otherNode, this);
+        return this;
+    };
+
+    /**
+     * Removes the node from its current parent and inserts it into
+     * a new parent after `otherNode`.
+     *
+     * This will also clean the node’s code style properties just as it would
+     * in {@link Node#moveTo}.
+     *
+     * @param {Node} otherNode - node that will be after current node
+     *
+     * @return {Node} current node to methods chain
+     */
+
+
+    Node.prototype.moveAfter = function moveAfter(otherNode) {
+        this.cleanRaws(this.root() === otherNode.root());
+        this.remove();
+        otherNode.parent.insertAfter(otherNode, this);
+        return this;
+    };
+
+    /**
+     * Returns the next child of the node’s parent.
+     * Returns `undefined` if the current node is the last child.
+     *
+     * @return {Node|undefined} next node
+     *
+     * @example
+     * if ( comment.text === 'delete next' ) {
+     *   const next = comment.next();
+     *   if ( next ) {
+     *     next.remove();
+     *   }
+     * }
+     */
+
+
+    Node.prototype.next = function next() {
+        var index = this.parent.index(this);
+        return this.parent.nodes[index + 1];
+    };
+
+    /**
+     * Returns the previous child of the node’s parent.
+     * Returns `undefined` if the current node is the first child.
+     *
+     * @return {Node|undefined} previous node
+     *
+     * @example
+     * const annotation = decl.prev();
+     * if ( annotation.type == 'comment' ) {
+     *  readAnnotation(annotation.text);
+     * }
+     */
+
+
+    Node.prototype.prev = function prev() {
+        var index = this.parent.index(this);
+        return this.parent.nodes[index - 1];
+    };
+
+    Node.prototype.toJSON = function toJSON() {
+        var fixed = {};
+
+        for (var name in this) {
+            if (!this.hasOwnProperty(name)) continue;
+            if (name === 'parent') continue;
+            var value = this[name];
+
+            if (value instanceof Array) {
+                fixed[name] = value.map(function (i) {
+                    if ((typeof i === 'undefined' ? 'undefined' : _typeof(i)) === 'object' && i.toJSON) {
+                        return i.toJSON();
+                    } else {
+                        return i;
+                    }
+                });
+            } else if ((typeof value === 'undefined' ? 'undefined' : _typeof(value)) === 'object' && value.toJSON) {
+                fixed[name] = value.toJSON();
+            } else {
+                fixed[name] = value;
+            }
+        }
+
+        return fixed;
+    };
+
+    /**
+     * Returns a {@link Node#raws} value. If the node is missing
+     * the code style property (because the node was manually built or cloned),
+     * PostCSS will try to autodetect the code style property by looking
+     * at other nodes in the tree.
+     *
+     * @param {string} prop          - name of code style property
+     * @param {string} [defaultType] - name of default value, it can be missed
+     *                                 if the value is the same as prop
+     *
+     * @example
+     * const root = postcss.parse('a { background: white }');
+     * root.nodes[0].append({ prop: 'color', value: 'black' });
+     * root.nodes[0].nodes[1].raws.before   //=> undefined
+     * root.nodes[0].nodes[1].raw('before') //=> ' '
+     *
+     * @return {string} code style value
+     */
+
+
+    Node.prototype.raw = function raw(prop, defaultType) {
+        var str = new Stringifier();
+        return str.raw(this, prop, defaultType);
+    };
+
+    /**
+     * Finds the Root instance of the node’s tree.
+     *
+     * @example
+     * root.nodes[0].nodes[0].root() === root
+     *
+     * @return {Root} root parent
+     */
+
+
+    Node.prototype.root = function root() {
+        var result = this;
+        while (result.parent) {
+            result = result.parent;
+        }return result;
+    };
+
+    Node.prototype.cleanRaws = function cleanRaws(keepBetween) {
+        delete this.raws.before;
+        delete this.raws.after;
+        if (!keepBetween) delete this.raws.between;
+    };
+
+    Node.prototype.positionInside = function positionInside(index) {
+        var string = this.toString();
+        var column = this.source.start.column;
+        var line = this.source.start.line;
+
+        for (var i = 0; i < index; i++) {
+            if (string[i] === '\n') {
+                column = 1;
+                line += 1;
+            } else {
+                column += 1;
+            }
+        }
+
+        return { line: line, column: column };
+    };
+
+    Node.prototype.positionBy = function positionBy(opts) {
+        var pos = this.source.start;
+        if (opts.index) {
+            pos = this.positionInside(opts.index);
+        } else if (opts.word) {
+            var index = this.toString().indexOf(opts.word);
+            if (index !== -1) pos = this.positionInside(index);
+        }
+        return pos;
+    };
+
+    Node.prototype.removeSelf = function removeSelf() {
+        warnOnce('Node#removeSelf is deprecated. Use Node#remove.');
+        return this.remove();
+    };
+
+    Node.prototype.replace = function replace(nodes) {
+        warnOnce('Node#replace is deprecated. Use Node#replaceWith');
+        return this.replaceWith(nodes);
+    };
+
+    Node.prototype.style = function style(own, detect) {
+        warnOnce('Node#style() is deprecated. Use Node#raw()');
+        return this.raw(own, detect);
+    };
+
+    Node.prototype.cleanStyles = function cleanStyles(keepBetween) {
+        warnOnce('Node#cleanStyles() is deprecated. Use Node#cleanRaws()');
+        return this.cleanRaws(keepBetween);
+    };
+
+    createClass(Node, [{
+        key: 'before',
+        get: function get$$1() {
+            warnOnce('Node#before is deprecated. Use Node#raws.before');
+            return this.raws.before;
+        },
+        set: function set$$1(val) {
+            warnOnce('Node#before is deprecated. Use Node#raws.before');
+            this.raws.before = val;
+        }
+    }, {
+        key: 'between',
+        get: function get$$1() {
+            warnOnce('Node#between is deprecated. Use Node#raws.between');
+            return this.raws.between;
+        },
+        set: function set$$1(val) {
+            warnOnce('Node#between is deprecated. Use Node#raws.between');
+            this.raws.between = val;
+        }
+
+        /**
+         * @memberof Node#
+         * @member {string} type - String representing the node’s type.
+         *                         Possible values are `root`, `atrule`, `rule`,
+         *                         `decl`, or `comment`.
+         *
+         * @example
+         * postcss.decl({ prop: 'color', value: 'black' }).type //=> 'decl'
+         */
+
+        /**
+         * @memberof Node#
+         * @member {Container} parent - the node’s parent node.
+         *
+         * @example
+         * root.nodes[0].parent == root;
+         */
+
+        /**
+         * @memberof Node#
+         * @member {source} source - the input source of the node
+         *
+         * The property is used in source map generation.
+         *
+         * If you create a node manually (e.g., with `postcss.decl()`),
+         * that node will not have a `source` property and will be absent
+         * from the source map. For this reason, the plugin developer should
+         * consider cloning nodes to create new ones (in which case the new node’s
+         * source will reference the original, cloned node) or setting
+         * the `source` property manually.
+         *
+         * ```js
+         * // Bad
+         * const prefixed = postcss.decl({
+         *   prop: '-moz-' + decl.prop,
+         *   value: decl.value
+         * });
+         *
+         * // Good
+         * const prefixed = decl.clone({ prop: '-moz-' + decl.prop });
+         * ```
+         *
+         * ```js
+         * if ( atrule.name == 'add-link' ) {
+         *   const rule = postcss.rule({ selector: 'a', source: atrule.source });
+         *   atrule.parent.insertBefore(atrule, rule);
+         * }
+         * ```
+         *
+         * @example
+         * decl.source.input.from //=> '/home/ai/a.sass'
+         * decl.source.start      //=> { line: 10, column: 2 }
+         * decl.source.end        //=> { line: 10, column: 12 }
+         */
+
+        /**
+         * @memberof Node#
+         * @member {object} raws - Information to generate byte-to-byte equal
+         *                         node string as it was in the origin input.
+         *
+         * Every parser saves its own properties,
+         * but the default CSS parser uses:
+         *
+         * * `before`: the space symbols before the node. It also stores `*`
+         *   and `_` symbols before the declaration (IE hack).
+         * * `after`: the space symbols after the last child of the node
+         *   to the end of the node.
+         * * `between`: the symbols between the property and value
+         *   for declarations, selector and `{` for rules, or last parameter
+         *   and `{` for at-rules.
+         * * `semicolon`: contains true if the last child has
+         *   an (optional) semicolon.
+         * * `afterName`: the space between the at-rule name and its parameters.
+         * * `left`: the space symbols between `/*` and the comment’s text.
+         * * `right`: the space symbols between the comment’s text
+         *   and <code>*&#47;</code>.
+         * * `important`: the content of the important statement,
+         *   if it is not just `!important`.
+         *
+         * PostCSS cleans selectors, declaration values and at-rule parameters
+         * from comments and extra spaces, but it stores origin content in raws
+         * properties. As such, if you don’t change a declaration’s value,
+         * PostCSS will use the raw value with comments.
+         *
+         * @example
+         * const root = postcss.parse('a {\n  color:black\n}')
+         * root.first.first.raws //=> { before: '\n  ', between: ':' }
+         */
+
+    }]);
+    return Node;
+}();
+
+/**
+ * Represents a CSS declaration.
+ *
+ * @extends Node
+ *
+ * @example
+ * const root = postcss.parse('a { color: black }');
+ * const decl = root.first.first;
+ * decl.type       //=> 'decl'
+ * decl.toString() //=> ' color: black'
+ */
+
+var Declaration = function (_Node) {
+    inherits(Declaration, _Node);
+
+    function Declaration(defaults$$1) {
+        classCallCheck(this, Declaration);
+
+        var _this = possibleConstructorReturn(this, _Node.call(this, defaults$$1));
+
+        _this.type = 'decl';
+        return _this;
+    }
+
+    createClass(Declaration, [{
+        key: '_value',
+        get: function get$$1() {
+            warnOnce('Node#_value was deprecated. Use Node#raws.value');
+            return this.raws.value;
+        },
+        set: function set$$1(val) {
+            warnOnce('Node#_value was deprecated. Use Node#raws.value');
+            this.raws.value = val;
+        }
+    }, {
+        key: '_important',
+        get: function get$$1() {
+            warnOnce('Node#_important was deprecated. Use Node#raws.important');
+            return this.raws.important;
+        },
+        set: function set$$1(val) {
+            warnOnce('Node#_important was deprecated. Use Node#raws.important');
+            this.raws.important = val;
+        }
+
+        /**
+         * @memberof Declaration#
+         * @member {string} prop - the declaration’s property name
+         *
+         * @example
+         * const root = postcss.parse('a { color: black }');
+         * const decl = root.first.first;
+         * decl.prop //=> 'color'
+         */
+
+        /**
+         * @memberof Declaration#
+         * @member {string} value - the declaration’s value
+         *
+         * @example
+         * const root = postcss.parse('a { color: black }');
+         * const decl = root.first.first;
+         * decl.value //=> 'black'
+         */
+
+        /**
+         * @memberof Declaration#
+         * @member {boolean} important - `true` if the declaration
+         *                               has an !important annotation.
+         *
+         * @example
+         * const root = postcss.parse('a { color: black !important; color: red }');
+         * root.first.first.important //=> true
+         * root.first.last.important  //=> undefined
+         */
+
+        /**
+         * @memberof Declaration#
+         * @member {object} raws - Information to generate byte-to-byte equal
+         *                         node string as it was in the origin input.
+         *
+         * Every parser saves its own properties,
+         * but the default CSS parser uses:
+         *
+         * * `before`: the space symbols before the node. It also stores `*`
+         *   and `_` symbols before the declaration (IE hack).
+         * * `between`: the symbols between the property and value
+         *   for declarations, selector and `{` for rules, or last parameter
+         *   and `{` for at-rules.
+         * * `important`: the content of the important statement,
+         *   if it is not just `!important`.
+         *
+         * PostCSS cleans declaration from comments and extra spaces,
+         * but it stores origin content in raws properties.
+         * As such, if you don’t change a declaration’s value,
+         * PostCSS will use the raw value with comments.
+         *
+         * @example
+         * const root = postcss.parse('a {\n  color:black\n}')
+         * root.first.first.raws //=> { before: '\n  ', between: ':' }
+         */
+
+    }]);
+    return Declaration;
+}(Node);
+
+/**
+ * Represents a comment between declarations or statements (rule and at-rules).
+ *
+ * Comments inside selectors, at-rule parameters, or declaration values
+ * will be stored in the `raws` properties explained above.
+ *
+ * @extends Node
+ */
+
+var Comment = function (_Node) {
+    inherits(Comment, _Node);
+
+    function Comment(defaults$$1) {
+        classCallCheck(this, Comment);
+
+        var _this = possibleConstructorReturn(this, _Node.call(this, defaults$$1));
+
+        _this.type = 'comment';
+        return _this;
+    }
+
+    createClass(Comment, [{
+        key: 'left',
+        get: function get$$1() {
+            warnOnce('Comment#left was deprecated. Use Comment#raws.left');
+            return this.raws.left;
+        },
+        set: function set$$1(val) {
+            warnOnce('Comment#left was deprecated. Use Comment#raws.left');
+            this.raws.left = val;
+        }
+    }, {
+        key: 'right',
+        get: function get$$1() {
+            warnOnce('Comment#right was deprecated. Use Comment#raws.right');
+            return this.raws.right;
+        },
+        set: function set$$1(val) {
+            warnOnce('Comment#right was deprecated. Use Comment#raws.right');
+            this.raws.right = val;
+        }
+
+        /**
+         * @memberof Comment#
+         * @member {string} text - the comment’s text
+         */
+
+        /**
+         * @memberof Comment#
+         * @member {object} raws - Information to generate byte-to-byte equal
+         *                         node string as it was in the origin input.
+         *
+         * Every parser saves its own properties,
+         * but the default CSS parser uses:
+         *
+         * * `before`: the space symbols before the node.
+         * * `left`: the space symbols between `/*` and the comment’s text.
+         * * `right`: the space symbols between the comment’s text.
+         */
+
+    }]);
+    return Comment;
+}(Node);
+
+var Parser = function () {
+    function Parser(input) {
+        classCallCheck(this, Parser);
+
+        this.input = input;
+
+        this.pos = 0;
+        this.root = new Root();
+        this.current = this.root;
+        this.spaces = '';
+        this.semicolon = false;
+
+        this.root.source = { input: input, start: { line: 1, column: 1 } };
+    }
+
+    Parser.prototype.tokenize = function tokenize$$1() {
+        this.tokens = tokenize(this.input);
+    };
+
+    Parser.prototype.loop = function loop() {
+        var token = void 0;
+        while (this.pos < this.tokens.length) {
+            token = this.tokens[this.pos];
+
+            switch (token[0]) {
+
+                case 'space':
+                case ';':
+                    this.spaces += token[1];
+                    break;
+
+                case '}':
+                    this.end(token);
+                    break;
+
+                case 'comment':
+                    this.comment(token);
+                    break;
+
+                case 'at-word':
+                    this.atrule(token);
+                    break;
+
+                case '{':
+                    this.emptyRule(token);
+                    break;
+
+                default:
+                    this.other();
+                    break;
+            }
+
+            this.pos += 1;
+        }
+        this.endFile();
+    };
+
+    Parser.prototype.comment = function comment(token) {
+        var node = new Comment();
+        this.init(node, token[2], token[3]);
+        node.source.end = { line: token[4], column: token[5] };
+
+        var text = token[1].slice(2, -2);
+        if (/^\s*$/.test(text)) {
+            node.text = '';
+            node.raws.left = text;
+            node.raws.right = '';
+        } else {
+            var match = text.match(/^(\s*)([^]*[^\s])(\s*)$/);
+            node.text = match[2];
+            node.raws.left = match[1];
+            node.raws.right = match[3];
+        }
+    };
+
+    Parser.prototype.emptyRule = function emptyRule(token) {
+        var node = new Rule();
+        this.init(node, token[2], token[3]);
+        node.selector = '';
+        node.raws.between = '';
+        this.current = node;
+    };
+
+    Parser.prototype.other = function other() {
+        var token = void 0;
+        var end = false;
+        var type = null;
+        var colon = false;
+        var bracket = null;
+        var brackets = [];
+
+        var start = this.pos;
+        while (this.pos < this.tokens.length) {
+            token = this.tokens[this.pos];
+            type = token[0];
+
+            if (type === '(' || type === '[') {
+                if (!bracket) bracket = token;
+                brackets.push(type === '(' ? ')' : ']');
+            } else if (brackets.length === 0) {
+                if (type === ';') {
+                    if (colon) {
+                        this.decl(this.tokens.slice(start, this.pos + 1));
+                        return;
+                    } else {
+                        break;
+                    }
+                } else if (type === '{') {
+                    this.rule(this.tokens.slice(start, this.pos + 1));
+                    return;
+                } else if (type === '}') {
+                    this.pos -= 1;
+                    end = true;
+                    break;
+                } else if (type === ':') {
+                    colon = true;
+                }
+            } else if (type === brackets[brackets.length - 1]) {
+                brackets.pop();
+                if (brackets.length === 0) bracket = null;
+            }
+
+            this.pos += 1;
+        }
+        if (this.pos === this.tokens.length) {
+            this.pos -= 1;
+            end = true;
+        }
+
+        if (brackets.length > 0) this.unclosedBracket(bracket);
+
+        if (end && colon) {
+            while (this.pos > start) {
+                token = this.tokens[this.pos][0];
+                if (token !== 'space' && token !== 'comment') break;
+                this.pos -= 1;
+            }
+            this.decl(this.tokens.slice(start, this.pos + 1));
+            return;
+        }
+
+        this.unknownWord(start);
+    };
+
+    Parser.prototype.rule = function rule(tokens) {
+        tokens.pop();
+
+        var node = new Rule();
+        this.init(node, tokens[0][2], tokens[0][3]);
+
+        node.raws.between = this.spacesFromEnd(tokens);
+        this.raw(node, 'selector', tokens);
+        this.current = node;
+    };
+
+    Parser.prototype.decl = function decl(tokens) {
+        var node = new Declaration();
+        this.init(node);
+
+        var last = tokens[tokens.length - 1];
+        if (last[0] === ';') {
+            this.semicolon = true;
+            tokens.pop();
+        }
+        if (last[4]) {
+            node.source.end = { line: last[4], column: last[5] };
+        } else {
+            node.source.end = { line: last[2], column: last[3] };
+        }
+
+        while (tokens[0][0] !== 'word') {
+            node.raws.before += tokens.shift()[1];
+        }
+        node.source.start = { line: tokens[0][2], column: tokens[0][3] };
+
+        node.prop = '';
+        while (tokens.length) {
+            var type = tokens[0][0];
+            if (type === ':' || type === 'space' || type === 'comment') {
+                break;
+            }
+            node.prop += tokens.shift()[1];
+        }
+
+        node.raws.between = '';
+
+        var token = void 0;
+        while (tokens.length) {
+            token = tokens.shift();
+
+            if (token[0] === ':') {
+                node.raws.between += token[1];
+                break;
+            } else {
+                node.raws.between += token[1];
+            }
+        }
+
+        if (node.prop[0] === '_' || node.prop[0] === '*') {
+            node.raws.before += node.prop[0];
+            node.prop = node.prop.slice(1);
+        }
+        node.raws.between += this.spacesFromStart(tokens);
+        this.precheckMissedSemicolon(tokens);
+
+        for (var i = tokens.length - 1; i > 0; i--) {
+            token = tokens[i];
+            if (token[1] === '!important') {
+                node.important = true;
+                var string = this.stringFrom(tokens, i);
+                string = this.spacesFromEnd(tokens) + string;
+                if (string !== ' !important') node.raws.important = string;
+                break;
+            } else if (token[1] === 'important') {
+                var cache = tokens.slice(0);
+                var str = '';
+                for (var j = i; j > 0; j--) {
+                    var _type = cache[j][0];
+                    if (str.trim().indexOf('!') === 0 && _type !== 'space') {
+                        break;
+                    }
+                    str = cache.pop()[1] + str;
+                }
+                if (str.trim().indexOf('!') === 0) {
+                    node.important = true;
+                    node.raws.important = str;
+                    tokens = cache;
+                }
+            }
+
+            if (token[0] !== 'space' && token[0] !== 'comment') {
+                break;
+            }
+        }
+
+        this.raw(node, 'value', tokens);
+
+        if (node.value.indexOf(':') !== -1) this.checkMissedSemicolon(tokens);
+    };
+
+    Parser.prototype.atrule = function atrule(token) {
+        var node = new AtRule();
+        node.name = token[1].slice(1);
+        if (node.name === '') {
+            this.unnamedAtrule(node, token);
+        }
+        this.init(node, token[2], token[3]);
+
+        var last = false;
+        var open = false;
+        var params = [];
+
+        this.pos += 1;
+        while (this.pos < this.tokens.length) {
+            token = this.tokens[this.pos];
+
+            if (token[0] === ';') {
+                node.source.end = { line: token[2], column: token[3] };
+                this.semicolon = true;
+                break;
+            } else if (token[0] === '{') {
+                open = true;
+                break;
+            } else if (token[0] === '}') {
+                this.end(token);
+                break;
+            } else {
+                params.push(token);
+            }
+
+            this.pos += 1;
+        }
+        if (this.pos === this.tokens.length) {
+            last = true;
+        }
+
+        node.raws.between = this.spacesFromEnd(params);
+        if (params.length) {
+            node.raws.afterName = this.spacesFromStart(params);
+            this.raw(node, 'params', params);
+            if (last) {
+                token = params[params.length - 1];
+                node.source.end = { line: token[4], column: token[5] };
+                this.spaces = node.raws.between;
+                node.raws.between = '';
+            }
+        } else {
+            node.raws.afterName = '';
+            node.params = '';
+        }
+
+        if (open) {
+            node.nodes = [];
+            this.current = node;
+        }
+    };
+
+    Parser.prototype.end = function end(token) {
+        if (this.current.nodes && this.current.nodes.length) {
+            this.current.raws.semicolon = this.semicolon;
+        }
+        this.semicolon = false;
+
+        this.current.raws.after = (this.current.raws.after || '') + this.spaces;
+        this.spaces = '';
+
+        if (this.current.parent) {
+            this.current.source.end = { line: token[2], column: token[3] };
+            this.current = this.current.parent;
+        } else {
+            this.unexpectedClose(token);
+        }
+    };
+
+    Parser.prototype.endFile = function endFile() {
+        if (this.current.parent) this.unclosedBlock();
+        if (this.current.nodes && this.current.nodes.length) {
+            this.current.raws.semicolon = this.semicolon;
+        }
+        this.current.raws.after = (this.current.raws.after || '') + this.spaces;
+    };
+
+    // Helpers
+
+    Parser.prototype.init = function init(node, line, column) {
+        this.current.push(node);
+
+        node.source = { start: { line: line, column: column }, input: this.input };
+        node.raws.before = this.spaces;
+        this.spaces = '';
+        if (node.type !== 'comment') this.semicolon = false;
+    };
+
+    Parser.prototype.raw = function raw(node, prop, tokens) {
+        var token = void 0,
+            type = void 0;
+        var length = tokens.length;
+        var value = '';
+        var clean = true;
+        for (var i = 0; i < length; i += 1) {
+            token = tokens[i];
+            type = token[0];
+            if (type === 'comment' || type === 'space' && i === length - 1) {
+                clean = false;
+            } else {
+                value += token[1];
+            }
+        }
+        if (!clean) {
+            var raw = tokens.reduce(function (all, i) {
+                return all + i[1];
+            }, '');
+            node.raws[prop] = { value: value, raw: raw };
+        }
+        node[prop] = value;
+    };
+
+    Parser.prototype.spacesFromEnd = function spacesFromEnd(tokens) {
+        var lastTokenType = void 0;
+        var spaces = '';
+        while (tokens.length) {
+            lastTokenType = tokens[tokens.length - 1][0];
+            if (lastTokenType !== 'space' && lastTokenType !== 'comment') break;
+            spaces = tokens.pop()[1] + spaces;
+        }
+        return spaces;
+    };
+
+    Parser.prototype.spacesFromStart = function spacesFromStart(tokens) {
+        var next = void 0;
+        var spaces = '';
+        while (tokens.length) {
+            next = tokens[0][0];
+            if (next !== 'space' && next !== 'comment') break;
+            spaces += tokens.shift()[1];
+        }
+        return spaces;
+    };
+
+    Parser.prototype.stringFrom = function stringFrom(tokens, from) {
+        var result = '';
+        for (var i = from; i < tokens.length; i++) {
+            result += tokens[i][1];
+        }
+        tokens.splice(from, tokens.length - from);
+        return result;
+    };
+
+    Parser.prototype.colon = function colon(tokens) {
+        var brackets = 0;
+        var token = void 0,
+            type = void 0,
+            prev = void 0;
+        for (var i = 0; i < tokens.length; i++) {
+            token = tokens[i];
+            type = token[0];
+
+            if (type === '(') {
+                brackets += 1;
+            } else if (type === ')') {
+                brackets -= 1;
+            } else if (brackets === 0 && type === ':') {
+                if (!prev) {
+                    this.doubleColon(token);
+                } else if (prev[0] === 'word' && prev[1] === 'progid') {
+                    continue;
+                } else {
+                    return i;
+                }
+            }
+
+            prev = token;
+        }
+        return false;
+    };
+
+    // Errors
+
+    Parser.prototype.unclosedBracket = function unclosedBracket(bracket) {
+        throw this.input.error('Unclosed bracket', bracket[2], bracket[3]);
+    };
+
+    Parser.prototype.unknownWord = function unknownWord(start) {
+        var token = this.tokens[start];
+        throw this.input.error('Unknown word', token[2], token[3]);
+    };
+
+    Parser.prototype.unexpectedClose = function unexpectedClose(token) {
+        throw this.input.error('Unexpected }', token[2], token[3]);
+    };
+
+    Parser.prototype.unclosedBlock = function unclosedBlock() {
+        var pos = this.current.source.start;
+        throw this.input.error('Unclosed block', pos.line, pos.column);
+    };
+
+    Parser.prototype.doubleColon = function doubleColon(token) {
+        throw this.input.error('Double colon', token[2], token[3]);
+    };
+
+    Parser.prototype.unnamedAtrule = function unnamedAtrule(node, token) {
+        throw this.input.error('At-rule without name', token[2], token[3]);
+    };
+
+    Parser.prototype.precheckMissedSemicolon = function precheckMissedSemicolon(tokens) {
+        // Hook for Safe Parser
+        
+    };
+
+    Parser.prototype.checkMissedSemicolon = function checkMissedSemicolon(tokens) {
+        var colon = this.colon(tokens);
+        if (colon === false) return;
+
+        var founded = 0;
+        var token = void 0;
+        for (var j = colon - 1; j >= 0; j--) {
+            token = tokens[j];
+            if (token[0] !== 'space') {
+                founded += 1;
+                if (founded === 2) break;
+            }
+        }
+        throw this.input.error('Missed semicolon', token[2], token[3]);
+    };
+
+    return Parser;
+}();
+
+function parse(css, opts) {
+    if (opts && opts.safe) {
+        throw new Error('Option safe was removed. ' + 'Use parser: require("postcss-safe-parser")');
+    }
+
+    var input = new Input(css, opts);
+
+    var parser = new Parser(input);
+    try {
+        parser.tokenize();
+        parser.loop();
+    } catch (e) {
+        if (e.name === 'CssSyntaxError' && opts && opts.from) {
+            if (/\.scss$/i.test(opts.from)) {
+                e.message += '\nYou tried to parse SCSS with ' + 'the standard CSS parser; ' + 'try again with the postcss-scss parser';
+            } else if (/\.less$/i.test(opts.from)) {
+                e.message += '\nYou tried to parse Less with ' + 'the standard CSS parser; ' + 'try again with the postcss-less parser';
+            }
+        }
+        throw e;
+    }
+
+    return parser.root;
+}
+
+function cleanSource(nodes) {
+    return nodes.map(function (i) {
+        if (i.nodes) i.nodes = cleanSource(i.nodes);
+        delete i.source;
+        return i;
+    });
+}
+
+/**
+ * @callback childCondition
+ * @param {Node} node    - container child
+ * @param {number} index - child index
+ * @param {Node[]} nodes - all container children
+ * @return {boolean}
+ */
+
+/**
+ * @callback childIterator
+ * @param {Node} node    - container child
+ * @param {number} index - child index
+ * @return {false|undefined} returning `false` will break iteration
+ */
+
+/**
+ * The {@link Root}, {@link AtRule}, and {@link Rule} container nodes
+ * inherit some common methods to help work with their children.
+ *
+ * Note that all containers can store any content. If you write a rule inside
+ * a rule, PostCSS will parse it.
+ *
+ * @extends Node
+ * @abstract
+ */
+
+var Container = function (_Node) {
+    inherits(Container, _Node);
+
+    function Container() {
+        classCallCheck(this, Container);
+        return possibleConstructorReturn(this, _Node.apply(this, arguments));
+    }
+
+    Container.prototype.push = function push(child) {
+        child.parent = this;
+        this.nodes.push(child);
+        return this;
+    };
+
+    /**
+     * Iterates through the container’s immediate children,
+     * calling `callback` for each child.
+     *
+     * Returning `false` in the callback will break iteration.
+     *
+     * This method only iterates through the container’s immediate children.
+     * If you need to recursively iterate through all the container’s descendant
+     * nodes, use {@link Container#walk}.
+     *
+     * Unlike the for `{}`-cycle or `Array#forEach` this iterator is safe
+     * if you are mutating the array of child nodes during iteration.
+     * PostCSS will adjust the current index to match the mutations.
+     *
+     * @param {childIterator} callback - iterator receives each node and index
+     *
+     * @return {false|undefined} returns `false` if iteration was broke
+     *
+     * @example
+     * const root = postcss.parse('a { color: black; z-index: 1 }');
+     * const rule = root.first;
+     *
+     * for ( let decl of rule.nodes ) {
+     *     decl.cloneBefore({ prop: '-webkit-' + decl.prop });
+     *     // Cycle will be infinite, because cloneBefore moves the current node
+     *     // to the next index
+     * }
+     *
+     * rule.each(decl => {
+     *     decl.cloneBefore({ prop: '-webkit-' + decl.prop });
+     *     // Will be executed only for color and z-index
+     * });
+     */
+
+
+    Container.prototype.each = function each(callback) {
+        if (!this.lastEach) this.lastEach = 0;
+        if (!this.indexes) this.indexes = {};
+
+        this.lastEach += 1;
+        var id = this.lastEach;
+        this.indexes[id] = 0;
+
+        if (!this.nodes) return undefined;
+
+        var index = void 0,
+            result = void 0;
+        while (this.indexes[id] < this.nodes.length) {
+            index = this.indexes[id];
+            result = callback(this.nodes[index], index);
+            if (result === false) break;
+
+            this.indexes[id] += 1;
+        }
+
+        delete this.indexes[id];
+
+        return result;
+    };
+
+    /**
+     * Traverses the container’s descendant nodes, calling callback
+     * for each node.
+     *
+     * Like container.each(), this method is safe to use
+     * if you are mutating arrays during iteration.
+     *
+     * If you only need to iterate through the container’s immediate children,
+     * use {@link Container#each}.
+     *
+     * @param {childIterator} callback - iterator receives each node and index
+     *
+     * @return {false|undefined} returns `false` if iteration was broke
+     *
+     * @example
+     * root.walk(node => {
+     *   // Traverses all descendant nodes.
+     * });
+     */
+
+
+    Container.prototype.walk = function walk(callback) {
+        return this.each(function (child, i) {
+            var result = callback(child, i);
+            if (result !== false && child.walk) {
+                result = child.walk(callback);
+            }
+            return result;
+        });
+    };
+
+    /**
+     * Traverses the container’s descendant nodes, calling callback
+     * for each declaration node.
+     *
+     * If you pass a filter, iteration will only happen over declarations
+     * with matching properties.
+     *
+     * Like {@link Container#each}, this method is safe
+     * to use if you are mutating arrays during iteration.
+     *
+     * @param {string|RegExp} [prop]   - string or regular expression
+     *                                   to filter declarations by property name
+     * @param {childIterator} callback - iterator receives each node and index
+     *
+     * @return {false|undefined} returns `false` if iteration was broke
+     *
+     * @example
+     * root.walkDecls(decl => {
+     *   checkPropertySupport(decl.prop);
+     * });
+     *
+     * root.walkDecls('border-radius', decl => {
+     *   decl.remove();
+     * });
+     *
+     * root.walkDecls(/^background/, decl => {
+     *   decl.value = takeFirstColorFromGradient(decl.value);
+     * });
+     */
+
+
+    Container.prototype.walkDecls = function walkDecls(prop, callback) {
+        if (!callback) {
+            callback = prop;
+            return this.walk(function (child, i) {
+                if (child.type === 'decl') {
+                    return callback(child, i);
+                }
+            });
+        } else if (prop instanceof RegExp) {
+            return this.walk(function (child, i) {
+                if (child.type === 'decl' && prop.test(child.prop)) {
+                    return callback(child, i);
+                }
+            });
+        } else {
+            return this.walk(function (child, i) {
+                if (child.type === 'decl' && child.prop === prop) {
+                    return callback(child, i);
+                }
+            });
+        }
+    };
+
+    /**
+     * Traverses the container’s descendant nodes, calling callback
+     * for each rule node.
+     *
+     * If you pass a filter, iteration will only happen over rules
+     * with matching selectors.
+     *
+     * Like {@link Container#each}, this method is safe
+     * to use if you are mutating arrays during iteration.
+     *
+     * @param {string|RegExp} [selector] - string or regular expression
+     *                                     to filter rules by selector
+     * @param {childIterator} callback   - iterator receives each node and index
+     *
+     * @return {false|undefined} returns `false` if iteration was broke
+     *
+     * @example
+     * const selectors = [];
+     * root.walkRules(rule => {
+     *   selectors.push(rule.selector);
+     * });
+     * console.log(`Your CSS uses ${selectors.length} selectors`);
+     */
+
+
+    Container.prototype.walkRules = function walkRules(selector, callback) {
+        if (!callback) {
+            callback = selector;
+
+            return this.walk(function (child, i) {
+                if (child.type === 'rule') {
+                    return callback(child, i);
+                }
+            });
+        } else if (selector instanceof RegExp) {
+            return this.walk(function (child, i) {
+                if (child.type === 'rule' && selector.test(child.selector)) {
+                    return callback(child, i);
+                }
+            });
+        } else {
+            return this.walk(function (child, i) {
+                if (child.type === 'rule' && child.selector === selector) {
+                    return callback(child, i);
+                }
+            });
+        }
+    };
+
+    /**
+     * Traverses the container’s descendant nodes, calling callback
+     * for each at-rule node.
+     *
+     * If you pass a filter, iteration will only happen over at-rules
+     * that have matching names.
+     *
+     * Like {@link Container#each}, this method is safe
+     * to use if you are mutating arrays during iteration.
+     *
+     * @param {string|RegExp} [name]   - string or regular expression
+     *                                   to filter at-rules by name
+     * @param {childIterator} callback - iterator receives each node and index
+     *
+     * @return {false|undefined} returns `false` if iteration was broke
+     *
+     * @example
+     * root.walkAtRules(rule => {
+     *   if ( isOld(rule.name) ) rule.remove();
+     * });
+     *
+     * let first = false;
+     * root.walkAtRules('charset', rule => {
+     *   if ( !first ) {
+     *     first = true;
+     *   } else {
+     *     rule.remove();
+     *   }
+     * });
+     */
+
+
+    Container.prototype.walkAtRules = function walkAtRules(name, callback) {
+        if (!callback) {
+            callback = name;
+            return this.walk(function (child, i) {
+                if (child.type === 'atrule') {
+                    return callback(child, i);
+                }
+            });
+        } else if (name instanceof RegExp) {
+            return this.walk(function (child, i) {
+                if (child.type === 'atrule' && name.test(child.name)) {
+                    return callback(child, i);
+                }
+            });
+        } else {
+            return this.walk(function (child, i) {
+                if (child.type === 'atrule' && child.name === name) {
+                    return callback(child, i);
+                }
+            });
+        }
+    };
+
+    /**
+     * Traverses the container’s descendant nodes, calling callback
+     * for each comment node.
+     *
+     * Like {@link Container#each}, this method is safe
+     * to use if you are mutating arrays during iteration.
+     *
+     * @param {childIterator} callback - iterator receives each node and index
+     *
+     * @return {false|undefined} returns `false` if iteration was broke
+     *
+     * @example
+     * root.walkComments(comment => {
+     *   comment.remove();
+     * });
+     */
+
+
+    Container.prototype.walkComments = function walkComments(callback) {
+        return this.walk(function (child, i) {
+            if (child.type === 'comment') {
+                return callback(child, i);
+            }
+        });
+    };
+
+    /**
+     * Inserts new nodes to the start of the container.
+     *
+     * @param {...(Node|object|string|Node[])} children - new nodes
+     *
+     * @return {Node} this node for methods chain
+     *
+     * @example
+     * const decl1 = postcss.decl({ prop: 'color', value: 'black' });
+     * const decl2 = postcss.decl({ prop: 'background-color', value: 'white' });
+     * rule.append(decl1, decl2);
+     *
+     * root.append({ name: 'charset', params: '"UTF-8"' });  // at-rule
+     * root.append({ selector: 'a' });                       // rule
+     * rule.append({ prop: 'color', value: 'black' });       // declaration
+     * rule.append({ text: 'Comment' })                      // comment
+     *
+     * root.append('a {}');
+     * root.first.append('color: black; z-index: 1');
+     */
+
+
+    Container.prototype.append = function append() {
+        var _this2 = this;
+
+        for (var _len = arguments.length, children = Array(_len), _key = 0; _key < _len; _key++) {
+            children[_key] = arguments[_key];
+        }
+
+        children.forEach(function (child) {
+            var nodes = _this2.normalize(child, _this2.last);
+            nodes.forEach(function (node) {
+                return _this2.nodes.push(node);
+            });
+        });
+        return this;
+    };
+
+    /**
+     * Inserts new nodes to the end of the container.
+     *
+     * @param {...(Node|object|string|Node[])} children - new nodes
+     *
+     * @return {Node} this node for methods chain
+     *
+     * @example
+     * const decl1 = postcss.decl({ prop: 'color', value: 'black' });
+     * const decl2 = postcss.decl({ prop: 'background-color', value: 'white' });
+     * rule.prepend(decl1, decl2);
+     *
+     * root.append({ name: 'charset', params: '"UTF-8"' });  // at-rule
+     * root.append({ selector: 'a' });                       // rule
+     * rule.append({ prop: 'color', value: 'black' });       // declaration
+     * rule.append({ text: 'Comment' })                      // comment
+     *
+     * root.append('a {}');
+     * root.first.append('color: black; z-index: 1');
+     */
+
+
+    Container.prototype.prepend = function prepend() {
+        var _this3 = this;
+
+        for (var _len2 = arguments.length, children = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+            children[_key2] = arguments[_key2];
+        }
+
+        children = children.reverse();
+        children.forEach(function (child) {
+            var nodes = _this3.normalize(child, _this3.first, 'prepend').reverse();
+            nodes.forEach(function (node) {
+                return _this3.nodes.unshift(node);
+            });
+            for (var id in _this3.indexes) {
+                _this3.indexes[id] = _this3.indexes[id] + nodes.length;
+            }
+        });
+        return this;
+    };
+
+    Container.prototype.cleanRaws = function cleanRaws(keepBetween) {
+        _Node.prototype.cleanRaws.call(this, keepBetween);
+        if (this.nodes) {
+            this.nodes.forEach(function (node) {
+                return node.cleanRaws(keepBetween);
+            });
+        }
+    };
+
+    /**
+     * Insert new node before old node within the container.
+     *
+     * @param {Node|number} exist             - child or child’s index.
+     * @param {Node|object|string|Node[]} add - new node
+     *
+     * @return {Node} this node for methods chain
+     *
+     * @example
+     * rule.insertBefore(decl, decl.clone({ prop: '-webkit-' + decl.prop }));
+     */
+
+
+    Container.prototype.insertBefore = function insertBefore(exist, add) {
+        var _this4 = this;
+
+        exist = this.index(exist);
+
+        var type = exist === 0 ? 'prepend' : false;
+        var nodes = this.normalize(add, this.nodes[exist], type).reverse();
+        nodes.forEach(function (node) {
+            return _this4.nodes.splice(exist, 0, node);
+        });
+
+        var index = void 0;
+        for (var id in this.indexes) {
+            index = this.indexes[id];
+            if (exist <= index) {
+                this.indexes[id] = index + nodes.length;
+            }
+        }
+
+        return this;
+    };
+
+    /**
+     * Insert new node after old node within the container.
+     *
+     * @param {Node|number} exist             - child or child’s index
+     * @param {Node|object|string|Node[]} add - new node
+     *
+     * @return {Node} this node for methods chain
+     */
+
+
+    Container.prototype.insertAfter = function insertAfter(exist, add) {
+        var _this5 = this;
+
+        exist = this.index(exist);
+
+        var nodes = this.normalize(add, this.nodes[exist]).reverse();
+        nodes.forEach(function (node) {
+            return _this5.nodes.splice(exist + 1, 0, node);
+        });
+
+        var index = void 0;
+        for (var id in this.indexes) {
+            index = this.indexes[id];
+            if (exist < index) {
+                this.indexes[id] = index + nodes.length;
+            }
+        }
+
+        return this;
+    };
+
+    Container.prototype.remove = function remove(child) {
+        if (typeof child !== 'undefined') {
+            warnOnce('Container#remove is deprecated. ' + 'Use Container#removeChild');
+            this.removeChild(child);
+        } else {
+            _Node.prototype.remove.call(this);
+        }
+        return this;
+    };
+
+    /**
+     * Removes node from the container and cleans the parent properties
+     * from the node and its children.
+     *
+     * @param {Node|number} child - child or child’s index
+     *
+     * @return {Node} this node for methods chain
+     *
+     * @example
+     * rule.nodes.length  //=> 5
+     * rule.removeChild(decl);
+     * rule.nodes.length  //=> 4
+     * decl.parent        //=> undefined
+     */
+
+
+    Container.prototype.removeChild = function removeChild(child) {
+        child = this.index(child);
+        this.nodes[child].parent = undefined;
+        this.nodes.splice(child, 1);
+
+        var index = void 0;
+        for (var id in this.indexes) {
+            index = this.indexes[id];
+            if (index >= child) {
+                this.indexes[id] = index - 1;
+            }
+        }
+
+        return this;
+    };
+
+    /**
+     * Removes all children from the container
+     * and cleans their parent properties.
+     *
+     * @return {Node} this node for methods chain
+     *
+     * @example
+     * rule.removeAll();
+     * rule.nodes.length //=> 0
+     */
+
+
+    Container.prototype.removeAll = function removeAll() {
+        this.nodes.forEach(function (node) {
+            return node.parent = undefined;
+        });
+        this.nodes = [];
+        return this;
+    };
+
+    /**
+     * Passes all declaration values within the container that match pattern
+     * through callback, replacing those values with the returned result
+     * of callback.
+     *
+     * This method is useful if you are using a custom unit or function
+     * and need to iterate through all values.
+     *
+     * @param {string|RegExp} pattern      - replace pattern
+     * @param {object} opts                - options to speed up the search
+     * @param {string|string[]} opts.props - an array of property names
+     * @param {string} opts.fast           - string that’s used
+     *                                       to narrow down values and speed up
+                                             the regexp search
+     * @param {function|string} callback   - string to replace pattern
+     *                                       or callback that returns a new
+     *                                       value.
+     *                                       The callback will receive
+     *                                       the same arguments as those
+     *                                       passed to a function parameter
+     *                                       of `String#replace`.
+     *
+     * @return {Node} this node for methods chain
+     *
+     * @example
+     * root.replaceValues(/\d+rem/, { fast: 'rem' }, string => {
+     *   return 15 * parseInt(string) + 'px';
+     * });
+     */
+
+
+    Container.prototype.replaceValues = function replaceValues(pattern, opts, callback) {
+        if (!callback) {
+            callback = opts;
+            opts = {};
+        }
+
+        this.walkDecls(function (decl) {
+            if (opts.props && opts.props.indexOf(decl.prop) === -1) return;
+            if (opts.fast && decl.value.indexOf(opts.fast) === -1) return;
+
+            decl.value = decl.value.replace(pattern, callback);
+        });
+
+        return this;
+    };
+
+    /**
+     * Returns `true` if callback returns `true`
+     * for all of the container’s children.
+     *
+     * @param {childCondition} condition - iterator returns true or false.
+     *
+     * @return {boolean} is every child pass condition
+     *
+     * @example
+     * const noPrefixes = rule.every(i => i.prop[0] !== '-');
+     */
+
+
+    Container.prototype.every = function every(condition) {
+        return this.nodes.every(condition);
+    };
+
+    /**
+     * Returns `true` if callback returns `true` for (at least) one
+     * of the container’s children.
+     *
+     * @param {childCondition} condition - iterator returns true or false.
+     *
+     * @return {boolean} is some child pass condition
+     *
+     * @example
+     * const hasPrefix = rule.some(i => i.prop[0] === '-');
+     */
+
+
+    Container.prototype.some = function some(condition) {
+        return this.nodes.some(condition);
+    };
+
+    /**
+     * Returns a `child`’s index within the {@link Container#nodes} array.
+     *
+     * @param {Node} child - child of the current container.
+     *
+     * @return {number} child index
+     *
+     * @example
+     * rule.index( rule.nodes[2] ) //=> 2
+     */
+
+
+    Container.prototype.index = function index(child) {
+        if (typeof child === 'number') {
+            return child;
+        } else {
+            return this.nodes.indexOf(child);
+        }
+    };
+
+    /**
+     * The container’s first child.
+     *
+     * @type {Node}
+     *
+     * @example
+     * rule.first == rules.nodes[0];
+     */
+
+
+    Container.prototype.normalize = function normalize(nodes, sample) {
+        var _this6 = this;
+
+        if (typeof nodes === 'string') {
+            nodes = cleanSource(parse(nodes).nodes);
+        } else if (!Array.isArray(nodes)) {
+            if (nodes.type === 'root') {
+                nodes = nodes.nodes;
+            } else if (nodes.type) {
+                nodes = [nodes];
+            } else if (nodes.prop) {
+                if (typeof nodes.value === 'undefined') {
+                    throw new Error('Value field is missed in node creation');
+                } else if (typeof nodes.value !== 'string') {
+                    nodes.value = String(nodes.value);
+                }
+                nodes = [new Declaration(nodes)];
+            } else if (nodes.selector) {
+                nodes = [new Rule(nodes)];
+            } else if (nodes.name) {
+                nodes = [new AtRule(nodes)];
+            } else if (nodes.text) {
+                nodes = [new Comment(nodes)];
+            } else {
+                throw new Error('Unknown node type in node creation');
+            }
+        }
+
+        var processed = nodes.map(function (i) {
+            if (typeof i.raws === 'undefined') i = _this6.rebuild(i);
+
+            if (i.parent) i = i.clone();
+            if (typeof i.raws.before === 'undefined') {
+                if (sample && typeof sample.raws.before !== 'undefined') {
+                    i.raws.before = sample.raws.before.replace(/[^\s]/g, '');
+                }
+            }
+            i.parent = _this6;
+            return i;
+        });
+
+        return processed;
+    };
+
+    Container.prototype.rebuild = function rebuild(node, parent) {
+        var _this7 = this;
+
+        var fix = void 0;
+        if (node.type === 'root') {
+            fix = new Root();
+        } else if (node.type === 'atrule') {
+            fix = new AtRule();
+        } else if (node.type === 'rule') {
+            fix = new Rule();
+        } else if (node.type === 'decl') {
+            fix = new Declaration();
+        } else if (node.type === 'comment') {
+            fix = new Comment();
+        }
+
+        for (var i in node) {
+            if (i === 'nodes') {
+                fix.nodes = node.nodes.map(function (j) {
+                    return _this7.rebuild(j, fix);
+                });
+            } else if (i === 'parent' && parent) {
+                fix.parent = parent;
+            } else if (node.hasOwnProperty(i)) {
+                fix[i] = node[i];
+            }
+        }
+
+        return fix;
+    };
+
+    Container.prototype.eachInside = function eachInside(callback) {
+        warnOnce('Container#eachInside is deprecated. ' + 'Use Container#walk instead.');
+        return this.walk(callback);
+    };
+
+    Container.prototype.eachDecl = function eachDecl(prop, callback) {
+        warnOnce('Container#eachDecl is deprecated. ' + 'Use Container#walkDecls instead.');
+        return this.walkDecls(prop, callback);
+    };
+
+    Container.prototype.eachRule = function eachRule(selector, callback) {
+        warnOnce('Container#eachRule is deprecated. ' + 'Use Container#walkRules instead.');
+        return this.walkRules(selector, callback);
+    };
+
+    Container.prototype.eachAtRule = function eachAtRule(name, callback) {
+        warnOnce('Container#eachAtRule is deprecated. ' + 'Use Container#walkAtRules instead.');
+        return this.walkAtRules(name, callback);
+    };
+
+    Container.prototype.eachComment = function eachComment(callback) {
+        warnOnce('Container#eachComment is deprecated. ' + 'Use Container#walkComments instead.');
+        return this.walkComments(callback);
+    };
+
+    createClass(Container, [{
+        key: 'first',
+        get: function get$$1() {
+            if (!this.nodes) return undefined;
+            return this.nodes[0];
+        }
+
+        /**
+         * The container’s last child.
+         *
+         * @type {Node}
+         *
+         * @example
+         * rule.last == rule.nodes[rule.nodes.length - 1];
+         */
+
+    }, {
+        key: 'last',
+        get: function get$$1() {
+            if (!this.nodes) return undefined;
+            return this.nodes[this.nodes.length - 1];
+        }
+    }, {
+        key: 'semicolon',
+        get: function get$$1() {
+            warnOnce('Node#semicolon is deprecated. Use Node#raws.semicolon');
+            return this.raws.semicolon;
+        },
+        set: function set$$1(val) {
+            warnOnce('Node#semicolon is deprecated. Use Node#raws.semicolon');
+            this.raws.semicolon = val;
+        }
+    }, {
+        key: 'after',
+        get: function get$$1() {
+            warnOnce('Node#after is deprecated. Use Node#raws.after');
+            return this.raws.after;
+        },
+        set: function set$$1(val) {
+            warnOnce('Node#after is deprecated. Use Node#raws.after');
+            this.raws.after = val;
+        }
+
+        /**
+         * @memberof Container#
+         * @member {Node[]} nodes - an array containing the container’s children
+         *
+         * @example
+         * const root = postcss.parse('a { color: black }');
+         * root.nodes.length           //=> 1
+         * root.nodes[0].selector      //=> 'a'
+         * root.nodes[0].nodes[0].prop //=> 'color'
+         */
+
+    }]);
+    return Container;
+}(Node);
+
+/**
+ * Represents an at-rule.
+ *
+ * If it’s followed in the CSS by a {} block, this node will have
+ * a nodes property representing its children.
+ *
+ * @extends Container
+ *
+ * @example
+ * const root = postcss.parse('@charset "UTF-8"; @media print {}');
+ *
+ * const charset = root.first;
+ * charset.type  //=> 'atrule'
+ * charset.nodes //=> undefined
+ *
+ * const media = root.last;
+ * media.nodes   //=> []
+ */
+
+var AtRule = function (_Container) {
+    inherits(AtRule, _Container);
+
+    function AtRule(defaults$$1) {
+        classCallCheck(this, AtRule);
+
+        var _this = possibleConstructorReturn(this, _Container.call(this, defaults$$1));
+
+        _this.type = 'atrule';
+        return _this;
+    }
+
+    AtRule.prototype.append = function append() {
+        var _Container$prototype$;
+
+        if (!this.nodes) this.nodes = [];
+
+        for (var _len = arguments.length, children = Array(_len), _key = 0; _key < _len; _key++) {
+            children[_key] = arguments[_key];
+        }
+
+        return (_Container$prototype$ = _Container.prototype.append).call.apply(_Container$prototype$, [this].concat(children));
+    };
+
+    AtRule.prototype.prepend = function prepend() {
+        var _Container$prototype$2;
+
+        if (!this.nodes) this.nodes = [];
+
+        for (var _len2 = arguments.length, children = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+            children[_key2] = arguments[_key2];
+        }
+
+        return (_Container$prototype$2 = _Container.prototype.prepend).call.apply(_Container$prototype$2, [this].concat(children));
+    };
+
+    createClass(AtRule, [{
+        key: 'afterName',
+        get: function get$$1() {
+            warnOnce('AtRule#afterName was deprecated. Use AtRule#raws.afterName');
+            return this.raws.afterName;
+        },
+        set: function set$$1(val) {
+            warnOnce('AtRule#afterName was deprecated. Use AtRule#raws.afterName');
+            this.raws.afterName = val;
+        }
+    }, {
+        key: '_params',
+        get: function get$$1() {
+            warnOnce('AtRule#_params was deprecated. Use AtRule#raws.params');
+            return this.raws.params;
+        },
+        set: function set$$1(val) {
+            warnOnce('AtRule#_params was deprecated. Use AtRule#raws.params');
+            this.raws.params = val;
+        }
+
+        /**
+         * @memberof AtRule#
+         * @member {string} name - the at-rule’s name immediately follows the `@`
+         *
+         * @example
+         * const root  = postcss.parse('@media print {}');
+         * media.name //=> 'media'
+         * const media = root.first;
+         */
+
+        /**
+         * @memberof AtRule#
+         * @member {string} params - the at-rule’s parameters, the values
+         *                           that follow the at-rule’s name but precede
+         *                           any {} block
+         *
+         * @example
+         * const root  = postcss.parse('@media print, screen {}');
+         * const media = root.first;
+         * media.params //=> 'print, screen'
+         */
+
+        /**
+         * @memberof AtRule#
+         * @member {object} raws - Information to generate byte-to-byte equal
+         *                         node string as it was in the origin input.
+         *
+         * Every parser saves its own properties,
+         * but the default CSS parser uses:
+         *
+         * * `before`: the space symbols before the node. It also stores `*`
+         *   and `_` symbols before the declaration (IE hack).
+         * * `after`: the space symbols after the last child of the node
+         *   to the end of the node.
+         * * `between`: the symbols between the property and value
+         *   for declarations, selector and `{` for rules, or last parameter
+         *   and `{` for at-rules.
+         * * `semicolon`: contains true if the last child has
+         *   an (optional) semicolon.
+         * * `afterName`: the space between the at-rule name and its parameters.
+         *
+         * PostCSS cleans at-rule parameters from comments and extra spaces,
+         * but it stores origin content in raws properties.
+         * As such, if you don’t change a declaration’s value,
+         * PostCSS will use the raw value with comments.
+         *
+         * @example
+         * const root = postcss.parse('  @media\nprint {\n}')
+         * root.first.first.raws //=> { before: '  ',
+         *                       //     between: ' ',
+         *                       //     afterName: '\n',
+         *                       //     after: '\n' }
+         */
+
+    }]);
+    return AtRule;
+}(Container);
+
+/**
+ * Contains helpers for safely splitting lists of CSS values,
+ * preserving parentheses and quotes.
+ *
+ * @example
+ * const list = postcss.list;
+ *
+ * @namespace list
+ */
+var list = {
+    split: function split(string, separators, last) {
+        var array = [];
+        var current = '';
+        var split = false;
+
+        var func = 0;
+        var quote = false;
+        var escape = false;
+
+        for (var i = 0; i < string.length; i++) {
+            var letter = string[i];
+
+            if (quote) {
+                if (escape) {
+                    escape = false;
+                } else if (letter === '\\') {
+                    escape = true;
+                } else if (letter === quote) {
+                    quote = false;
+                }
+            } else if (letter === '"' || letter === '\'') {
+                quote = letter;
+            } else if (letter === '(') {
+                func += 1;
+            } else if (letter === ')') {
+                if (func > 0) func -= 1;
+            } else if (func === 0) {
+                if (separators.indexOf(letter) !== -1) split = true;
+            }
+
+            if (split) {
+                if (current !== '') array.push(current.trim());
+                current = '';
+                split = false;
+            } else {
+                current += letter;
+            }
+        }
+
+        if (last || current !== '') array.push(current.trim());
+        return array;
+    },
+
+
+    /**
+     * Safely splits space-separated values (such as those for `background`,
+     * `border-radius`, and other shorthand properties).
+     *
+     * @param {string} string - space-separated values
+     *
+     * @return {string[]} splitted values
+     *
+     * @example
+     * postcss.list.space('1px calc(10% + 1px)') //=> ['1px', 'calc(10% + 1px)']
+     */
+    space: function space(string) {
+        var spaces = [' ', '\n', '\t'];
+        return list.split(string, spaces);
+    },
+
+
+    /**
+     * Safely splits comma-separated values (such as those for `transition-*`
+     * and `background` properties).
+     *
+     * @param {string} string - comma-separated values
+     *
+     * @return {string[]} splitted values
+     *
+     * @example
+     * postcss.list.comma('black, linear-gradient(white, black)')
+     * //=> ['black', 'linear-gradient(white, black)']
+     */
+    comma: function comma(string) {
+        var comma = ',';
+        return list.split(string, [comma], true);
+    }
+};
+
+/**
+ * Represents a CSS rule: a selector followed by a declaration block.
+ *
+ * @extends Container
+ *
+ * @example
+ * const root = postcss.parse('a{}');
+ * const rule = root.first;
+ * rule.type       //=> 'rule'
+ * rule.toString() //=> 'a{}'
+ */
+
+var Rule = function (_Container) {
+    inherits(Rule, _Container);
+
+    function Rule(defaults$$1) {
+        classCallCheck(this, Rule);
+
+        var _this = possibleConstructorReturn(this, _Container.call(this, defaults$$1));
+
+        _this.type = 'rule';
+        if (!_this.nodes) _this.nodes = [];
+        return _this;
+    }
+
+    /**
+     * An array containing the rule’s individual selectors.
+     * Groups of selectors are split at commas.
+     *
+     * @type {string[]}
+     *
+     * @example
+     * const root = postcss.parse('a, b { }');
+     * const rule = root.first;
+     *
+     * rule.selector  //=> 'a, b'
+     * rule.selectors //=> ['a', 'b']
+     *
+     * rule.selectors = ['a', 'strong'];
+     * rule.selector //=> 'a, strong'
+     */
+
+
+    createClass(Rule, [{
+        key: 'selectors',
+        get: function get$$1() {
+            return list.comma(this.selector);
+        },
+        set: function set$$1(values) {
+            var match = this.selector ? this.selector.match(/,\s*/) : null;
+            var sep = match ? match[0] : ',' + this.raw('between', 'beforeOpen');
+            this.selector = values.join(sep);
+        }
+    }, {
+        key: '_selector',
+        get: function get$$1() {
+            warnOnce('Rule#_selector is deprecated. Use Rule#raws.selector');
+            return this.raws.selector;
+        },
+        set: function set$$1(val) {
+            warnOnce('Rule#_selector is deprecated. Use Rule#raws.selector');
+            this.raws.selector = val;
+        }
+
+        /**
+         * @memberof Rule#
+         * @member {string} selector - the rule’s full selector represented
+         *                             as a string
+         *
+         * @example
+         * const root = postcss.parse('a, b { }');
+         * const rule = root.first;
+         * rule.selector //=> 'a, b'
+         */
+
+        /**
+         * @memberof Rule#
+         * @member {object} raws - Information to generate byte-to-byte equal
+         *                         node string as it was in the origin input.
+         *
+         * Every parser saves its own properties,
+         * but the default CSS parser uses:
+         *
+         * * `before`: the space symbols before the node. It also stores `*`
+         *   and `_` symbols before the declaration (IE hack).
+         * * `after`: the space symbols after the last child of the node
+         *   to the end of the node.
+         * * `between`: the symbols between the property and value
+         *   for declarations, selector and `{` for rules, or last parameter
+         *   and `{` for at-rules.
+         * * `semicolon`: contains true if the last child has
+         *   an (optional) semicolon.
+         *
+         * PostCSS cleans selectors from comments and extra spaces,
+         * but it stores origin content in raws properties.
+         * As such, if you don’t change a declaration’s value,
+         * PostCSS will use the raw value with comments.
+         *
+         * @example
+         * const root = postcss.parse('a {\n  color:black\n}')
+         * root.first.first.raws //=> { before: '', between: ' ', after: '\n' }
+         */
+
+    }]);
+    return Rule;
+}(Container);
+
+/**
+ * Represents a plugin’s warning. It can be created using {@link Node#warn}.
+ *
+ * @example
+ * if ( decl.important ) {
+ *     decl.warn(result, 'Avoid !important', { word: '!important' });
+ * }
+ */
+var Warning = function () {
+
+  /**
+   * @param {string} text        - warning message
+   * @param {Object} [opts]      - warning options
+   * @param {Node}   opts.node   - CSS node that caused the warning
+   * @param {string} opts.word   - word in CSS source that caused the warning
+   * @param {number} opts.index  - index in CSS node string that caused
+   *                               the warning
+   * @param {string} opts.plugin - name of the plugin that created
+   *                               this warning. {@link Result#warn} fills
+   *                               this property automatically.
+   */
+  function Warning(text) {
+    var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    classCallCheck(this, Warning);
+
+    /**
+     * @member {string} - Type to filter warnings from
+     *                    {@link Result#messages}. Always equal
+     *                    to `"warning"`.
+     *
+     * @example
+     * const nonWarning = result.messages.filter(i => i.type !== 'warning')
+     */
+    this.type = 'warning';
+    /**
+     * @member {string} - The warning message.
+     *
+     * @example
+     * warning.text //=> 'Try to avoid !important'
+     */
+    this.text = text;
+
+    if (opts.node && opts.node.source) {
+      var pos = opts.node.positionBy(opts);
+      /**
+       * @member {number} - Line in the input file
+       *                    with this warning’s source
+       *
+       * @example
+       * warning.line //=> 5
+       */
+      this.line = pos.line;
+      /**
+       * @member {number} - Column in the input file
+       *                    with this warning’s source.
+       *
+       * @example
+       * warning.column //=> 6
+       */
+      this.column = pos.column;
+    }
+
+    for (var opt in opts) {
+      this[opt] = opts[opt];
+    }
+  }
+
+  /**
+   * Returns a warning position and message.
+   *
+   * @example
+   * warning.toString() //=> 'postcss-lint:a.css:10:14: Avoid !important'
+   *
+   * @return {string} warning position and message
+   */
+
+
+  Warning.prototype.toString = function toString() {
+    if (this.node) {
+      return this.node.error(this.text, {
+        plugin: this.plugin,
+        index: this.index,
+        word: this.word
+      }).message;
+    } else if (this.plugin) {
+      return this.plugin + ': ' + this.text;
+    } else {
+      return this.text;
+    }
+  };
+
+  /**
+   * @memberof Warning#
+   * @member {string} plugin - The name of the plugin that created
+   *                           it will fill this property automatically.
+   *                           this warning. When you call {@link Node#warn}
+   *
+   * @example
+   * warning.plugin //=> 'postcss-important'
+   */
+
+  /**
+   * @memberof Warning#
+   * @member {Node} node - Contains the CSS node that caused the warning.
+   *
+   * @example
+   * warning.node.toString() //=> 'color: white !important'
+   */
+
+  return Warning;
+}();
+
+/**
+ * @typedef  {object} Message
+ * @property {string} type   - message type
+ * @property {string} plugin - source PostCSS plugin name
+ */
+
+/**
+ * Provides the result of the PostCSS transformations.
+ *
+ * A Result instance is returned by {@link LazyResult#then}
+ * or {@link Root#toResult} methods.
+ *
+ * @example
+ * postcss([cssnext]).process(css).then(function (result) {
+ *    console.log(result.css);
+ * });
+ *
+ * @example
+ * var result2 = postcss.parse(css).toResult();
+ */
+
+var Result = function () {
+
+  /**
+   * @param {Processor} processor - processor used for this transformation.
+   * @param {Root}      root      - Root node after all transformations.
+   * @param {processOptions} opts - options from the {@link Processor#process}
+   *                                or {@link Root#toResult}
+   */
+  function Result(processor, root, opts) {
+    classCallCheck(this, Result);
+
+    /**
+     * @member {Processor} - The Processor instance used
+     *                       for this transformation.
+     *
+     * @example
+     * for ( let plugin of result.processor.plugins) {
+     *   if ( plugin.postcssPlugin === 'postcss-bad' ) {
+     *     throw 'postcss-good is incompatible with postcss-bad';
+     *   }
+     * });
+     */
+    this.processor = processor;
+    /**
+     * @member {Message[]} - Contains messages from plugins
+     *                       (e.g., warnings or custom messages).
+     *                       Each message should have type
+     *                       and plugin properties.
+     *
+     * @example
+     * postcss.plugin('postcss-min-browser', () => {
+     *   return (root, result) => {
+     *     var browsers = detectMinBrowsersByCanIUse(root);
+     *     result.messages.push({
+     *       type:    'min-browser',
+     *       plugin:  'postcss-min-browser',
+     *       browsers: browsers
+     *     });
+     *   };
+     * });
+     */
+    this.messages = [];
+    /**
+     * @member {Root} - Root node after all transformations.
+     *
+     * @example
+     * root.toResult().root == root;
+     */
+    this.root = root;
+    /**
+     * @member {processOptions} - Options from the {@link Processor#process}
+     *                            or {@link Root#toResult} call
+     *                            that produced this Result instance.
+     *
+     * @example
+     * root.toResult(opts).opts == opts;
+     */
+    this.opts = opts;
+    /**
+     * @member {string} - A CSS string representing of {@link Result#root}.
+     *
+     * @example
+     * postcss.parse('a{}').toResult().css //=> "a{}"
+     */
+    this.css = undefined;
+    /**
+     * @member {SourceMapGenerator} - An instance of `SourceMapGenerator`
+     *                                class from the `source-map` library,
+     *                                representing changes
+     *                                to the {@link Result#root} instance.
+     *
+     * @example
+     * result.map.toJSON() //=> { version: 3, file: 'a.css', … }
+     *
+     * @example
+     * if ( result.map ) {
+     *   fs.writeFileSync(result.opts.to + '.map', result.map.toString());
+     * }
+     */
+    this.map = undefined;
+  }
+
+  /**
+   * Returns for @{link Result#css} content.
+   *
+   * @example
+   * result + '' === result.css
+   *
+   * @return {string} string representing of {@link Result#root}
+   */
+
+
+  Result.prototype.toString = function toString() {
+    return this.css;
+  };
+
+  /**
+   * Creates an instance of {@link Warning} and adds it
+   * to {@link Result#messages}.
+   *
+   * @param {string} text        - warning message
+   * @param {Object} [opts]      - warning options
+   * @param {Node}   opts.node   - CSS node that caused the warning
+   * @param {string} opts.word   - word in CSS source that caused the warning
+   * @param {number} opts.index  - index in CSS node string that caused
+   *                               the warning
+   * @param {string} opts.plugin - name of the plugin that created
+   *                               this warning. {@link Result#warn} fills
+   *                               this property automatically.
+   *
+   * @return {Warning} created warning
+   */
+
+
+  Result.prototype.warn = function warn(text) {
+    var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+    if (!opts.plugin) {
+      if (this.lastPlugin && this.lastPlugin.postcssPlugin) {
+        opts.plugin = this.lastPlugin.postcssPlugin;
+      }
+    }
+
+    var warning = new Warning(text, opts);
+    this.messages.push(warning);
+
+    return warning;
+  };
+
+  /**
+   * Returns warnings from plugins. Filters {@link Warning} instances
+   * from {@link Result#messages}.
+   *
+   * @example
+   * result.warnings().forEach(warn => {
+   *   console.warn(warn.toString());
+   * });
+   *
+   * @return {Warning[]} warnings from plugins
+   */
+
+
+  Result.prototype.warnings = function warnings() {
+    return this.messages.filter(function (i) {
+      return i.type === 'warning';
+    });
+  };
+
+  /**
+   * An alias for the {@link Result#css} property.
+   * Use it with syntaxes that generate non-CSS output.
+   * @type {string}
+   *
+   * @example
+   * result.css === result.content;
+   */
+
+
+  createClass(Result, [{
+    key: 'content',
+    get: function get$$1() {
+      return this.css;
+    }
+  }]);
+  return Result;
+}();
+
+function isPromise(obj) {
+    return (typeof obj === 'undefined' ? 'undefined' : _typeof(obj)) === 'object' && typeof obj.then === 'function';
+}
+
+/**
+ * @callback onFulfilled
+ * @param {Result} result
+ */
+
+/**
+ * @callback onRejected
+ * @param {Error} error
+ */
+
+/**
+ * A Promise proxy for the result of PostCSS transformations.
+ *
+ * A `LazyResult` instance is returned by {@link Processor#process}.
+ *
+ * @example
+ * const lazy = postcss([cssnext]).process(css);
+ */
+
+var LazyResult = function () {
+    function LazyResult(processor, css, opts) {
+        classCallCheck(this, LazyResult);
+
+        this.stringified = false;
+        this.processed = false;
+
+        var root = void 0;
+        if ((typeof css === 'undefined' ? 'undefined' : _typeof(css)) === 'object' && css.type === 'root') {
+            root = css;
+        } else if (css instanceof LazyResult || css instanceof Result) {
+            root = css.root;
+            if (css.map) {
+                if (typeof opts.map === 'undefined') opts.map = {};
+                if (!opts.map.inline) opts.map.inline = false;
+                opts.map.prev = css.map;
+            }
+        } else {
+            var parser = parse;
+            if (opts.syntax) parser = opts.syntax.parse;
+            if (opts.parser) parser = opts.parser;
+            if (parser.parse) parser = parser.parse;
+
+            try {
+                root = parser(css, opts);
+            } catch (error) {
+                this.error = error;
+            }
+        }
+
+        this.result = new Result(processor, root, opts);
+    }
+
+    /**
+     * Returns a {@link Processor} instance, which will be used
+     * for CSS transformations.
+     * @type {Processor}
+     */
+
+
+    /**
+     * Processes input CSS through synchronous plugins
+     * and calls {@link Result#warnings()}.
+     *
+     * @return {Warning[]} warnings from plugins
+     */
+    LazyResult.prototype.warnings = function warnings() {
+        return this.sync().warnings();
+    };
+
+    /**
+     * Alias for the {@link LazyResult#css} property.
+     *
+     * @example
+     * lazy + '' === lazy.css;
+     *
+     * @return {string} output CSS
+     */
+
+
+    LazyResult.prototype.toString = function toString() {
+        return this.css;
+    };
+
+    /**
+     * Processes input CSS through synchronous and asynchronous plugins
+     * and calls `onFulfilled` with a Result instance. If a plugin throws
+     * an error, the `onRejected` callback will be executed.
+     *
+     * It implements standard Promise API.
+     *
+     * @param {onFulfilled} onFulfilled - callback will be executed
+     *                                    when all plugins will finish work
+     * @param {onRejected}  onRejected  - callback will be execited on any error
+     *
+     * @return {Promise} Promise API to make queue
+     *
+     * @example
+     * postcss([cssnext]).process(css).then(result => {
+     *   console.log(result.css);
+     * });
+     */
+
+
+    LazyResult.prototype.then = function then(onFulfilled, onRejected) {
+        return this.async().then(onFulfilled, onRejected);
+    };
+
+    /**
+     * Processes input CSS through synchronous and asynchronous plugins
+     * and calls onRejected for each error thrown in any plugin.
+     *
+     * It implements standard Promise API.
+     *
+     * @param {onRejected} onRejected - callback will be execited on any error
+     *
+     * @return {Promise} Promise API to make queue
+     *
+     * @example
+     * postcss([cssnext]).process(css).then(result => {
+     *   console.log(result.css);
+     * }).catch(error => {
+     *   console.error(error);
+     * });
+     */
+
+
+    LazyResult.prototype.catch = function _catch(onRejected) {
+        return this.async().catch(onRejected);
+    };
+
+    LazyResult.prototype.handleError = function handleError(error, plugin) {
+        try {
+            this.error = error;
+            if (error.name === 'CssSyntaxError' && !error.plugin) {
+                error.plugin = plugin.postcssPlugin;
+                error.setMessage();
+            } else if (plugin.postcssVersion) {
+                var pluginName = plugin.postcssPlugin;
+                var pluginVer = plugin.postcssVersion;
+                var runtimeVer = this.result.processor.version;
+                var a = pluginVer.split('.');
+                var b = runtimeVer.split('.');
+
+                if (a[0] !== b[0] || parseInt(a[1]) > parseInt(b[1])) {
+                    warnOnce('Your current PostCSS version ' + 'is ' + runtimeVer + ', but ' + pluginName + ' ' + 'uses ' + pluginVer + '. Perhaps this is ' + 'the source of the error below.');
+                }
+            }
+        } catch (err) {
+            if (console && console.error) console.error(err);
+        }
+    };
+
+    LazyResult.prototype.asyncTick = function asyncTick(resolve, reject) {
+        var _this = this;
+
+        if (this.plugin >= this.processor.plugins.length) {
+            this.processed = true;
+            return resolve();
+        }
+
+        try {
+            var plugin = this.processor.plugins[this.plugin];
+            var promise = this.run(plugin);
+            this.plugin += 1;
+
+            if (isPromise(promise)) {
+                promise.then(function () {
+                    _this.asyncTick(resolve, reject);
+                }).catch(function (error) {
+                    _this.handleError(error, plugin);
+                    _this.processed = true;
+                    reject(error);
+                });
+            } else {
+                this.asyncTick(resolve, reject);
+            }
+        } catch (error) {
+            this.processed = true;
+            reject(error);
+        }
+    };
+
+    LazyResult.prototype.async = function async() {
+        var _this2 = this;
+
+        if (this.processed) {
+            return new Promise(function (resolve, reject) {
+                if (_this2.error) {
+                    reject(_this2.error);
+                } else {
+                    resolve(_this2.stringify());
+                }
+            });
+        }
+        if (this.processing) {
+            return this.processing;
+        }
+
+        this.processing = new Promise(function (resolve, reject) {
+            if (_this2.error) return reject(_this2.error);
+            _this2.plugin = 0;
+            _this2.asyncTick(resolve, reject);
+        }).then(function () {
+            _this2.processed = true;
+            return _this2.stringify();
+        });
+
+        return this.processing;
+    };
+
+    LazyResult.prototype.sync = function sync() {
+        var _this3 = this;
+
+        if (this.processed) return this.result;
+        this.processed = true;
+
+        if (this.processing) {
+            throw new Error('Use process(css).then(cb) to work with async plugins');
+        }
+
+        if (this.error) throw this.error;
+
+        this.result.processor.plugins.forEach(function (plugin) {
+            var promise = _this3.run(plugin);
+            if (isPromise(promise)) {
+                throw new Error('Use process(css).then(cb) to work with async plugins');
+            }
+        });
+
+        return this.result;
+    };
+
+    LazyResult.prototype.run = function run(plugin) {
+        this.result.lastPlugin = plugin;
+
+        try {
+            return plugin(this.result.root, this.result);
+        } catch (error) {
+            this.handleError(error, plugin);
+            throw error;
+        }
+    };
+
+    LazyResult.prototype.stringify = function stringify$$1() {
+        if (this.stringified) return this.result;
+        this.stringified = true;
+
+        this.sync();
+
+        var opts = this.result.opts;
+        var str = stringify;
+        if (opts.syntax) str = opts.syntax.stringify;
+        if (opts.stringifier) str = opts.stringifier;
+        if (str.stringify) str = str.stringify;
+
+        var result = '';
+        str(this.root, function (i) {
+            result += i;
+        });
+        this.result.css = result;
+
+        return this.result;
+    };
+
+    createClass(LazyResult, [{
+        key: 'processor',
+        get: function get$$1() {
+            return this.result.processor;
+        }
+
+        /**
+         * Options from the {@link Processor#process} call.
+         * @type {processOptions}
+         */
+
+    }, {
+        key: 'opts',
+        get: function get$$1() {
+            return this.result.opts;
+        }
+
+        /**
+         * Processes input CSS through synchronous plugins, converts `Root`
+         * to a CSS string and returns {@link Result#css}.
+         *
+         * This property will only work with synchronous plugins.
+         * If the processor contains any asynchronous plugins
+         * it will throw an error. This is why this method is only
+         * for debug purpose, you should always use {@link LazyResult#then}.
+         *
+         * @type {string}
+         * @see Result#css
+         */
+
+    }, {
+        key: 'css',
+        get: function get$$1() {
+            return this.stringify().css;
+        }
+
+        /**
+         * An alias for the `css` property. Use it with syntaxes
+         * that generate non-CSS output.
+         *
+         * This property will only work with synchronous plugins.
+         * If the processor contains any asynchronous plugins
+         * it will throw an error. This is why this method is only
+         * for debug purpose, you should always use {@link LazyResult#then}.
+         *
+         * @type {string}
+         * @see Result#content
+         */
+
+    }, {
+        key: 'content',
+        get: function get$$1() {
+            return this.stringify().content;
+        }
+
+        /**
+         * Processes input CSS through synchronous plugins
+         * and returns {@link Result#map}.
+         *
+         * This property will only work with synchronous plugins.
+         * If the processor contains any asynchronous plugins
+         * it will throw an error. This is why this method is only
+         * for debug purpose, you should always use {@link LazyResult#then}.
+         *
+         * @type {SourceMapGenerator}
+         * @see Result#map
+         */
+
+    }, {
+        key: 'map',
+        get: function get$$1() {
+            return this.stringify().map;
+        }
+
+        /**
+         * Processes input CSS through synchronous plugins
+         * and returns {@link Result#root}.
+         *
+         * This property will only work with synchronous plugins. If the processor
+         * contains any asynchronous plugins it will throw an error.
+         *
+         * This is why this method is only for debug purpose,
+         * you should always use {@link LazyResult#then}.
+         *
+         * @type {Root}
+         * @see Result#root
+         */
+
+    }, {
+        key: 'root',
+        get: function get$$1() {
+            return this.sync().root;
+        }
+
+        /**
+         * Processes input CSS through synchronous plugins
+         * and returns {@link Result#messages}.
+         *
+         * This property will only work with synchronous plugins. If the processor
+         * contains any asynchronous plugins it will throw an error.
+         *
+         * This is why this method is only for debug purpose,
+         * you should always use {@link LazyResult#then}.
+         *
+         * @type {Message[]}
+         * @see Result#messages
+         */
+
+    }, {
+        key: 'messages',
+        get: function get$$1() {
+            return this.sync().messages;
+        }
+    }]);
+    return LazyResult;
+}();
+
+/**
+ * @callback builder
+ * @param {string} part          - part of generated CSS connected to this node
+ * @param {Node}   node          - AST node
+ * @param {"start"|"end"} [type] - node’s part type
+ */
+
+/**
+ * @callback parser
+ *
+ * @param {string|toString} css   - string with input CSS or any object
+ *                                  with toString() method, like a Buffer
+ * @param {processOptions} [opts] - options with only `from` and `map` keys
+ *
+ * @return {Root} PostCSS AST
+ */
+
+/**
+ * @callback stringifier
+ *
+ * @param {Node} node       - start node for stringifing. Usually {@link Root}.
+ * @param {builder} builder - function to concatenate CSS from node’s parts
+ *                            or generate string and source map
+ *
+ * @return {void}
+ */
+
+/**
+ * @typedef {object} syntax
+ * @property {parser} parse          - function to generate AST by string
+ * @property {stringifier} stringify - function to generate string by AST
+ */
+
+/**
+ * @typedef {object} toString
+ * @property {function} toString
+ */
+
+/**
+ * @callback pluginFunction
+ * @param {Root} root     - parsed input CSS
+ * @param {Result} result - result to set warnings or check other plugins
+ */
+
+/**
+ * @typedef {object} Plugin
+ * @property {function} postcss - PostCSS plugin function
+ */
+
+/**
+ * @typedef {object} processOptions
+ * @property {string} from             - the path of the CSS source file.
+ *                                       You should always set `from`,
+ *                                       because it is used in source map
+ *                                       generation and syntax error messages.
+ * @property {string} to               - the path where you’ll put the output
+ *                                       CSS file. You should always set `to`
+ *                                       to generate correct source maps.
+ * @property {parser} parser           - function to generate AST by string
+ * @property {stringifier} stringifier - class to generate string by AST
+ * @property {syntax} syntax           - object with `parse` and `stringify`
+ * @property {object} map              - source map options
+ * @property {boolean} map.inline                    - does source map should
+ *                                                     be embedded in the output
+ *                                                     CSS as a base64-encoded
+ *                                                     comment
+ * @property {string|object|false|function} map.prev - source map content
+ *                                                     from a previous
+ *                                                     processing step
+ *                                                     (for example, Sass).
+ *                                                     PostCSS will try to find
+ *                                                     previous map
+ *                                                     automatically, so you
+ *                                                     could disable it by
+ *                                                     `false` value.
+ * @property {boolean} map.sourcesContent            - does PostCSS should set
+ *                                                     the origin content to map
+ * @property {string|false} map.annotation           - does PostCSS should set
+ *                                                     annotation comment to map
+ * @property {string} map.from                       - override `from` in map’s
+ *                                                     `sources`
+ */
+
+/**
+ * Contains plugins to process CSS. Create one `Processor` instance,
+ * initialize its plugins, and then use that instance on numerous CSS files.
+ *
+ * @example
+ * const processor = postcss([autoprefixer, precss]);
+ * processor.process(css1).then(result => console.log(result.css));
+ * processor.process(css2).then(result => console.log(result.css));
+ */
+
+var Processor = function () {
+
+  /**
+   * @param {Array.<Plugin|pluginFunction>|Processor} plugins - PostCSS
+   *        plugins. See {@link Processor#use} for plugin format.
+   */
+  function Processor() {
+    var plugins = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+    classCallCheck(this, Processor);
+
+    /**
+     * @member {string} - Current PostCSS version.
+     *
+     * @example
+     * if ( result.processor.version.split('.')[0] !== '5' ) {
+     *   throw new Error('This plugin works only with PostCSS 5');
+     * }
+     */
+    this.version = '5.2.0';
+    /**
+     * @member {pluginFunction[]} - Plugins added to this processor.
+     *
+     * @example
+     * const processor = postcss([autoprefixer, precss]);
+     * processor.plugins.length //=> 2
+     */
+    this.plugins = this.normalize(plugins);
+  }
+
+  /**
+   * Adds a plugin to be used as a CSS processor.
+   *
+   * PostCSS plugin can be in 4 formats:
+   * * A plugin created by {@link postcss.plugin} method.
+   * * A function. PostCSS will pass the function a @{link Root}
+   *   as the first argument and current {@link Result} instance
+   *   as the second.
+   * * An object with a `postcss` method. PostCSS will use that method
+   *   as described in #2.
+   * * Another {@link Processor} instance. PostCSS will copy plugins
+   *   from that instance into this one.
+   *
+   * Plugins can also be added by passing them as arguments when creating
+   * a `postcss` instance (see [`postcss(plugins)`]).
+   *
+   * Asynchronous plugins should return a `Promise` instance.
+   *
+   * @param {Plugin|pluginFunction|Processor} plugin - PostCSS plugin
+   *                                                   or {@link Processor}
+   *                                                   with plugins
+   *
+   * @example
+   * const processor = postcss()
+   *   .use(autoprefixer)
+   *   .use(precss);
+   *
+   * @return {Processes} current processor to make methods chain
+   */
+
+
+  Processor.prototype.use = function use(plugin) {
+    this.plugins = this.plugins.concat(this.normalize([plugin]));
+    return this;
+  };
+
+  /**
+   * Parses source CSS and returns a {@link LazyResult} Promise proxy.
+   * Because some plugins can be asynchronous it doesn’t make
+   * any transformations. Transformations will be applied
+   * in the {@link LazyResult} methods.
+   *
+   * @param {string|toString|Result} css - String with input CSS or
+   *                                       any object with a `toString()`
+   *                                       method, like a Buffer.
+   *                                       Optionally, send a {@link Result}
+   *                                       instance and the processor will
+   *                                       take the {@link Root} from it.
+   * @param {processOptions} [opts]      - options
+   *
+   * @return {LazyResult} Promise proxy
+   *
+   * @example
+   * processor.process(css, { from: 'a.css', to: 'a.out.css' })
+   *   .then(result => {
+   *      console.log(result.css);
+   *   });
+   */
+
+
+  Processor.prototype.process = function process(css) {
+    var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+    return new LazyResult(this, css, opts);
+  };
+
+  Processor.prototype.normalize = function normalize(plugins) {
+    var normalized = [];
+    plugins.forEach(function (i) {
+      if (i.postcss) i = i.postcss;
+
+      if ((typeof i === 'undefined' ? 'undefined' : _typeof(i)) === 'object' && Array.isArray(i.plugins)) {
+        normalized = normalized.concat(i.plugins);
+      } else if (typeof i === 'function') {
+        normalized.push(i);
+      } else {
+        throw new Error(i + ' is not a PostCSS plugin');
+      }
+    });
+    return normalized;
+  };
+
+  return Processor;
+}();
+
+/**
+ * Represents a CSS file and contains all its parsed nodes.
+ *
+ * @extends Container
+ *
+ * @example
+ * const root = postcss.parse('a{color:black} b{z-index:2}');
+ * root.type         //=> 'root'
+ * root.nodes.length //=> 2
+ */
+
+var Root = function (_Container) {
+    inherits(Root, _Container);
+
+    function Root(defaults$$1) {
+        classCallCheck(this, Root);
+
+        var _this = possibleConstructorReturn(this, _Container.call(this, defaults$$1));
+
+        _this.type = 'root';
+        if (!_this.nodes) _this.nodes = [];
+        return _this;
+    }
+
+    Root.prototype.removeChild = function removeChild(child) {
+        child = this.index(child);
+
+        if (child === 0 && this.nodes.length > 1) {
+            this.nodes[1].raws.before = this.nodes[child].raws.before;
+        }
+
+        return _Container.prototype.removeChild.call(this, child);
+    };
+
+    Root.prototype.normalize = function normalize(child, sample, type) {
+        var nodes = _Container.prototype.normalize.call(this, child);
+
+        if (sample) {
+            if (type === 'prepend') {
+                if (this.nodes.length > 1) {
+                    sample.raws.before = this.nodes[1].raws.before;
+                } else {
+                    delete sample.raws.before;
+                }
+            } else if (this.first !== sample) {
+                nodes.forEach(function (node) {
+                    node.raws.before = sample.raws.before;
+                });
+            }
+        }
+
+        return nodes;
+    };
+
+    /**
+     * Returns a {@link Result} instance representing the root’s CSS.
+     *
+     * @param {processOptions} [opts] - options with only `to` and `map` keys
+     *
+     * @return {Result} result with current root’s CSS
+     *
+     * @example
+     * const root1 = postcss.parse(css1, { from: 'a.css' });
+     * const root2 = postcss.parse(css2, { from: 'b.css' });
+     * root1.append(root2);
+     * const result = root1.toResult({ to: 'all.css', map: true });
+     */
+
+
+    Root.prototype.toResult = function toResult() {
+        var opts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+        var lazy = new LazyResult(new Processor(), this, opts);
+        return lazy.stringify();
+    };
+
+    Root.prototype.remove = function remove(child) {
+        warnOnce('Root#remove is deprecated. Use Root#removeChild');
+        this.removeChild(child);
+    };
+
+    Root.prototype.prevMap = function prevMap() {
+        warnOnce('Root#prevMap is deprecated. Use Root#source.input.map');
+        return this.source.input.map;
+    };
+
+    /**
+     * @memberof Root#
+     * @member {object} raws - Information to generate byte-to-byte equal
+     *                         node string as it was in the origin input.
+     *
+     * Every parser saves its own properties,
+     * but the default CSS parser uses:
+     *
+     * * `after`: the space symbols after the last child to the end of file.
+     * * `semicolon`: is the last child has an (optional) semicolon.
+     *
+     * @example
+     * postcss.parse('a {}\n').raws //=> { after: '\n' }
+     * postcss.parse('a {}').raws   //=> { after: '' }
+     */
+
+    return Root;
+}(Container);
+
+// import PreviousMap    from './previous-map';
+
+var sequence = 0;
+
+/**
+ * @typedef  {object} filePosition
+ * @property {string} file   - path to file
+ * @property {number} line   - source line in file
+ * @property {number} column - source column in file
+ */
+
+/**
+ * Represents the source CSS.
+ *
+ * @example
+ * const root  = postcss.parse(css, { from: file });
+ * const input = root.source.input;
+ */
+
+var Input = function () {
+
+    /**
+     * @param {string} css    - input CSS source
+     * @param {object} [opts] - {@link Processor#process} options
+     */
+    function Input(css) {
+        var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+        classCallCheck(this, Input);
+
+        /**
+         * @member {string} - input CSS source
+         *
+         * @example
+         * const input = postcss.parse('a{}', { from: file }).input;
+         * input.css //=> "a{}";
+         */
+        this.css = css.toString();
+
+        if (this.css[0] === '\uFEFF' || this.css[0] === '\uFFFE') {
+            this.css = this.css.slice(1);
+        }
+
+        if (opts.from) {
+            if (/^\w+:\/\//.test(opts.from)) {
+                /**
+                 * @member {string} - The absolute path to the CSS source file
+                 *                    defined with the `from` option.
+                 *
+                 * @example
+                 * const root = postcss.parse(css, { from: 'a.css' });
+                 * root.source.input.file //=> '/home/ai/a.css'
+                 */
+                this.file = opts.from;
+            } else {
+                this.file = path.resolve(opts.from);
+            }
+        }
+
+        /*
+                let map = new PreviousMap(this.css, opts);
+                if ( map.text ) {
+                    /!**
+                     * @member {PreviousMap} - The input source map passed from
+                     *                         a compilation step before PostCSS
+                     *                         (for example, from Sass compiler).
+                     *
+                     * @example
+                     * root.source.input.map.consumer().sources //=> ['a.sass']
+                     *!/
+                    this.map = map;
+                    let file = map.consumer().file;
+                    if ( !this.file && file ) this.file = this.mapResolve(file);
+                }
+        */
+
+        if (!this.file) {
+            sequence += 1;
+            /**
+             * @member {string} - The unique ID of the CSS source. It will be
+             *                    created if `from` option is not provided
+             *                    (because PostCSS does not know the file path).
+             *
+             * @example
+             * const root = postcss.parse(css);
+             * root.source.input.file //=> undefined
+             * root.source.input.id   //=> "<input css 1>"
+             */
+            this.id = '<input css ' + sequence + '>';
+        }
+        if (this.map) this.map.file = this.from;
+    }
+
+    Input.prototype.error = function error(message, line, column) {
+        var opts = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
+
+        var result = void 0;
+        var origin = this.origin(line, column);
+        if (origin) {
+            result = new CssSyntaxError(message, origin.line, origin.column, origin.source, origin.file, opts.plugin);
+        } else {
+            result = new CssSyntaxError(message, line, column, this.css, this.file, opts.plugin);
+        }
+
+        result.input = { line: line, column: column, source: this.css };
+        if (this.file) result.input.file = this.file;
+
+        return result;
+    };
+
+    /**
+     * Reads the input source map and returns a symbol position
+     * in the input source (e.g., in a Sass file that was compiled
+     * to CSS before being passed to PostCSS).
+     *
+     * @param {number} line   - line in input CSS
+     * @param {number} column - column in input CSS
+     *
+     * @return {filePosition} position in input source
+     *
+     * @example
+     * root.source.input.origin(1, 1) //=> { file: 'a.css', line: 3, column: 1 }
+     */
+
+
+    Input.prototype.origin = function origin(line, column) {
+        if (!this.map) return false;
+        var consumer = this.map.consumer();
+
+        var from = consumer.originalPositionFor({ line: line, column: column });
+        if (!from.source) return false;
+
+        var result = {
+            file: this.mapResolve(from.source),
+            line: from.line,
+            column: from.column
+        };
+
+        var source = consumer.sourceContentFor(from.source);
+        if (source) result.source = source;
+
+        return result;
+    };
+
+    Input.prototype.mapResolve = function mapResolve(file) {
+        if (/^\w+:\/\//.test(file)) {
+            return file;
+        } else {
+            return path.resolve(this.map.consumer().sourceRoot || '.', file);
+        }
+    };
+
+    /**
+     * The CSS source identifier. Contains {@link Input#file} if the user
+     * set the `from` option, or {@link Input#id} if they did not.
+     * @type {string}
+     *
+     * @example
+     * const root = postcss.parse(css, { from: 'a.css' });
+     * root.source.input.from //=> "/home/ai/a.css"
+     *
+     * const root = postcss.parse(css);
+     * root.source.input.from //=> "<input css 1>"
+     */
+
+
+    createClass(Input, [{
+        key: 'from',
+        get: function get$$1() {
+            return this.file || this.id;
+        }
+    }]);
+    return Input;
+}();
+
+var SafeParser = function (_Parser) {
+    inherits(SafeParser, _Parser);
+
+    function SafeParser() {
+        classCallCheck(this, SafeParser);
+        return possibleConstructorReturn(this, _Parser.apply(this, arguments));
+    }
+
+    SafeParser.prototype.tokenize = function tokenize$$1() {
+        this.tokens = tokenize(this.input, { ignoreErrors: true });
+    };
+
+    SafeParser.prototype.comment = function comment(token) {
+        var node = new Comment();
+        this.init(node, token[2], token[3]);
+        node.source.end = { line: token[4], column: token[5] };
+
+        var text = token[1].slice(2);
+        if (text.slice(-2) === '*/') text = text.slice(0, -2);
+
+        if (/^\s*$/.test(text)) {
+            node.text = '';
+            node.raws.left = text;
+            node.raws.right = '';
+        } else {
+            var match = text.match(/^(\s*)([^]*[^\s])(\s*)$/);
+            node.text = match[2];
+            node.raws.left = match[1];
+            node.raws.right = match[3];
+        }
+    };
+
+    SafeParser.prototype.unclosedBracket = function unclosedBracket() {};
+
+    SafeParser.prototype.unknownWord = function unknownWord(start) {
+        var buffer = this.tokens.slice(start, this.pos + 1);
+        this.spaces += buffer.map(function (i) {
+            return i[1];
+        }).join('');
+    };
+
+    SafeParser.prototype.unexpectedClose = function unexpectedClose() {
+        this.current.raws.after += '}';
+    };
+
+    SafeParser.prototype.doubleColon = function doubleColon() {};
+
+    SafeParser.prototype.unnamedAtrule = function unnamedAtrule(node) {
+        node.name = '';
+    };
+
+    SafeParser.prototype.precheckMissedSemicolon = function precheckMissedSemicolon(tokens) {
+        var colon = this.colon(tokens);
+        if (colon === false) return;
+
+        var split = void 0;
+        for (split = colon - 1; split >= 0; split--) {
+            if (tokens[split][0] === 'word') break;
+        }
+        for (split -= 1; split >= 0; split--) {
+            if (tokens[split][0] !== 'space') {
+                split += 1;
+                break;
+            }
+        }
+        var other = tokens.splice(split, tokens.length - split);
+        this.decl(other);
+    };
+
+    SafeParser.prototype.checkMissedSemicolon = function checkMissedSemicolon() {};
+
+    SafeParser.prototype.endFile = function endFile() {
+        if (this.current.nodes && this.current.nodes.length) {
+            this.current.raws.semicolon = this.semicolon;
+        }
+        this.current.raws.after = (this.current.raws.after || '') + this.spaces;
+
+        while (this.current.parent) {
+            this.current = this.current.parent;
+            this.current.raws.after = '';
+        }
+    };
+
+    return SafeParser;
+}(Parser);
+
+function safeParse(css, opts) {
+    var input = new Input(css, opts);
+
+    var parser = new SafeParser(input);
+    parser.tokenize();
+    parser.loop();
+
+    return parser.root;
+}
+
+// 
+/* eslint-disable import/no-unresolved */
+var generated = {};
+
+
+
+/*
+ InlineStyle takes arbitrary CSS and generates a flat object
+ */
+var _InlineStyle = (function (styleSheet) {
+  var InlineStyle = function () {
+    function InlineStyle(rules) {
+      classCallCheck(this, InlineStyle);
+
+      this.rules = rules;
+    }
+
+    InlineStyle.prototype.generateStyleObject = function generateStyleObject(executionContext) {
+      var flatCSS = flatten(this.rules, executionContext).join('');
+      var hash = murmurhash(flatCSS);
+      if (!generated[hash]) {
+        var root = safeParse(flatCSS);
+        var declPairs = [];
+        root.each(function (node) {
+          if (node.type === 'decl') {
+            declPairs.push([node.prop, node.value]);
+          } else if (node.type !== 'comment' && "development" !== 'production') {
+            /* eslint-disable no-console */
+            console.warn('Node of type ' + node.type + ' not supported as an inline style');
+          }
+        });
+        // RN currently does not support differing values for the corner radii of Image
+        // components (but does for View). It is almost impossible to tell whether we'll have
+        // support, so we'll just disable multiple values here.
+        // https://github.com/styled-components/css-to-react-native/issues/11
+        var styleObject = css_to_react_native__WEBPACK_IMPORTED_MODULE_1___default()(declPairs, ['borderRadius', 'borderWidth', 'borderColor', 'borderStyle']);
+        var styles = styleSheet.create({
+          generated: styleObject
+        });
+        generated[hash] = styles.generated;
+      }
+      return generated[hash];
+    };
+
+    return InlineStyle;
+  }();
+
+  return InlineStyle;
+});
+
+// 
+
+var determineTheme = (function (props, fallbackTheme, defaultProps) {
+  // Props should take precedence over ThemeProvider, which should take precedence over
+  // defaultProps, but React automatically puts defaultProps on props.
+
+  /* eslint-disable react/prop-types */
+  var isDefaultTheme = defaultProps && props.theme === defaultProps.theme;
+  var theme = props.theme && !isDefaultTheme ? props.theme : fallbackTheme;
+  /* eslint-enable */
+
+  return theme;
+});
+
+// 
+
+function getComponentName(target) {
+  return target.displayName || target.name || 'Component';
+}
+
+// 
+
+function isTag(target) /* : %checks */{
+  return typeof target === 'string';
+}
+
+// 
+function generateDisplayName(target) {
+  return isTag(target) ? 'styled.' + target : 'Styled(' + getComponentName(target) + ')';
+}
+
+// 
+
+function isStyledComponent(target) /* : %checks */{
+  return (
+    // $FlowFixMe TODO: flow for styledComponentId
+    typeof target === 'function' && typeof target.styledComponentId === 'string'
+  );
+}
+
+// 
+
+function hasInInheritanceChain(child, parent) {
+  var target = child;
+
+  while (target) {
+    target = Object.getPrototypeOf(target);
+
+    if (target && target === parent) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+// 
+/**
+ * Creates a broadcast that can be listened to, i.e. simple event emitter
+ *
+ * @see https://github.com/ReactTraining/react-broadcast
+ */
+
+var createBroadcast = function createBroadcast(initialState) {
+  var listeners = {};
+  var id = 0;
+  var state = initialState;
+
+  function publish(nextState) {
+    state = nextState;
+
+    // eslint-disable-next-line guard-for-in, no-restricted-syntax
+    for (var key in listeners) {
+      var listener = listeners[key];
+      if (listener === undefined) {
+        // eslint-disable-next-line no-continue
+        continue;
+      }
+
+      listener(state);
+    }
+  }
+
+  function subscribe(listener) {
+    var currentId = id;
+    listeners[currentId] = listener;
+    id += 1;
+    listener(state);
+    return currentId;
+  }
+
+  function unsubscribe(unsubID) {
+    listeners[unsubID] = undefined;
+  }
+
+  return { publish: publish, subscribe: subscribe, unsubscribe: unsubscribe };
+};
+
+// 
+// Helper to call a given function, only once
+var once = (function (cb) {
+  var called = false;
+
+  return function () {
+    if (!called) {
+      called = true;
+      cb();
+    }
+  };
+});
+
+var _ThemeProvider$childC;
+var _ThemeProvider$contex;
+
+// 
+// NOTE: DO NOT CHANGE, changing this is a semver major change!
+var CHANNEL = '__styled-components__';
+var CHANNEL_NEXT = CHANNEL + 'next__';
+
+var CONTEXT_CHANNEL_SHAPE = prop_types__WEBPACK_IMPORTED_MODULE_5___default.a.shape({
+  getTheme: prop_types__WEBPACK_IMPORTED_MODULE_5___default.a.func,
+  subscribe: prop_types__WEBPACK_IMPORTED_MODULE_5___default.a.func,
+  unsubscribe: prop_types__WEBPACK_IMPORTED_MODULE_5___default.a.func
+});
+
+var warnChannelDeprecated = void 0;
+if (true) {
+  warnChannelDeprecated = once(function () {
+    // eslint-disable-next-line no-console
+    console.error('Warning: Usage of `context.' + CHANNEL + '` as a function is deprecated. It will be replaced with the object on `.context.' + CHANNEL_NEXT + '` in a future version.');
+  });
+}
+
+var isFunction = function isFunction(test) {
+  return typeof test === 'function';
+};
+
+/**
+ * Provide a theme to an entire react component tree via context and event listeners (have to do
+ * both context and event emitter as pure components block context updates)
+ */
+
+var ThemeProvider = function (_Component) {
+  inherits(ThemeProvider, _Component);
+
+  function ThemeProvider() {
+    classCallCheck(this, ThemeProvider);
+
+    var _this = possibleConstructorReturn(this, _Component.call(this));
+
+    _this.unsubscribeToOuterId = -1;
+
+    _this.getTheme = _this.getTheme.bind(_this);
+    return _this;
+  }
+
+  ThemeProvider.prototype.componentWillMount = function componentWillMount() {
+    var _this2 = this;
+
+    // If there is a ThemeProvider wrapper anywhere around this theme provider, merge this theme
+    // with the outer theme
+    var outerContext = this.context[CHANNEL_NEXT];
+    if (outerContext !== undefined) {
+      this.unsubscribeToOuterId = outerContext.subscribe(function (theme) {
+        _this2.outerTheme = theme;
+
+        if (_this2.broadcast !== undefined) {
+          _this2.publish(_this2.props.theme);
+        }
+      });
+    }
+
+    this.broadcast = createBroadcast(this.getTheme());
+  };
+
+  ThemeProvider.prototype.getChildContext = function getChildContext() {
+    var _this3 = this,
+        _babelHelpers$extends;
+
+    return _extends({}, this.context, (_babelHelpers$extends = {}, _babelHelpers$extends[CHANNEL_NEXT] = {
+      getTheme: this.getTheme,
+      subscribe: this.broadcast.subscribe,
+      unsubscribe: this.broadcast.unsubscribe
+    }, _babelHelpers$extends[CHANNEL] = function (subscriber) {
+      if (true) {
+        warnChannelDeprecated();
+      }
+
+      // Patch the old `subscribe` provide via `CHANNEL` for older clients.
+      var unsubscribeId = _this3.broadcast.subscribe(subscriber);
+      return function () {
+        return _this3.broadcast.unsubscribe(unsubscribeId);
+      };
+    }, _babelHelpers$extends));
+  };
+
+  ThemeProvider.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
+    if (this.props.theme !== nextProps.theme) {
+      this.publish(nextProps.theme);
+    }
+  };
+
+  ThemeProvider.prototype.componentWillUnmount = function componentWillUnmount() {
+    if (this.unsubscribeToOuterId !== -1) {
+      this.context[CHANNEL_NEXT].unsubscribe(this.unsubscribeToOuterId);
+    }
+  };
+
+  // Get the theme from the props, supporting both (outerTheme) => {} as well as object notation
+
+
+  ThemeProvider.prototype.getTheme = function getTheme(passedTheme) {
+    var theme = passedTheme || this.props.theme;
+    if (isFunction(theme)) {
+      var mergedTheme = theme(this.outerTheme);
+      if ("development" !== 'production' && (mergedTheme === null || Array.isArray(mergedTheme) || (typeof mergedTheme === 'undefined' ? 'undefined' : _typeof(mergedTheme)) !== 'object')) {
+        throw new Error( true ? '[ThemeProvider] Please return an object from your theme function, i.e. theme={() => ({})}!' : undefined);
+      }
+      return mergedTheme;
+    }
+    if (theme === null || Array.isArray(theme) || (typeof theme === 'undefined' ? 'undefined' : _typeof(theme)) !== 'object') {
+      throw new Error( true ? '[ThemeProvider] Please make your theme prop an object' : undefined);
+    }
+    return _extends({}, this.outerTheme, theme);
+  };
+
+  ThemeProvider.prototype.publish = function publish(theme) {
+    this.broadcast.publish(this.getTheme(theme));
+  };
+
+  ThemeProvider.prototype.render = function render() {
+    if (!this.props.children) {
+      return null;
+    }
+    return react__WEBPACK_IMPORTED_MODULE_6___default.a.Children.only(this.props.children);
+  };
+
+  return ThemeProvider;
+}(react__WEBPACK_IMPORTED_MODULE_6__["Component"]);
+
+ThemeProvider.childContextTypes = (_ThemeProvider$childC = {}, _ThemeProvider$childC[CHANNEL] = prop_types__WEBPACK_IMPORTED_MODULE_5___default.a.func, _ThemeProvider$childC[CHANNEL_NEXT] = CONTEXT_CHANNEL_SHAPE, _ThemeProvider$childC);
+ThemeProvider.contextTypes = (_ThemeProvider$contex = {}, _ThemeProvider$contex[CHANNEL_NEXT] = CONTEXT_CHANNEL_SHAPE, _ThemeProvider$contex);
+
+// 
+var _StyledNativeComponent = (function (constructWithOptions, InlineStyle) {
+  // $FlowFixMe
+  var BaseStyledNativeComponent = function (_Component) {
+    inherits(BaseStyledNativeComponent, _Component);
+
+    function BaseStyledNativeComponent() {
+      var _temp, _this, _ret;
+
+      classCallCheck(this, BaseStyledNativeComponent);
+
+      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      return _ret = (_temp = (_this = possibleConstructorReturn(this, _Component.call.apply(_Component, [this].concat(args))), _this), _this.attrs = {}, _this.state = {
+        theme: null,
+        generatedStyles: undefined
+      }, _this.unsubscribeId = -1, _this.onRef = function (node) {
+        // eslint-disable-next-line react/prop-types
+        var innerRef = _this.props.innerRef;
+
+        _this.root = node;
+
+        if (typeof innerRef === 'function') {
+          innerRef(node);
+        } else if ((typeof innerRef === 'undefined' ? 'undefined' : _typeof(innerRef)) === 'object' && innerRef && innerRef.hasOwnProperty('current')) {
+          innerRef.current = node;
+        }
+      }, _temp), possibleConstructorReturn(_this, _ret);
+    }
+
+    BaseStyledNativeComponent.prototype.unsubscribeFromContext = function unsubscribeFromContext() {
+      if (this.unsubscribeId !== -1) {
+        this.context[CHANNEL_NEXT].unsubscribe(this.unsubscribeId);
+      }
+    };
+
+    BaseStyledNativeComponent.prototype.buildExecutionContext = function buildExecutionContext(theme, props) {
+      var attrs = this.constructor.attrs;
+
+      var context = _extends({}, props, { theme: theme });
+      if (attrs === undefined) {
+        return context;
+      }
+
+      this.attrs = Object.keys(attrs).reduce(function (acc, key) {
+        var attr = attrs[key];
+        // eslint-disable-next-line no-param-reassign
+        acc[key] = typeof attr === 'function' && !hasInInheritanceChain(attr, react__WEBPACK_IMPORTED_MODULE_6__["Component"]) ? attr(context) : attr;
+        return acc;
+      }, {});
+
+      return _extends({}, context, this.attrs);
+    };
+
+    BaseStyledNativeComponent.prototype.generateAndInjectStyles = function generateAndInjectStyles(theme, props) {
+      var inlineStyle = this.constructor.inlineStyle;
+
+      var executionContext = this.buildExecutionContext(theme, props);
+
+      return inlineStyle.generateStyleObject(executionContext);
+    };
+
+    BaseStyledNativeComponent.prototype.componentWillMount = function componentWillMount() {
+      var _this2 = this;
+
+      // If there is a theme in the context, subscribe to the event emitter. This
+      // is necessary due to pure components blocking context updates, this circumvents
+      // that by updating when an event is emitted
+      var styledContext = this.context[CHANNEL_NEXT];
+      if (styledContext !== undefined) {
+        var subscribe = styledContext.subscribe;
+
+        this.unsubscribeId = subscribe(function (nextTheme) {
+          // This will be called once immediately
+          var theme = determineTheme(_this2.props, nextTheme, _this2.constructor.defaultProps);
+          var generatedStyles = _this2.generateAndInjectStyles(theme, _this2.props);
+
+          _this2.setState({ theme: theme, generatedStyles: generatedStyles });
+        });
+      } else {
+        // eslint-disable-next-line react/prop-types
+        var theme = this.props.theme || {};
+        var generatedStyles = this.generateAndInjectStyles(theme, this.props);
+        this.setState({ theme: theme, generatedStyles: generatedStyles });
+      }
+    };
+
+    BaseStyledNativeComponent.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
+      var _this3 = this;
+
+      this.setState(function (prevState) {
+        var theme = determineTheme(nextProps, prevState.theme, _this3.constructor.defaultProps);
+        var generatedStyles = _this3.generateAndInjectStyles(theme, nextProps);
+
+        return { theme: theme, generatedStyles: generatedStyles };
+      });
+    };
+
+    BaseStyledNativeComponent.prototype.componentWillUnmount = function componentWillUnmount() {
+      this.unsubscribeFromContext();
+    };
+
+    BaseStyledNativeComponent.prototype.setNativeProps = function setNativeProps(nativeProps) {
+      if (this.root !== undefined) {
+        // $FlowFixMe
+        this.root.setNativeProps(nativeProps);
+      } else if (true) {
+        var displayName = this.constructor.displayName;
+
+        // eslint-disable-next-line no-console
+
+        console.warn('setNativeProps was called on a Styled Component wrapping a stateless functional component. ' + 'In this case no ref will be stored, and instead an innerRef prop will be passed on.\n' + ('Check whether the stateless functional component is passing on innerRef as a ref in ' + (displayName || 'UnknownStyledNativeComponent') + '.'));
+      }
+    };
+
+    BaseStyledNativeComponent.prototype.render = function render() {
+      // eslint-disable-next-line react/prop-types
+      var _props = this.props,
+          children = _props.children,
+          style = _props.style;
+      var generatedStyles = this.state.generatedStyles;
+      var target = this.constructor.target;
+
+
+      var propsForElement = _extends({}, this.attrs, this.props, {
+        style: [generatedStyles, style]
+      });
+
+      if (!isStyledComponent(target) && (
+      // NOTE: We can't pass a ref to a stateless functional component
+      typeof target !== 'function' ||
+      // $FlowFixMe TODO: flow for prototype
+      target.prototype && 'isReactComponent' in target.prototype)) {
+        propsForElement.ref = this.onRef;
+        delete propsForElement.innerRef;
+      } else {
+        propsForElement.innerRef = this.onRef;
+      }
+
+      return Object(react__WEBPACK_IMPORTED_MODULE_6__["createElement"])(target, propsForElement, children);
+    };
+
+    return BaseStyledNativeComponent;
+  }(react__WEBPACK_IMPORTED_MODULE_6__["Component"]);
+
+  var createStyledNativeComponent = function createStyledNativeComponent(target, options, rules) {
+    var _StyledNativeComponen;
+
+    var _options$isClass = options.isClass,
+        isClass = _options$isClass === undefined ? !isTag(target) : _options$isClass,
+        _options$displayName = options.displayName,
+        displayName = _options$displayName === undefined ? generateDisplayName(target) : _options$displayName,
+        _options$ParentCompon = options.ParentComponent,
+        ParentComponent = _options$ParentCompon === undefined ? BaseStyledNativeComponent : _options$ParentCompon,
+        extendingRules = options.rules,
+        attrs = options.attrs;
+
+
+    var inlineStyle = new InlineStyle(extendingRules === undefined ? rules : extendingRules.concat(rules));
+
+    var StyledNativeComponent = function (_ParentComponent) {
+      inherits(StyledNativeComponent, _ParentComponent);
+
+      function StyledNativeComponent() {
+        classCallCheck(this, StyledNativeComponent);
+        return possibleConstructorReturn(this, _ParentComponent.apply(this, arguments));
+      }
+
+      StyledNativeComponent.withComponent = function withComponent(tag) {
+        var _ = options.displayName,
+            __ = options.componentId,
+            optionsToCopy = objectWithoutProperties(options, ['displayName', 'componentId']);
+
+        var newOptions = _extends({}, optionsToCopy, {
+          ParentComponent: StyledNativeComponent
+        });
+        return createStyledNativeComponent(tag, newOptions, rules);
+      };
+
+      createClass(StyledNativeComponent, null, [{
+        key: 'extend',
+        get: function get$$1() {
+          var _ = options.displayName,
+              __ = options.componentId,
+              rulesFromOptions = options.rules,
+              optionsToCopy = objectWithoutProperties(options, ['displayName', 'componentId', 'rules']);
+
+
+          var newRules = rulesFromOptions === undefined ? rules : rulesFromOptions.concat(rules);
+
+          var newOptions = _extends({}, optionsToCopy, {
+            rules: newRules,
+            ParentComponent: StyledNativeComponent
+          });
+
+          return constructWithOptions(createStyledNativeComponent, target, newOptions);
+        }
+      }]);
+      return StyledNativeComponent;
+    }(ParentComponent);
+
+    StyledNativeComponent.attrs = attrs;
+    StyledNativeComponent.displayName = displayName;
+    StyledNativeComponent.inlineStyle = inlineStyle;
+    StyledNativeComponent.styledComponentId = 'StyledNativeComponent';
+    StyledNativeComponent.target = target;
+    StyledNativeComponent.contextTypes = (_StyledNativeComponen = {}, _StyledNativeComponen[CHANNEL] = prop_types__WEBPACK_IMPORTED_MODULE_5___default.a.func, _StyledNativeComponen[CHANNEL_NEXT] = CONTEXT_CHANNEL_SHAPE, _StyledNativeComponen);
+
+
+    if (isClass) {
+      hoist_non_react_statics__WEBPACK_IMPORTED_MODULE_4___default()(StyledNativeComponent, target, {
+        // all SC-specific things should not be hoisted
+        attrs: true,
+        displayName: true,
+        extend: true,
+        inlineStyle: true,
+        styledComponentId: true,
+        target: true,
+        withComponent: true
+      });
+    }
+
+    return StyledNativeComponent;
+  };
+
+  return createStyledNativeComponent;
+});
+
+// 
+var _constructWithOptions = (function (css) {
+  var constructWithOptions = function constructWithOptions(componentConstructor, tag) {
+    var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+    if (!Object(react_is__WEBPACK_IMPORTED_MODULE_7__["isValidElementType"])(tag)) {
+      throw new Error( true ? 'Cannot create styled-component for component: ' + String(tag) : undefined);
+    }
+
+    /* This is callable directly as a template function */
+    // $FlowFixMe: Not typed to avoid destructuring arguments
+    var templateFunction = function templateFunction() {
+      return componentConstructor(tag, options, css.apply(undefined, arguments));
+    };
+
+    /* If config methods are called, wrap up a new template function and merge options */
+    templateFunction.withConfig = function (config) {
+      return constructWithOptions(componentConstructor, tag, _extends({}, options, config));
+    };
+    templateFunction.attrs = function (attrs) {
+      return constructWithOptions(componentConstructor, tag, _extends({}, options, {
+        attrs: _extends({}, options.attrs || {}, attrs)
+      }));
+    };
+
+    return templateFunction;
+  };
+
+  return constructWithOptions;
+});
+
+// 
+
+var interleave = (function (strings, interpolations) {
+  return interpolations.reduce(function (array, interp, i) {
+    return array.concat(interp, strings[i + 1]);
+  }, [strings[0]]);
+});
+
+// 
+var css = (function (styles) {
+  for (var _len = arguments.length, interpolations = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    interpolations[_key - 1] = arguments[_key];
+  }
+
+  if (!Array.isArray(styles) && (typeof styles === 'undefined' ? 'undefined' : _typeof(styles)) === 'object') {
+    return flatten(interleave([], [styles].concat(interpolations)));
+  }
+  return flatten(interleave(styles, interpolations));
+});
+
+// 
+var wrapWithTheme = function wrapWithTheme(Component$$1) {
+  var _WithTheme$contextTyp;
+
+  var componentName = Component$$1.displayName || Component$$1.name || 'Component';
+  var isStatelessFunctionalComponent = typeof Component$$1 === 'function' &&
+  // $FlowFixMe TODO: flow for prototype
+  !(Component$$1.prototype && 'isReactComponent' in Component$$1.prototype);
+
+  // NOTE: We can't pass a ref to a stateless functional component
+  var shouldSetInnerRef = isStyledComponent(Component$$1) || isStatelessFunctionalComponent;
+
+  var WithTheme = function (_React$Component) {
+    inherits(WithTheme, _React$Component);
+
+    function WithTheme() {
+      var _temp, _this, _ret;
+
+      classCallCheck(this, WithTheme);
+
+      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      return _ret = (_temp = (_this = possibleConstructorReturn(this, _React$Component.call.apply(_React$Component, [this].concat(args))), _this), _this.state = {}, _this.unsubscribeId = -1, _temp), possibleConstructorReturn(_this, _ret);
+    }
+
+    // NOTE: This is so that isStyledComponent passes for the innerRef unwrapping
+
+
+    WithTheme.prototype.componentWillMount = function componentWillMount() {
+      var _this2 = this;
+
+      var defaultProps = this.constructor.defaultProps;
+
+      var styledContext = this.context[CHANNEL_NEXT];
+      var themeProp = determineTheme(this.props, undefined, defaultProps);
+      if (styledContext === undefined && themeProp === undefined && "development" !== 'production') {
+        // eslint-disable-next-line no-console
+        console.warn('[withTheme] You are not using a ThemeProvider nor passing a theme prop or a theme in defaultProps');
+      } else if (styledContext === undefined && themeProp !== undefined) {
+        this.setState({ theme: themeProp });
+      } else {
+        var subscribe = styledContext.subscribe;
+
+        this.unsubscribeId = subscribe(function (nextTheme) {
+          var theme = determineTheme(_this2.props, nextTheme, defaultProps);
+          _this2.setState({ theme: theme });
+        });
+      }
+    };
+
+    WithTheme.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
+      var defaultProps = this.constructor.defaultProps;
+
+      this.setState(function (oldState) {
+        var theme = determineTheme(nextProps, oldState.theme, defaultProps);
+
+        return { theme: theme };
+      });
+    };
+
+    WithTheme.prototype.componentWillUnmount = function componentWillUnmount() {
+      if (this.unsubscribeId !== -1) {
+        this.context[CHANNEL_NEXT].unsubscribe(this.unsubscribeId);
+      }
+    };
+
+    WithTheme.prototype.render = function render() {
+      var props = _extends({
+        theme: this.state.theme
+      }, this.props);
+
+      if (!shouldSetInnerRef) {
+        props.ref = props.innerRef;
+        delete props.innerRef;
+      }
+
+      return react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement(Component$$1, props);
+    };
+
+    return WithTheme;
+  }(react__WEBPACK_IMPORTED_MODULE_6___default.a.Component);
+
+  WithTheme.displayName = 'WithTheme(' + componentName + ')';
+  WithTheme.styledComponentId = 'withTheme';
+  WithTheme.contextTypes = (_WithTheme$contextTyp = {}, _WithTheme$contextTyp[CHANNEL] = prop_types__WEBPACK_IMPORTED_MODULE_5___default.a.func, _WithTheme$contextTyp[CHANNEL_NEXT] = CONTEXT_CHANNEL_SHAPE, _WithTheme$contextTyp);
+
+
+  return hoist_non_react_statics__WEBPACK_IMPORTED_MODULE_4___default()(WithTheme, Component$$1);
+};
+
+// 
+
+/* eslint-disable import/no-unresolved */
+var constructWithOptions = _constructWithOptions(css);
+var InlineStyle = _InlineStyle(react_primitives__WEBPACK_IMPORTED_MODULE_8___default.a.StyleSheet);
+var StyledNativeComponent = _StyledNativeComponent(constructWithOptions, InlineStyle);
+var styled = function styled(tag) {
+  return constructWithOptions(StyledNativeComponent, tag);
+};
+
+/* React native lazy-requires each of these modules for some reason, so let's
+*  assume it's for a good reason and not eagerly load them all */
+var aliases = 'Image Text Touchable View ';
+
+/* Define a getter for each alias which simply gets the reactNative component
+ * and passes it to styled */
+aliases.split(/\s+/m).forEach(function (alias) {
+  return Object.defineProperty(styled, alias, {
+    enumerable: true,
+    configurable: false,
+    get: function get() {
+      return styled(react_primitives__WEBPACK_IMPORTED_MODULE_8___default.a[alias]);
+    }
+  });
+});
+
+
+/* harmony default export */ __webpack_exports__["default"] = (styled);
+//# sourceMappingURL=styled-components-primitives.es.js.map
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/promise-polyfill/lib/index.js */ "./node_modules/promise-polyfill/lib/index.js")))
+
+/***/ }),
+
+/***/ "./node_modules/styled-components/node_modules/supports-color/browser.js":
+/*!*******************************************************************************!*\
+  !*** ./node_modules/styled-components/node_modules/supports-color/browser.js ***!
+  \*******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+module.exports = false;
 
 
 /***/ }),
@@ -32697,7 +44730,7 @@ module.exports = g;
   }run();
 });
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../process/browser.js */ "./node_modules/process/browser.js"), __webpack_require__(/*! ./node_modules/@skpm/timers/interval.js */ "./node_modules/@skpm/timers/interval.js")["clearInterval"], __webpack_require__(/*! ./node_modules/@skpm/timers/timeout.js */ "./node_modules/@skpm/timers/timeout.js")["setTimeout"], __webpack_require__(/*! ./node_modules/@skpm/timers/interval.js */ "./node_modules/@skpm/timers/interval.js")["setInterval"], __webpack_require__(/*! ./../../../node-libs-browser/node_modules/buffer/index.js */ "./node_modules/node-libs-browser/node_modules/buffer/index.js").Buffer))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../process/browser.js */ "./node_modules/process/browser.js"), __webpack_require__(/*! ./node_modules/@skpm/timers/interval.js */ "./node_modules/@skpm/timers/interval.js")["clearInterval"], __webpack_require__(/*! ./node_modules/@skpm/timers/timeout.js */ "./node_modules/@skpm/timers/timeout.js")["setTimeout"], __webpack_require__(/*! ./node_modules/@skpm/timers/interval.js */ "./node_modules/@skpm/timers/interval.js")["setInterval"], __webpack_require__(/*! ./../../../buffer/index.js */ "./node_modules/buffer/index.js").Buffer))
 
 /***/ }),
 
@@ -33144,16 +45177,38 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_sketchapp__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-sketchapp */ "./node_modules/react-sketchapp/lib/index.js");
 /* harmony import */ var react_sketchapp__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_sketchapp__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var styled_components_primitives__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! styled-components/primitives */ "./node_modules/styled-components/dist/styled-components-primitives.es.js");
+function _templateObject() {
+  var data = _taggedTemplateLiteral(["\n  font-size: 24;\n  font-weight: bold;\n  padding: 4px;\n  text-align: center;\n"]);
+
+  _templateObject = function _templateObject() {
+    return data;
+  };
+
+  return data;
+}
+
+function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 
-/* harmony default export */ __webpack_exports__["default"] = (function (context) {
-  Object(react_sketchapp__WEBPACK_IMPORTED_MODULE_1__["render"])(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_sketchapp__WEBPACK_IMPORTED_MODULE_1__["Artboard"], {
+
+
+var HelloLabel = styled_components_primitives__WEBPACK_IMPORTED_MODULE_2__["default"].Text(_templateObject());
+
+var SamplePage = function SamplePage() {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_sketchapp__WEBPACK_IMPORTED_MODULE_1__["Artboard"], {
     name: "Sample Artboard",
     style: {
       width: 375,
       height: 667
     }
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_sketchapp__WEBPACK_IMPORTED_MODULE_1__["Text"], null, "Hello world! in Artboard")), context.document.currentPage());
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(HelloLabel, {
+    name: "hello label"
+  }, "Hello world! in Artboard"));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (function (context) {
+  Object(react_sketchapp__WEBPACK_IMPORTED_MODULE_1__["render"])(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(SamplePage, null), context.document.currentPage());
 });
 
 /***/ })
